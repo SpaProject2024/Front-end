@@ -102,10 +102,4 @@ export const styles = StyleSheet.create({
     fontWeight: "bold",
     fontSize: 16,
   },
-  orText: {
-    fontSize: 12,
-    fontWeight: "bold",
-    color: "#999",
-    marginTop: 10,
-  },
 });
