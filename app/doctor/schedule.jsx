@@ -5,6 +5,9 @@ export default function schedule() {
   return (
     <View>
       <Text>schedule</Text>
+      <Text>schedule</Text>
+      <Text>schedule</Text>
+      <Text>schedule</Text>
     </View>
   )
 }
