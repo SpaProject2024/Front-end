@@ -1,5 +1,6 @@
 import { Text, View } from "react-native";
-
+import {Link} from "expo-router";
+import BottomTabs from './doctor/bottomTabs';
 export default function Index() {
   return (
     <View
@@ -7,9 +8,12 @@ export default function Index() {
         flex: 1,
         justifyContent: "center",
         alignItems: "center",
+        
       }}
     >
-      <Text>Edit app/index.tsx to edit this screen.</Text>
+      <Link href={'/bottomTabs'}>
+        <Text>phuc123</Text>
+      </Link>
     </View>
   );
 }
