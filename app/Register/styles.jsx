@@ -12,18 +12,6 @@ export const buttonStyles = StyleSheet.create({
     color: "#fff",
     fontWeight: "bold",
   },
-  socialButton: {
-    width: "50%",
-    marginLeft: 10,
-  },
-  facebookButton: {
-    backgroundColor: "#4B8BF5",
-    marginBottom: 10,
-  },
-  googleButton: {
-    backgroundColor: "#EA4335",
-    marginBottom: 10,
-  },
 });
 
 export const styles = StyleSheet.create({
@@ -69,27 +57,12 @@ export const styles = StyleSheet.create({
     width: "100%",
     marginVertical: 10,
   },
-  linkButton: {
-    flex: 1,
-    marginRight: 5,
-  },
-  linkText: {
-    color: "#2B5F2F",
-    fontSize: 10,
-    textAlign: "center",
-  },
-  fogotText: {
-    textDecorationLine: "underline",
-  },
   registerText: {
     color: "#fff",
     fontSize: 10,
     textAlign: "center",
   },
-  button: {
-    backgroundColor: "#2B5F2F",
-  },
-  loginButton: {
+  registerButton: {
     width: "100%",
     backgroundColor: "#2B5F2F",
     padding: 10,
@@ -97,7 +70,7 @@ export const styles = StyleSheet.create({
     alignItems: "center",
     marginTop: 20,
   },
-  loginButtonText: {
+  registerButtonText: {
     color: "#fff",
     fontWeight: "bold",
     fontSize: 16,
