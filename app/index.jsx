@@ -1,26 +1,19 @@
-// app/index.tsx
-import React from 'react';
-import { View, Text, Button, StyleSheet } from 'react-native';
-import { useRouter } from 'expo-router';
-
-export default function IntroScreen() {
-  const router = useRouter();
-
+import { Text, View } from "react-native";
+import {Link} from "expo-router";
+import BottomTabs from './doctor/bottomTabs';
+export default function Index() {
   return (
-    <View style={styles.container}>
-      <Text>Welcome to the Intro Screen!</Text>
-      <Button
-        title="Go to Login"
-        onPress={() => router.push('/Login/login')}
-      />
+    <View
+      style={{
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+        
+      }}
+    >
+      <Link href={'/bottomTabs'}>
+        <Text>phuc123</Text>
+      </Link>
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-});
