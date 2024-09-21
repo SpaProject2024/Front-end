@@ -5,9 +5,7 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 import { Colors } from "../../constants/Colors";
 
 export default function ServiceItem({
-  title,
-  description,
-  isFavorite,
+  service,
   onServicePress,
   toggleFavorite,
 }) {
@@ -22,22 +20,22 @@ export default function ServiceItem({
           <View
             style={{ flexDirection: "row", justifyContent: "space-between" }}
           >
-            <Text style={{fontSize: 30}}>{title}</Text>
+            <Text style={{ fontSize: 30 }}>{service.title}</Text>
             <TouchableOpacity onPress={toggleFavorite}>
               <Ionicons
-                name={isFavorite ? "heart-sharp" : "heart-outline"}
+                name={service.isFavorite ? "heart-sharp" : "heart-outline"}
                 size={20}
                 color={Colors.PRIMARY}
               />
             </TouchableOpacity>
           </View>
-          <StarRatingDisplay starSize={25} rating={4.5} />
+          <StarRatingDisplay starSize={25} rating={service.rate} />
           <Text
             style={styles.description}
             numberOfLines={2}
             ellipsizeMode="tail"
           >
-            {description}
+            {service.description}
           </Text>
         </View>
       </View>

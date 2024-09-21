@@ -12,6 +12,7 @@ const serviceList = [
     description:
       "A performant interface for rendering basic, flat lists, supporting the most handy feature. A performant interface for rendering basic, flat lists, supporting the most handy feature",
     isFavorite: true,
+    rate: 3,
   },
   {
     id: "2",
@@ -21,6 +22,7 @@ const serviceList = [
     description:
       "A performant interface for rendering basic, flat lists, supporting the most handy feature. A performant interface for rendering basic, flat lists, supporting the most handy feature",
     isFavorite: false,
+    rate: 5,
   },
   {
     id: "3",
@@ -29,7 +31,8 @@ const serviceList = [
     type: "C",
     description:
       "A performant interface for rendering basic, flat lists, supporting the most handy feature. A performant interface for rendering basic, flat lists, supporting the most handy feature",
-    isFavorite: false,
+    isFavorite: true,
+    rate: 4,
   },
   {
     id: "4",
@@ -39,6 +42,7 @@ const serviceList = [
     description:
       "A performant interface for rendering basic, flat lists, supporting the most handy feature. A performant interface for rendering basic, flat lists, supporting the most handy feature",
     isFavorite: false,
+    rate: 3,
   },
   {
     id: "5",
@@ -48,6 +52,7 @@ const serviceList = [
     description:
       "A performant interface for rendering basic, flat lists, supporting the most handy feature. A performant interface for rendering basic, flat lists, supporting the most handy feature",
     isFavorite: false,
+    rate: 2,
   },
   {
     id: "6",
@@ -57,6 +62,7 @@ const serviceList = [
     description:
       "A performant interface for rendering basic, flat lists, supporting the most handy feature. A performant interface for rendering basic, flat lists, supporting the most handy feature",
     isFavorite: false,
+    rate: 1,
   },
   {
     id: "7",
@@ -66,6 +72,7 @@ const serviceList = [
     description:
       "A performant interface for rendering basic, flat lists, supporting the most handy feature. A performant interface for rendering basic, flat lists, supporting the most handy feature",
     isFavorite: false,
+    rate: 5,
   },
   {
     id: "8",
@@ -75,6 +82,7 @@ const serviceList = [
     description:
       "A performant interface for rendering basic, flat lists, supporting the most handy feature. A performant interface for rendering basic, flat lists, supporting the most handy feature",
     isFavorite: false,
+    rate: 4,
   },
   {
     id: "9",
@@ -84,6 +92,7 @@ const serviceList = [
     description:
       "A performant interface for rendering basic, flat lists, supporting the most handy feature. A performant interface for rendering basic, flat lists, supporting the most handy feature",
     isFavorite: false,
+    rate: 3,
   },
   {
     id: "10",
@@ -93,6 +102,7 @@ const serviceList = [
     description:
       "A performant interface for rendering basic, flat lists, supporting the most handy feature. A performant interface for rendering basic, flat lists, supporting the most handy feature",
     isFavorite: false,
+    rate: 2,
   },
 ];
 
@@ -115,12 +125,12 @@ export default function ServiceList() {
         data={serviceList}
         renderItem={({ item }) => (
           <ServiceItem
-            title={item.title}
-            description={item.description}
-            isFavorite={item.isFavorite}
+            service={item}
             toggleFavorite={() => toggleFavorite(item.id)} // Bao trong hàm
             onServicePress={() =>
-              router.push("/ServiceInfo/" + JSON.stringify(item))
+              router.push(
+                "/ServiceInfo/" + encodeURIComponent(JSON.stringify(item))
+              )
             }
           />
         )}

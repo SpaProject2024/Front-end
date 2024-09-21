@@ -10,7 +10,7 @@ import React, { useState } from "react";
 import { StarRatingDisplay } from "react-native-star-rating-widget";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { Colors } from "../../constants/Colors";
-import SegmentedControl from "./SegmentedControl";
+
 
 export default function Service({ service }) {
   const [isFavorite, setIsFavorite] = useState(service.isFavorite);
@@ -19,7 +19,7 @@ export default function Service({ service }) {
   };
 
   return (
-    <View style={{ flex: 1, backgroundColor: "#F2F2F2"}}>
+    <View style={{backgroundColor: "#F2F2F2"}}>
       <Image
         style={styles.picture}
         source={require("./../../assets/images/hasaki.jpg")}
@@ -29,7 +29,7 @@ export default function Service({ service }) {
       <View style={styles.title}>
         <View>
           <Text style={{ fontSize: 30 }}>{service.title}</Text>
-          <StarRatingDisplay starSize={25} rating={4.5} />
+          <StarRatingDisplay starSize={25} rating={service.rate} />
         </View>
         <TouchableOpacity
           style={styles.favoriteIcon}
@@ -43,11 +43,7 @@ export default function Service({ service }) {
         </TouchableOpacity>
       </View>
 
-      <SegmentedControl values={["Information", "Review"]} service={service} />
-
-      <TouchableOpacity style={styles.bookButton}>
-        <Text style={styles.bookText}>BOOK APPOINTMENT</Text>
-      </TouchableOpacity>
+      
     </View>
   );
 }
@@ -67,19 +63,5 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "flex-end",
     paddingRight: 10,
-  },
-  bookButton: {
-    position: "absolute",
-    left: 0,
-    right: 0,
-    bottom: 0,
-  },
-  bookText: {
-    backgroundColor: Colors.PRIMARY,
-    padding: 20,
-    color: "white",
-    fontWeight: "bold",
-    fontSize: 24,
-    textAlign: "center",
-  },
+  },  
 });
