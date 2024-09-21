@@ -1,15 +1,13 @@
 import { View, Text, Image, StyleSheet } from "react-native";
 import React from "react";
-import Header from "./header";
-import Data from "./data";
-import Footer from "./footer";
+import Header from "../../components/Home/header";
+import Data from "../../components/Home/data";
 
 export default function Home() {
   return (
     <View style={styles.container}>
-      <Header/>
+      <Header />
       <Data />
-      <Footer/>
     </View>
   );
 }
@@ -17,6 +15,5 @@ export default function Home() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "##C0E3C5",
   },
 });
