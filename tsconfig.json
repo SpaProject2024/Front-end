@@ -14,6 +14,6 @@
     "expo-env.d.ts",
     "app/_layout.jsx",
     "app/index.jsx",
-    "app/Login/login.jsx"
+    "components/Login/login.jsx"
   ]
 }
