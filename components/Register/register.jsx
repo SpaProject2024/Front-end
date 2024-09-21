@@ -14,7 +14,6 @@ const Register = () => {
   const [passwordMatchError, setPasswordMatchError] = useState("");
 
   const validateEmail = (email) => {
-    // Simple regex for email validation
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
   };
@@ -22,7 +21,6 @@ const Register = () => {
   const handleLogin = () => {
     let hasError = false;
 
-    // Clear previous errors
     setEmailError("");
     setPasswordError("");
     setPasswordMatchError("");
@@ -50,7 +48,6 @@ const Register = () => {
 
     if (hasError) return;
 
-    // Pass email as a parameter
     router.push({
       pathname: "Vertification/vertification",
       params: { email },

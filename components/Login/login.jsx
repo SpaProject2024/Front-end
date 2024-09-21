@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   Alert,
 } from "react-native";
-import Logo from "../../assets/images/Neutral Feminine Flower Line Art.png";
+import Logo from "../../assets/images/logo2.png";
 import { useRouter } from "expo-router";
 import { styles, buttonStyles } from "./styles";
 
