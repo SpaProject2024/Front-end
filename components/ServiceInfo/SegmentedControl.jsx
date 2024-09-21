@@ -4,7 +4,7 @@ import { Colors } from "../../constants/Colors";
 import ServiceInfo from "./ServiceInfo";
 import Review from "./ServiceReview";
 
-export default function SegmentedControl({ values }) {
+export default function SegmentedControl({ values, service }) {
   const [selectedIndex, setSelectedIndex] = useState(0);
 
   return (
@@ -33,7 +33,7 @@ export default function SegmentedControl({ values }) {
       </View>
       
       {/* Display */}
-      {values[selectedIndex] === "Information" ? <ServiceInfo /> : <Review />}
+      {values[selectedIndex] === "Information" ? <ServiceInfo service={service} /> : <Review service={service} />}
     </View>
   );
 }
@@ -44,6 +44,7 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     borderRadius: 5,
     overflow: "hidden",
+    elevation: 5,
   },
   segment: {
     flex: 1,
@@ -58,7 +59,6 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 18, // Điều chỉnh size chữ ở đây
-    color: "black",
   },
   selectedText: {
     color: Colors.PRIMARY, // Màu chữ khi được chọn

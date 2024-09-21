@@ -12,9 +12,9 @@ export default function serviceInfo() {
   const parsedService = service ? JSON.parse(service) : {};
   return (
     <View style={{flex: 1, backgroundColor: "white"}}>    
-
       {/* Service Information */}
       <ServiceInfo service={parsedService} />
+
       {/* Back Button */}
       <View style={styles.backButton}>
         <Ionicons

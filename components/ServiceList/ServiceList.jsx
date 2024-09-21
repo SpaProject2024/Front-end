@@ -1,15 +1,5 @@
-import {
-  View,
-  Text,
-  FlatList,
-  StyleSheet,
-  Image,
-  TouchableOpacity,
-} from "react-native";
+import { View, Text, FlatList, StyleSheet } from "react-native";
 import React, { useState } from "react";
-import { StarRatingDisplay } from "react-native-star-rating-widget";
-import Ionicons from "@expo/vector-icons/Ionicons";
-import { Colors } from "../../constants/Colors";
 import { useRouter } from "expo-router";
 import ServiceItem from "./ServiceItem";
 
@@ -17,7 +7,7 @@ const serviceList = [
   {
     id: "1",
     title: "First Item",
-    image: "",
+    image: "./../../assets/images/hasaki.jpg",
     type: "A",
     description:
       "A performant interface for rendering basic, flat lists, supporting the most handy feature. A performant interface for rendering basic, flat lists, supporting the most handy feature",
@@ -26,7 +16,7 @@ const serviceList = [
   {
     id: "2",
     title: "Second Item",
-    image: "",
+    image: "./../../assets/images/hasaki.jpg",
     type: "B",
     description:
       "A performant interface for rendering basic, flat lists, supporting the most handy feature. A performant interface for rendering basic, flat lists, supporting the most handy feature",
@@ -35,7 +25,7 @@ const serviceList = [
   {
     id: "3",
     title: "Third Item",
-    image: "",
+    image: "./../../assets/images/hasaki.jpg",
     type: "C",
     description:
       "A performant interface for rendering basic, flat lists, supporting the most handy feature. A performant interface for rendering basic, flat lists, supporting the most handy feature",
@@ -44,7 +34,7 @@ const serviceList = [
   {
     id: "4",
     title: "First Item",
-    image: "",
+    image: "./../../assets/images/hasaki.jpg",
     type: "A",
     description:
       "A performant interface for rendering basic, flat lists, supporting the most handy feature. A performant interface for rendering basic, flat lists, supporting the most handy feature",
@@ -53,7 +43,7 @@ const serviceList = [
   {
     id: "5",
     title: "Second Item",
-    image: "",
+    image: "./../../assets/images/hasaki.jpg",
     type: "B",
     description:
       "A performant interface for rendering basic, flat lists, supporting the most handy feature. A performant interface for rendering basic, flat lists, supporting the most handy feature",
@@ -62,7 +52,7 @@ const serviceList = [
   {
     id: "6",
     title: "Third Item",
-    image: "",
+    image: "./../../assets/images/hasaki.jpg",
     type: "C",
     description:
       "A performant interface for rendering basic, flat lists, supporting the most handy feature. A performant interface for rendering basic, flat lists, supporting the most handy feature",
@@ -71,7 +61,7 @@ const serviceList = [
   {
     id: "7",
     title: "First Item",
-    image: "",
+    image: "./../../assets/images/hasaki.jpg",
     type: "A",
     description:
       "A performant interface for rendering basic, flat lists, supporting the most handy feature. A performant interface for rendering basic, flat lists, supporting the most handy feature",
@@ -80,7 +70,7 @@ const serviceList = [
   {
     id: "8",
     title: "Second Item",
-    image: "",
+    image: "./../../assets/images/hasaki.jpg",
     type: "B",
     description:
       "A performant interface for rendering basic, flat lists, supporting the most handy feature. A performant interface for rendering basic, flat lists, supporting the most handy feature",
@@ -89,7 +79,7 @@ const serviceList = [
   {
     id: "9",
     title: "Third Item",
-    image: "",
+    image: "./../../assets/images/hasaki.jpg",
     type: "C",
     description:
       "A performant interface for rendering basic, flat lists, supporting the most handy feature. A performant interface for rendering basic, flat lists, supporting the most handy feature",
@@ -98,7 +88,7 @@ const serviceList = [
   {
     id: "10",
     title: "Third Item",
-    image: "",
+    image: "./../../assets/images/hasaki.jpg",
     type: "C",
     description:
       "A performant interface for rendering basic, flat lists, supporting the most handy feature. A performant interface for rendering basic, flat lists, supporting the most handy feature",
@@ -144,14 +134,6 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: "#F2F2F2",
     flex: 1,
-  },
-  item: {
-    flexDirection: "row",
-    backgroundColor: "#ffffff",
-    borderRadius: 10,
-    marginVertical: 8,
-    marginHorizontal: 16,
-    elevation: 5,
   },
   info: {
     padding: 10,

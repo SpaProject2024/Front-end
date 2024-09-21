@@ -10,23 +10,22 @@ import React, { useState } from "react";
 import { StarRatingDisplay } from "react-native-star-rating-widget";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { Colors } from "../../constants/Colors";
-import SegmentedControl from './SegmentedControl';
+import SegmentedControl from "./SegmentedControl";
 
 export default function Service({ service }) {
   const [isFavorite, setIsFavorite] = useState(service.isFavorite);
   const toggleFavorite = () => {
     setIsFavorite(!isFavorite);
   };
-  const [selectedIndex, setSelectedIndex] = useState(0);
 
   return (
-    <View style={{ flex: 1 }}>
+    <View style={{ flex: 1, backgroundColor: "#F2F2F2"}}>
       <Image
         style={styles.picture}
         source={require("./../../assets/images/hasaki.jpg")}
         resizeMode="contain"
       />
-      
+
       <View style={styles.title}>
         <View>
           <Text style={{ fontSize: 30 }}>{service.title}</Text>
@@ -44,9 +43,11 @@ export default function Service({ service }) {
         </TouchableOpacity>
       </View>
 
-      <SegmentedControl values={['Information', 'Review']}/>
+      <SegmentedControl values={["Information", "Review"]} service={service} />
 
-      <Text style={styles.bookButton}>BOOK APPOINTMENT</Text>
+      <TouchableOpacity style={styles.bookButton}>
+        <Text style={styles.bookText}>BOOK APPOINTMENT</Text>
+      </TouchableOpacity>
     </View>
   );
 }
@@ -59,7 +60,6 @@ const styles = StyleSheet.create({
   title: {
     flexDirection: "row",
     justifyContent: "space-between",
-    backgroundColor: "#F2F2F2",
     padding: 20,
   },
   favoriteIcon: {
@@ -73,11 +73,13 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     bottom: 0,
-    backgroundColor: Colors.PRIMARY,    
+  },
+  bookText: {
+    backgroundColor: Colors.PRIMARY,
     padding: 20,
     color: "white",
     fontWeight: "bold",
     fontSize: 24,
-    textAlign:"center"
+    textAlign: "center",
   },
 });
