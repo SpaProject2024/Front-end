@@ -11,7 +11,7 @@ export default function serviceInfo() {
   const { service } = useLocalSearchParams();
   const parsedService = service ? JSON.parse(service) : {};
   return (
-    <View style={{flex: 1, backgroundColor: "white"}}>    
+    <View style={{ flex: 1, backgroundColor: "white" }}>
       {/* Service Information */}
       <ServiceInfo service={parsedService} />
 
