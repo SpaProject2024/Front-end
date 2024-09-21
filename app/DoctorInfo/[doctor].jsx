@@ -1,35 +1,20 @@
-import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  ScrollView,
-} from "react-native";
+import { View, Text, ScrollView, StyleSheet, TouchableOpacity } from "react-native";
 import React from "react";
-import { useLocalSearchParams, useNavigation, useRouter } from "expo-router";
-import ServiceInfo from "./../../components/ServiceInfo/Service";
-import { Colors } from "../../constants/Colors";
+import { useLocalSearchParams, useRouter } from "expo-router";
+import Doctor from "./../../components/DoctorInfo/Doctor";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import SegmentedControl from "./../../components/ServiceInfo/SegmentedControl";
+import { Colors } from "../../constants/Colors";
 
-export default function serviceInfo() {
+export default function doctorInfo() {
   const router = useRouter();
-  // const navigation = useNavigation()
-  const { service } = useLocalSearchParams();
-  const parsedService = JSON.parse(decodeURIComponent(service));
+  const { doctor } = useLocalSearchParams();
+  const parsedDoctor = JSON.parse(decodeURIComponent(doctor));
 
-  // const parsedService = service ? JSON.parse(service) : {};
   return (
     <View style={{ flex: 1 }}>
-      <ScrollView contentContainerStyle={{ flexGrow: 1, paddingBottom: 50 }}>
-        {/* Service Information */}
-        <ServiceInfo service={parsedService} />
-
-        {/* Segmented Control */}
-        <SegmentedControl
-          values={["Information", "Review"]}
-          service={parsedService}
-        />
+      {/* Doctor Profile */}
+      <ScrollView contentContainerStyle={{ flexGrow: 1, paddingBottom: 70 }}>
+        <Doctor doctor={parsedDoctor} />
       </ScrollView>
 
       {/* Back Button */}

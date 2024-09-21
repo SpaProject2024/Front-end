@@ -11,7 +11,6 @@ import { StarRatingDisplay } from "react-native-star-rating-widget";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { Colors } from "../../constants/Colors";
 
-
 export default function Service({ service }) {
   const [isFavorite, setIsFavorite] = useState(service.isFavorite);
   const toggleFavorite = () => {
@@ -19,17 +18,23 @@ export default function Service({ service }) {
   };
 
   return (
-    <View style={{backgroundColor: "#F2F2F2"}}>
+    <View style={{ backgroundColor: "#F2F2F2" }}>
       <Image
         style={styles.picture}
         source={require("./../../assets/images/hasaki.jpg")}
-        resizeMode="contain"
+        resizeMode=""
       />
 
-      <View style={styles.title}>
+      <View style={styles.titleContainer}>
         <View>
-          <Text style={{ fontSize: 30 }}>{service.title}</Text>
-          <StarRatingDisplay starSize={25} rating={service.rate} />
+          <Text style={styles.title}>
+            {service.title}
+          </Text>
+          <StarRatingDisplay
+            color="orange"
+            starSize={20}
+            rating={service.rate}
+          />
         </View>
         <TouchableOpacity
           style={styles.favoriteIcon}
@@ -42,8 +47,6 @@ export default function Service({ service }) {
           />
         </TouchableOpacity>
       </View>
-
-      
     </View>
   );
 }
@@ -51,17 +54,22 @@ export default function Service({ service }) {
 const styles = StyleSheet.create({
   picture: {
     width: Dimensions.get("window").width,
-    height: 600,
+    // height: 600,
   },
-  title: {
+  titleContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
     padding: 20,
+  },
+  title: {
+    fontSize: 20,
+    paddingBottom: 5,
+    fontWeight: "bold",
   },
   favoriteIcon: {
     flex: 1,
     justifyContent: "center",
     alignItems: "flex-end",
     paddingRight: 10,
-  },  
+  },
 });

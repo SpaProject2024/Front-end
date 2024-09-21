@@ -1,6 +1,6 @@
 import { View, Text, StyleSheet } from "react-native";
 import React from "react";
-import DoctorList from "./../Doctor/DoctorList";
+import DoctorList from "./../DoctorList/DoctorList";
 
 export default function ServiceInfo({ service }) {
   return (
@@ -8,7 +8,7 @@ export default function ServiceInfo({ service }) {
       {/* Description */}
       <View style={styles.div}>
         <Text style={styles.title}>About</Text>
-        <Text>{service.description}</Text>
+        <Text style={{fontSize: 13}}>{service.description}</Text>
       </View>
 
       <View style={styles.line} />
@@ -34,9 +34,9 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   title: {
-    fontSize: 24,
+    fontSize: 16,
     fontWeight: "bold",
-    marginBottom: 15
+    marginBottom: 5
   },
   line: {
     height: 3, // Chiều cao của đường gạch ngang

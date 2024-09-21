@@ -16,7 +16,7 @@ const serviceList = [
   },
   {
     id: "2",
-    title: "Second Item",
+    title: "Second Item Second Item",
     image: "./../../assets/images/hasaki.jpg",
     type: "B",
     description:
