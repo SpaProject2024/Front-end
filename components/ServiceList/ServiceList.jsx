@@ -10,6 +10,8 @@ import React, { useState } from "react";
 import { StarRatingDisplay } from "react-native-star-rating-widget";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { Colors } from "../../constants/Colors";
+import { useRouter } from "expo-router";
+import ServiceItem from "./ServiceItem";
 
 const serviceList = [
   {
@@ -104,11 +106,10 @@ const serviceList = [
   },
 ];
 
-const initialServiceList = serviceList
+const initialServiceList = serviceList;
 
 export default function ServiceList() {
   const [serviceList, setServiceList] = useState(initialServiceList);
-
   const toggleFavorite = (id) => {
     setServiceList((prevList) =>
       prevList.map((item) =>
@@ -116,42 +117,21 @@ export default function ServiceList() {
       )
     );
   };
-
-  const Item = ({ id, title, description, isFavorite }) => (
-    <View style={styles.item}>
-      <Image
-        style={styles.picture}
-        source={require("./../../assets/images/hasaki.jpg")}
-      />
-      <View style={styles.info}>
-        <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
-          <Text style={styles.title}>{title}</Text>
-          <TouchableOpacity onPress={() => toggleFavorite(id)}>
-            <Ionicons
-              name={isFavorite ? "heart-sharp" : "heart-outline"}
-              size={20}
-              color={Colors.PRIMARY}
-            />
-          </TouchableOpacity>
-        </View>
-        <StarRatingDisplay starSize={25} rating={4.5} />
-        <Text style={styles.description} numberOfLines={2} ellipsizeMode="tail">
-          {description}
-        </Text>
-      </View>
-    </View>
-  );
+  const router = useRouter();
 
   return (
     <View style={styles.container}>
       <FlatList
         data={serviceList}
         renderItem={({ item }) => (
-          <Item
-            id={item.id}
+          <ServiceItem
             title={item.title}
             description={item.description}
             isFavorite={item.isFavorite}
+            toggleFavorite={() => toggleFavorite(item.id)} // Bao trong hàm
+            onServicePress={() =>
+              router.push("/ServiceInfo/" + JSON.stringify(item))
+            }
           />
         )}
         keyExtractor={(item) => item.id}
@@ -175,9 +155,6 @@ const styles = StyleSheet.create({
   },
   info: {
     padding: 10,
-  },
-  title: {
-    fontSize: 30,
   },
   description: {
     fontSize: 16,

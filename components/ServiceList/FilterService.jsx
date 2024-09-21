@@ -5,7 +5,7 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 export default function FilterService() {
   return (
     <View>
-      <Ionicons name="filter-circle" size={40} color="white" />
+      <Text>ABC</Text>
     </View>
   )
 }
