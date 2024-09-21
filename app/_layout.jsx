@@ -37,6 +37,7 @@ export default function RootLayout() {
       <Stack.Screen name="register" />
       <Stack.Screen name="forgetpassword" />
       <Stack.Screen name="verification" />
+      <Stack.Screen name="ServiceList" />
     </Stack>
   );
 }

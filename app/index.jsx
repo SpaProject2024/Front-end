@@ -15,6 +15,13 @@ export default function IntroScreen() {
   }, [router]);
 
   return (
+    <View style={styles.container}>
+      <Text>Welcome to the Intro Screen!</Text>
+      <Button
+        title="Go to Login"
+        // onPress={() => router.push('/Login/login')}
+        onPress={() => router.push('/ServiceList')}
+      />
     <View style={styles.container}>    
       <Image source={Logo} style={styles.logo}></Image>
       <Text style={styles.text}> Bellavita Beauty </Text>
