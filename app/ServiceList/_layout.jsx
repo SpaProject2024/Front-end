@@ -21,7 +21,7 @@ export default function _layout() {
               name="arrow-back-outline"
               size={28}
               color="white"
-              onPress={() => router.push("/Home/home")}
+              onPress={() => router.back()}
             />
             <Text style={styles.text}>Search</Text>
           </View>
