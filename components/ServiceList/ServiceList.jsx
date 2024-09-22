@@ -8,7 +8,7 @@ const serviceList = [
     id: "1",
     title: "First Item",
     image: "./../../assets/images/hasaki.jpg",
-    type: "A",
+    category: "A",
     description:
       "A performant interface for rendering basic, flat lists, supporting the most handy feature. A performant interface for rendering basic, flat lists, supporting the most handy feature",
     isFavorite: true,
@@ -55,7 +55,7 @@ const serviceList = [
     id: "2",
     title: "Second Item Second Item",
     image: "./../../assets/images/hasaki.jpg",
-    type: "B",
+    category: "B",
     description:
       "A performant interface for rendering basic, flat lists, supporting the most handy feature. A performant interface for rendering basic, flat lists, supporting the most handy feature",
     isFavorite: false,
@@ -102,7 +102,7 @@ const serviceList = [
     id: "3",
     title: "Third Item",
     image: "./../../assets/images/hasaki.jpg",
-    type: "C",
+    category: "C",
     description:
       "A performant interface for rendering basic, flat lists, supporting the most handy feature. A performant interface for rendering basic, flat lists, supporting the most handy feature",
     isFavorite: true,
@@ -149,7 +149,7 @@ const serviceList = [
     id: "4",
     title: "First Item",
     image: "./../../assets/images/hasaki.jpg",
-    type: "A",
+    category: "A",
     description:
       "A performant interface for rendering basic, flat lists, supporting the most handy feature. A performant interface for rendering basic, flat lists, supporting the most handy feature",
     isFavorite: false,
@@ -196,7 +196,7 @@ const serviceList = [
     id: "5",
     title: "Second Item",
     image: "./../../assets/images/hasaki.jpg",
-    type: "B",
+    category: "B",
     description:
       "A performant interface for rendering basic, flat lists, supporting the most handy feature. A performant interface for rendering basic, flat lists, supporting the most handy feature",
     isFavorite: false,
