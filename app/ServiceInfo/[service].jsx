@@ -7,10 +7,10 @@ import {
 } from "react-native";
 import React from "react";
 import { useLocalSearchParams, useNavigation, useRouter } from "expo-router";
-import ServiceInfo from "./../../components/ServiceInfo/Service";
 import { Colors } from "../../constants/Colors";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import SegmentedControl from "./../../components/ServiceInfo/SegmentedControl";
+import SearchService from "./../../components/ServiceList/SearchService";
 
 export default function serviceInfo() {
   const router = useRouter();
@@ -21,26 +21,36 @@ export default function serviceInfo() {
   // const parsedService = service ? JSON.parse(service) : {};
   return (
     <View style={{ flex: 1 }}>
-      <ScrollView contentContainerStyle={{ flexGrow: 1, paddingBottom: 70 }}>
-        {/* Service Information */}
-        <ServiceInfo service={parsedService} />
-
-        {/* Segmented Control */}
-        <SegmentedControl
-          values={["Information", "Review"]}
-          service={parsedService}
-        />        
-      </ScrollView>
-
-      {/* Back Button */}
-      <View style={styles.backButton}>
+      {/* Header */}
+      <View style={styles.header}>
+        <View style={styles.backButton}>
           <Ionicons
             name="arrow-back-outline"
-            size={28}
-            color="white"
-            onPress={() => router.push("/ServiceList")}
+            size={24}
+            color="grey"
+            onPress={() => router.back()}
           />
         </View>
+        <View style={{ flex: 1 }}>
+          <SearchService placeholder={parsedService.title}/>
+        </View>
+      </View>
+
+      {/* Segmented Control */}
+      <SegmentedControl
+        values={["Information", "Review"]}
+        service={parsedService}
+      />
+
+      {/* Back Button */}
+      {/* <View style={styles.backButton}>
+        <Ionicons
+          name="arrow-back-outline"
+          size={24}
+          color="white"
+          onPress={() => router.back()}
+        />
+      </View> */}
 
       {/* Book Button */}
       <TouchableOpacity style={styles.bookButton}>
@@ -51,13 +61,15 @@ export default function serviceInfo() {
 }
 
 const styles = StyleSheet.create({
+  header: {
+    flexDirection: "row",
+    backgroundColor: "white",
+    paddingTop: 30,
+    padding: 20,
+  },
   backButton: {
-    position: "absolute",
-    top: 60,
-    left: 20,
-    backgroundColor: "rgba(128, 128, 128, 0.5)",
-    borderRadius: 100,
-    padding: 10,
+    justifyContent: "center",
+    paddingRight: 10,
   },
   bookButton: {
     position: "absolute",
@@ -67,10 +79,10 @@ const styles = StyleSheet.create({
   },
   bookText: {
     backgroundColor: Colors.PRIMARY,
-    padding: 20,
+    padding: 10,
     color: "white",
     fontWeight: "bold",
-    fontSize: 24,
+    fontSize: 16,
     textAlign: "center",
   },
 });

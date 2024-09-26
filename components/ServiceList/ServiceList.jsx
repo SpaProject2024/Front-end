@@ -8,101 +8,236 @@ const serviceList = [
     id: "1",
     title: "First Item",
     image: "./../../assets/images/hasaki.jpg",
-    type: "A",
+    category: "A",
     description:
       "A performant interface for rendering basic, flat lists, supporting the most handy feature. A performant interface for rendering basic, flat lists, supporting the most handy feature",
     isFavorite: true,
     rate: 3,
+    review: [
+      {
+        id: 1,
+        name: "Isabella Harris",
+        image: "./../../assets/images/user.jpg",
+        rate: 4,
+        comment: "A performant interface for rendering basic, flat lists, supporting the most handy feature. A performant interface for rendering basic, flat lists, supporting the most handy feature"
+      },
+      {
+        id: 2,
+        name: "Isabella Harris",
+        image: "./../../assets/images/user.jpg",
+        rate: 4,
+        comment: "A performant interface for rendering basic, flat lists, supporting the most handy feature. A performant interface for rendering basic, flat lists, supporting the most handy feature"
+      },
+      {
+        id: 3,
+        name: "Isabella Harris",
+        image: "./../../assets/images/user.jpg",
+        rate: 4,
+        comment: "A performant interface for rendering basic, flat lists, supporting the most handy feature. A performant interface for rendering basic, flat lists, supporting the most handy feature"
+      },
+      {
+        id: 4,
+        name: "Isabella Harris",
+        image: "./../../assets/images/user.jpg",
+        rate: 4,
+        comment: "A performant interface for rendering basic, flat lists, supporting the most handy feature. A performant interface for rendering basic, flat lists, supporting the most handy feature"
+      },
+      {
+        id: 5,
+        name: "Isabella Harris",
+        image: "./../../assets/images/user.jpg",
+        rate: 4,
+        comment: "A performant interface for rendering basic, flat lists, supporting the most handy feature. A performant interface for rendering basic, flat lists, supporting the most handy feature"
+      },
+    ]
   },
   {
     id: "2",
-    title: "Second Item",
+    title: "Second Item Second Item",
     image: "./../../assets/images/hasaki.jpg",
-    type: "B",
+    category: "B",
     description:
       "A performant interface for rendering basic, flat lists, supporting the most handy feature. A performant interface for rendering basic, flat lists, supporting the most handy feature",
     isFavorite: false,
     rate: 5,
+    review: [
+      {
+        id: 1,
+        name: "Isabella Harris",
+        image: "./../../assets/images/user.jpg",
+        rate: 4,
+        comment: "A performant interface for rendering basic, flat lists, supporting the most handy feature. A performant interface for rendering basic, flat lists, supporting the most handy feature"
+      },
+      {
+        id: 2,
+        name: "Isabella Harris",
+        image: "./../../assets/images/user.jpg",
+        rate: 4,
+        comment: "A performant interface for rendering basic, flat lists, supporting the most handy feature. A performant interface for rendering basic, flat lists, supporting the most handy feature"
+      },
+      {
+        id: 3,
+        name: "Isabella Harris",
+        image: "./../../assets/images/user.jpg",
+        rate: 4,
+        comment: "A performant interface for rendering basic, flat lists, supporting the most handy feature. A performant interface for rendering basic, flat lists, supporting the most handy feature"
+      },
+      {
+        id: 4,
+        name: "Isabella Harris",
+        image: "./../../assets/images/user.jpg",
+        rate: 4,
+        comment: "A performant interface for rendering basic, flat lists, supporting the most handy feature. A performant interface for rendering basic, flat lists, supporting the most handy feature"
+      },
+      {
+        id: 5,
+        name: "Isabella Harris",
+        image: "./../../assets/images/user.jpg",
+        rate: 4,
+        comment: "A performant interface for rendering basic, flat lists, supporting the most handy feature. A performant interface for rendering basic, flat lists, supporting the most handy feature"
+      },
+    ]
   },
   {
     id: "3",
     title: "Third Item",
     image: "./../../assets/images/hasaki.jpg",
-    type: "C",
+    category: "C",
     description:
       "A performant interface for rendering basic, flat lists, supporting the most handy feature. A performant interface for rendering basic, flat lists, supporting the most handy feature",
     isFavorite: true,
     rate: 4,
+    review: [
+      {
+        id: 1,
+        name: "Isabella Harris",
+        image: "./../../assets/images/user.jpg",
+        rate: 4,
+        comment: "A performant interface for rendering basic, flat lists, supporting the most handy feature. A performant interface for rendering basic, flat lists, supporting the most handy feature"
+      },
+      {
+        id: 2,
+        name: "Isabella Harris",
+        image: "./../../assets/images/user.jpg",
+        rate: 4,
+        comment: "A performant interface for rendering basic, flat lists, supporting the most handy feature. A performant interface for rendering basic, flat lists, supporting the most handy feature"
+      },
+      {
+        id: 3,
+        name: "Isabella Harris",
+        image: "./../../assets/images/user.jpg",
+        rate: 4,
+        comment: "A performant interface for rendering basic, flat lists, supporting the most handy feature. A performant interface for rendering basic, flat lists, supporting the most handy feature"
+      },
+      {
+        id: 4,
+        name: "Isabella Harris",
+        image: "./../../assets/images/user.jpg",
+        rate: 4,
+        comment: "A performant interface for rendering basic, flat lists, supporting the most handy feature. A performant interface for rendering basic, flat lists, supporting the most handy feature"
+      },
+      {
+        id: 5,
+        name: "Isabella Harris",
+        image: "./../../assets/images/user.jpg",
+        rate: 4,
+        comment: "A performant interface for rendering basic, flat lists, supporting the most handy feature. A performant interface for rendering basic, flat lists, supporting the most handy feature"
+      },
+    ]
   },
   {
     id: "4",
     title: "First Item",
     image: "./../../assets/images/hasaki.jpg",
-    type: "A",
+    category: "A",
     description:
       "A performant interface for rendering basic, flat lists, supporting the most handy feature. A performant interface for rendering basic, flat lists, supporting the most handy feature",
     isFavorite: false,
     rate: 3,
+    review: [
+      {
+        id: 1,
+        name: "Isabella Harris",
+        image: "./../../assets/images/user.jpg",
+        rate: 4,
+        comment: "A performant interface for rendering basic, flat lists, supporting the most handy feature. A performant interface for rendering basic, flat lists, supporting the most handy feature"
+      },
+      {
+        id: 2,
+        name: "Isabella Harris",
+        image: "./../../assets/images/user.jpg",
+        rate: 4,
+        comment: "A performant interface for rendering basic, flat lists, supporting the most handy feature. A performant interface for rendering basic, flat lists, supporting the most handy feature"
+      },
+      {
+        id: 3,
+        name: "Isabella Harris",
+        image: "./../../assets/images/user.jpg",
+        rate: 4,
+        comment: "A performant interface for rendering basic, flat lists, supporting the most handy feature. A performant interface for rendering basic, flat lists, supporting the most handy feature"
+      },
+      {
+        id: 4,
+        name: "Isabella Harris",
+        image: "./../../assets/images/user.jpg",
+        rate: 4,
+        comment: "A performant interface for rendering basic, flat lists, supporting the most handy feature. A performant interface for rendering basic, flat lists, supporting the most handy feature"
+      },
+      {
+        id: 5,
+        name: "Isabella Harris",
+        image: "./../../assets/images/user.jpg",
+        rate: 4,
+        comment: "A performant interface for rendering basic, flat lists, supporting the most handy feature. A performant interface for rendering basic, flat lists, supporting the most handy feature"
+      },
+    ]
   },
   {
     id: "5",
     title: "Second Item",
     image: "./../../assets/images/hasaki.jpg",
-    type: "B",
+    category: "B",
     description:
       "A performant interface for rendering basic, flat lists, supporting the most handy feature. A performant interface for rendering basic, flat lists, supporting the most handy feature",
     isFavorite: false,
     rate: 2,
-  },
-  {
-    id: "6",
-    title: "Third Item",
-    image: "./../../assets/images/hasaki.jpg",
-    type: "C",
-    description:
-      "A performant interface for rendering basic, flat lists, supporting the most handy feature. A performant interface for rendering basic, flat lists, supporting the most handy feature",
-    isFavorite: false,
-    rate: 1,
-  },
-  {
-    id: "7",
-    title: "First Item",
-    image: "./../../assets/images/hasaki.jpg",
-    type: "A",
-    description:
-      "A performant interface for rendering basic, flat lists, supporting the most handy feature. A performant interface for rendering basic, flat lists, supporting the most handy feature",
-    isFavorite: false,
-    rate: 5,
-  },
-  {
-    id: "8",
-    title: "Second Item",
-    image: "./../../assets/images/hasaki.jpg",
-    type: "B",
-    description:
-      "A performant interface for rendering basic, flat lists, supporting the most handy feature. A performant interface for rendering basic, flat lists, supporting the most handy feature",
-    isFavorite: false,
-    rate: 4,
-  },
-  {
-    id: "9",
-    title: "Third Item",
-    image: "./../../assets/images/hasaki.jpg",
-    type: "C",
-    description:
-      "A performant interface for rendering basic, flat lists, supporting the most handy feature. A performant interface for rendering basic, flat lists, supporting the most handy feature",
-    isFavorite: false,
-    rate: 3,
-  },
-  {
-    id: "10",
-    title: "Third Item",
-    image: "./../../assets/images/hasaki.jpg",
-    type: "C",
-    description:
-      "A performant interface for rendering basic, flat lists, supporting the most handy feature. A performant interface for rendering basic, flat lists, supporting the most handy feature",
-    isFavorite: false,
-    rate: 2,
+    review: [
+      {
+        id: 1,
+        name: "Isabella Harris",
+        image: "./../../assets/images/user.jpg",
+        rate: 4,
+        comment: "A performant interface for rendering basic, flat lists, supporting the most handy feature. A performant interface for rendering basic, flat lists, supporting the most handy feature"
+      },
+      {
+        id: 2,
+        name: "Isabella Harris",
+        image: "./../../assets/images/user.jpg",
+        rate: 4,
+        comment: "A performant interface for rendering basic, flat lists, supporting the most handy feature. A performant interface for rendering basic, flat lists, supporting the most handy feature"
+      },
+      {
+        id: 3,
+        name: "Isabella Harris",
+        image: "./../../assets/images/user.jpg",
+        rate: 4,
+        comment: "A performant interface for rendering basic, flat lists, supporting the most handy feature. A performant interface for rendering basic, flat lists, supporting the most handy feature"
+      },
+      {
+        id: 4,
+        name: "Isabella Harris",
+        image: "./../../assets/images/user.jpg",
+        rate: 4,
+        comment: "A performant interface for rendering basic, flat lists, supporting the most handy feature. A performant interface for rendering basic, flat lists, supporting the most handy feature"
+      },
+      {
+        id: 5,
+        name: "Isabella Harris",
+        image: "./../../assets/images/user.jpg",
+        rate: 4,
+        comment: "A performant interface for rendering basic, flat lists, supporting the most handy feature. A performant interface for rendering basic, flat lists, supporting the most handy feature"
+      },
+    ]
   },
 ];
 

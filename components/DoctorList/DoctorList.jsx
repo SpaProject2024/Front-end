@@ -1,5 +1,13 @@
-import { View, Text, FlatList, Image, StyleSheet } from "react-native";
+import {
+  View,
+  Text,
+  FlatList,
+  Image,
+  StyleSheet,
+  TouchableOpacity,
+} from "react-native";
 import React from "react";
+import { useRouter } from "expo-router";
 
 const doctorList = [
   {
@@ -49,23 +57,27 @@ const doctorList = [
   },
 ];
 
-const Doctor = ({ doctor }) => (
-  <View>
-    <Image
-      style={styles.image}
-      source={require("./../../assets/images/doctor.jpg")}
-    />
-    <Text
-      style={styles.name}
-      numberOfLines={1}
-      ellipsizeMode="tail"
-    >
-      {doctor.name}
-    </Text>
-  </View>
-);
-
 export default function DoctorList() {
+  const router = useRouter();
+
+  const Doctor = ({ doctor }) => (
+    <TouchableOpacity
+      onPress={() =>
+        router.push("/DoctorInfo/" + encodeURIComponent(JSON.stringify(doctor)))
+      }
+    >
+      <View>
+        <Image
+          style={styles.image}
+          source={require("./../../assets/images/doctor.jpg")}
+        />
+        <Text style={styles.name} numberOfLines={1} ellipsizeMode="tail">
+          {doctor.name}
+        </Text>
+      </View>
+    </TouchableOpacity>
+  );
+
   return (
     <View>
       <FlatList
@@ -83,11 +95,12 @@ export default function DoctorList() {
 const styles = StyleSheet.create({
   image: {
     borderRadius: 100,
-    width: 100,
-    height: 100,
+    width: 80,
+    height: 80,
   },
   name: {
     textAlign: "center",
-    width: 100
-  }
+    width: 80,
+    fontSize: 13
+  },
 });
