@@ -1,14 +1,43 @@
-// app/_layout.tsx
-import React from "react";
-import { Stack } from "expo-router";
+import React from 'react';
+import { Stack } from 'expo-router';
 
 export default function RootLayout() {
   return (
-    <Stack>
-      <Stack.Screen name="index"/>
-      <Stack.Screen name="login"/>
-      <Stack.Screen name="register"/>
-      <Stack.Screen name="fogetpassword"/>
+    <Stack
+      screenOptions={{
+        headerShown: false,
+        cardStyleInterpolator: ({ current, layouts }) => {
+          return {
+            cardStyle: {
+              transform: [
+                {
+                  translateX: current.progress.interpolate({
+                    inputRange: [0, 1],
+                    outputRange: [layouts.screen.width, 0], // Trượt từ phải sang trái
+                  }),
+                },
+                {
+                  scale: current.progress.interpolate({
+                    inputRange: [0, 1],
+                    outputRange: [1.2, 1], // Phóng to từ 1.2x đến kích thước gốc
+                  }),
+                },
+              ],
+              opacity: current.progress.interpolate({
+                inputRange: [0, 1],
+                outputRange: [0.5, 1], // Từ mờ dần đến hiển thị hoàn toàn
+              }),
+            },
+          };
+        },
+      }}
+    >
+      <Stack.Screen name="index" />
+      <Stack.Screen name="login" />
+      <Stack.Screen name="register" />
+      <Stack.Screen name="forgetpassword" />
+      <Stack.Screen name="verification" />
+      <Stack.Screen name="ServiceList" />
     </Stack>
   );
 }
