@@ -10,6 +10,7 @@ import Handbook from "../../assets/images/handbook.png";
 import Spa from "../../assets/images/spa.png";
 import Doctor from "../../assets/images/doctor.png";
 import Cosmetic from "../../assets/images/cosmetic.png";
+
 const carouselItems = [
   {
     id: "1",

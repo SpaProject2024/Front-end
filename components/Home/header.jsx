@@ -13,6 +13,8 @@ const data = [
   { label: "Login", value: "login" },
   { label: "Register", value: "register" },
   { label: "Logout", value: "logout" },
+  //Nghĩa
+  { label: "Favorites", value: "favorites" },
 ];
 
 const Header = () => {
@@ -57,6 +59,9 @@ const Header = () => {
                     router.push("/Login/login");
                   } else if (item.value === "register") {
                     router.push("/Register/register");
+                  }
+                  else if (item.value === "favorites") {
+                    router.push("/HelpSupport/HelpSupport");
                   }
                 }}
                 renderLeftIcon={() => (
