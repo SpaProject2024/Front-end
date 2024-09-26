@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { View, Text, StyleSheet, Image} from 'react-native';
+import { View, Text, StyleSheet, Image,Button} from 'react-native';
 import { useRouter } from 'expo-router';
 import Logo from "../assets/images/logo2.png";
 
@@ -25,6 +25,7 @@ export default function IntroScreen() {
     <View style={styles.container}>    
       <Image source={Logo} style={styles.logo}></Image>
       <Text style={styles.text}> Bellavita Beauty </Text>
+    </View>
     </View>
   );
 }
