@@ -33,8 +33,19 @@ export default function IntroScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  logo: {
+    width: 100,
+    height: 100,
+    borderRadius: 50,
+  },
+  text: {
+    fontSize: 14,
+    fontWeight: "bold",
+    color: "#999999",
+    paddingTop: 5,
   },
   logo: {
     width: 100,
