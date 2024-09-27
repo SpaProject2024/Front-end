@@ -5,7 +5,9 @@
     "strict": true,
     "jsx": "react-jsx",
     "paths": {
-      "@/*": ["./*"]
+      "@/*": [
+        "./*"
+      ]
     }
   },
   "include": [
@@ -13,8 +15,10 @@
     "**/*.tsx",
     ".expo/types/**/*.ts",
     "expo-env.d.ts",
+    "app/index.jsx",
+    "expo-env.d.ts",
     "app/_layout.jsx",
     "app/index.jsx",
-    "app/Login/login.jsx"
+    "components/Login/login.jsx"
   ]
 }
