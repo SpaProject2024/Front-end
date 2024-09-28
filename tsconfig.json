@@ -12,9 +12,9 @@
     "**/*.ts",
     "**/*.tsx",
     ".expo/types/**/*.ts",
-    "expo-env.d.ts",
-    "app/_layout.jsx",
+    "expo-env.d.ts", 
     "app/index.jsx",
-    "app/Login/login.jsx"
+    "app/_layout.jsx",
+    "components/Login/login.jsx"
   ]
 }

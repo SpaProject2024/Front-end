@@ -59,6 +59,7 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 18, // Điều chỉnh size chữ ở đây
+    color: "grey"
   },
   selectedText: {
     color: Colors.PRIMARY, // Màu chữ khi được chọn

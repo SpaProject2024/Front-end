@@ -5,9 +5,7 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 import { Colors } from "../../constants/Colors";
 
 export default function ServiceItem({
-  title,
-  description,
-  isFavorite,
+  service,
   onServicePress,
   toggleFavorite,
 }) {
@@ -22,22 +20,32 @@ export default function ServiceItem({
           <View
             style={{ flexDirection: "row", justifyContent: "space-between" }}
           >
-            <Text style={{fontSize: 30}}>{title}</Text>
-            <TouchableOpacity onPress={toggleFavorite}>
+            <Text numberOfLines={1} ellipsizeMode="tail" style={styles.title}>
+              {service.title}
+            </Text>
+            <TouchableOpacity
+              style={{ justifyContent: "center" }}
+              onPress={toggleFavorite}
+            >
               <Ionicons
-                name={isFavorite ? "heart-sharp" : "heart-outline"}
+                name={service.isFavorite ? "heart-sharp" : "heart-outline"}
                 size={20}
                 color={Colors.PRIMARY}
               />
             </TouchableOpacity>
           </View>
-          <StarRatingDisplay starSize={25} rating={4.5} />
+          <StarRatingDisplay
+            style={{ marginVertical: 5 }}
+            color="orange"
+            starSize={16}
+            rating={service.rate}
+          />
           <Text
             style={styles.description}
             numberOfLines={2}
             ellipsizeMode="tail"
           >
-            {description}
+            {service.description}
           </Text>
         </View>
       </View>
@@ -56,19 +64,23 @@ const styles = StyleSheet.create({
   },
   info: {
     padding: 10,
+    justifyContent: "center",
   },
   title: {
-    fontSize: 30,
+    fontSize: 16,
+    width: 160,
+    fontWeight: "bold"
   },
   description: {
-    fontSize: 16,
-    lineHeight: 24,
-    width: 390,
+    fontSize: 13,
+    lineHeight: 16,
+    width: 180,
+    color: "grey",
   },
   picture: {
     borderTopLeftRadius: 10,
     borderBottomLeftRadius: 10,
-    width: 150,
-    height: 150,
+    width: 120,
+    height: 120,
   },
 });
