@@ -1,6 +1,7 @@
 import React from "react";
 import { View, Image, StyleSheet, TextInput, Text } from "react-native";
 import Swiper from "react-native-swiper";
+import { useRouter } from "expo-router";
 import Carousel1 from "../../assets/images/carousel1.jpg";
 import Carousel2 from "../../assets/images/carousel2.jpg";
 import Carousel3 from "../../assets/images/carousel3.jpg";
@@ -25,7 +26,8 @@ const carouselItems = [
   },
 ];
 
-const Header = () => {
+const Navbar = () => {
+    const router = useRouter();
   return (
     <View style={styles.container}>
       {/* Carousel */}
@@ -93,9 +95,10 @@ const styles = StyleSheet.create({
     backgroundColor: "#2B5F2F",
     height:250,
   },
+
   swiper: {
-    overflow: "hidden",
-    position: "relative",
+    overflow: "visible",
+    position: "absolute",
   },
   carouselItem: {
     flex: 1,
@@ -157,4 +160,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Header;
+export default Navbar;

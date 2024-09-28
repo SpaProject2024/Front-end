@@ -1,8 +1,8 @@
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import React, { useState } from "react";
-import ServiceList from "./../../components/ServiceList/ServiceList";
-import FilterService from "./../../components/ServiceList/FilterService";
-import SearchService from "./../../components/ServiceList/SearchService";
+import ServiceList from "../../components/ServiceList/ServiceList";
+import FilterService from "../../components/ServiceList/FilterService";
+import SearchService from "../../components/ServiceList/SearchService";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { useRouter } from "expo-router";
 import { Colors } from "../../constants/Colors";

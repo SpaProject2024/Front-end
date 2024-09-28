@@ -21,7 +21,7 @@ export default function serviceInfo() {
           name="arrow-back-outline"
           size={28}
           color="white"
-          onPress={() => router.push("/ServiceList")}
+          onPress={() => router.push("/ServiceList/")}
         />
       </View>
     </View>
