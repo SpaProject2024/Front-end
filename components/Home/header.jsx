@@ -1,13 +1,19 @@
 import React, { useState } from "react";
-import { View, Image, StyleSheet, TextInput, TouchableOpacity } from "react-native";
-import { useRouter } from "expo-router"; // Import useRouter từ expo-router
-import Location from "../../assets/images/location.png";
-import Bell from "../../assets/images/bell.png";
-import Find from "../../assets/images/find.png";
-import Voice from "../../assets/images/voice.png";
-import Logo from "../../assets/images/logo2.png";
-import User from "../../assets/images/user.png";
+import {
+  View,
+  Image,
+  StyleSheet,
+  TextInput,
+  TouchableOpacity,
+  Text,
+} from "react-native";
+import { useRouter } from "expo-router";
 import { Dropdown } from "react-native-element-dropdown";
+import EvilIcons from "@expo/vector-icons/EvilIcons";
+import Feather from "@expo/vector-icons/Feather";
+import Ionicons from "@expo/vector-icons/Ionicons";
+import Logo from "../../assets/images/logo2.png";
+import UserIcon from "../../assets/images/user.png";
 
 const data = [
   { label: "Login", value: "login" },
@@ -16,8 +22,18 @@ const data = [
 ];
 
 const Header = () => {
-  const [value, setValue] = useState(null);
   const router = useRouter();
+  const [value, setValue] = useState(null);
+
+  const handleDropdownChange = (item) => {
+    if (item.value === "login") {
+      router.push("/Login/login");
+    } else if (item.value === "register") {
+      router.push("/Register/register");
+    } else if (item.value === "logout") {
+      router.push("/Confirmation/confirmation");
+    }
+  };
 
   return (
     <View style={styles.container}>
@@ -27,44 +43,49 @@ const Header = () => {
             <Image source={Logo} style={styles.logo} />
             <View style={styles.searchBox}>
               <View style={styles.searchRow}>
-                <Image source={Find} style={styles.icon} />
+                <EvilIcons name="search" size={18} color="#2B5F2F" />
                 <TextInput style={styles.input} placeholder="Search" />
-                <Image source={Voice} style={styles.icon} />
+                <Ionicons name="mic-outline" size={18} color="#2B5F2F" />
               </View>
             </View>
           </View>
           <View style={styles.rowRight}>
-            <Image source={Location} style={styles.location} />
-            <TouchableOpacity onPress={() => router.push("/Notification/notification")}>
-              <Image source={Bell} style={styles.bell} />
-            </TouchableOpacity>
-            <View style={styles.dropdownWrapper}>
-              <Dropdown
-                style={styles.dropdown}
-                placeholderStyle={styles.placeholderStyle}
-                selectedTextStyle={styles.selectedTextStyle}
-                inputSearchStyle={{ display: "none" }}
-                iconStyle={styles.iconStyle}
-                data={data}
-                search={false}
-                maxHeight={300}
-                labelField="label"
-                valueField="value"
-                value={value}
-                onChange={(item) => {
-                  setValue(item.value);
-                  if (item.value === "login") {
-                    router.push("/Login/login");
-                  } else if (item.value === "register") {
-                    router.push("/Register/register");
-                  }
-                }}
-                renderLeftIcon={() => (
-                  <Image source={User} style={styles.user} />
-                )}
-                renderRightIcon={() => null}
+            <TouchableOpacity
+              onPress={() => router.push("/Maps/maps")}
+              style={styles.locationContainer}
+            >
+              <Ionicons
+                name="location-outline"
+                size={18}
+                color="#fff"
+                style={{ marginRight: 10 }}
               />
-            </View>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => router.push("/Notification/notification")}
+              style={styles.bellContainer}
+            >
+              <Feather
+                name="bell"
+                size={18}
+                color="#fff"
+                style={{ marginLeft: 40 }}
+              />
+            </TouchableOpacity>
+            <Dropdown
+              data={data}
+              labelField="label"
+              valueField="value"
+              value={value}
+              onChange={handleDropdownChange}
+              style={styles.dropdown}
+              containerStyle={styles.dropdownContainer}
+              placeholder=""
+              renderRightIcon={() => (
+                <Image source={UserIcon} style={styles.userIcon} />
+              )}
+              itemTextStyle={styles.itemTextStyle}
+            />
           </View>
         </View>
       </View>
@@ -77,7 +98,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#2B5F2F",
   },
   header: {
-    left: 0,
     paddingTop: 25,
     paddingBottom: 10,
     paddingHorizontal: 5,
@@ -118,48 +138,36 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
   },
-  icon: {
-    width: 15,
-    height: 15,
-  },
   input: {
     flex: 1,
     marginHorizontal: 10,
-    fontSize: 10,
+    fontSize: 12,
+    color: "#2B5F2F",
   },
-  bell: {
-    width: 20,
-    height: 20,
-    tintColor: "#C0E3C5",
+  locationContainer: {
+    zIndex: 3,
   },
-  user: {
-    width: 20,
-    height: 20,
+  bellContainer: {
+    position: "absolute",
+    zIndex: 2,
   },
-  location: {
-    width: 25,
-    height: 25,
-    tintColor: "#C0E3C5",
-  },
-  dropdownWrapper: {
-    position: "relative",
-    right: 0,
+  dropdownContainer: {
+    zIndex: 1,
+    top: 15,
   },
   dropdown: {
-    zIndex: 1000,
-    width: 250,
+    width: 80,
+    borderRadius: 5,
+    right: 5,
   },
-  placeholderStyle: {
-    fontSize: 16,
-    color: "#999",
-  },
-  selectedTextStyle: {
-    fontSize: 14,
-    color: "#333",
-  },
-  iconStyle: {
+  userIcon: {
     width: 20,
     height: 20,
+    marginRight: 5,
+  },
+  itemTextStyle: {
+    fontSize: 12,
+    color: "#2B5F2F",
   },
 });
 

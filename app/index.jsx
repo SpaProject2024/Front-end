@@ -8,7 +8,7 @@ export default function IntroScreen() {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      // router.push("/Home/home");
+      router.push("/Home/home");
     }, 2000);
 
     return () => clearTimeout(timer);
