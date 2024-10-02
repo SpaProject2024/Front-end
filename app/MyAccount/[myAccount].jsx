@@ -1,11 +1,11 @@
 import { View, Text, Image, StyleSheet } from "react-native";
 import React from "react";
-import FogetpasswordPage from "../../components/Fogetpassword/fogetpassword";
+import MyAccount from "../../components/myAccount/myAccount";
 
 export default function Home() {
   return (
     <View style={styles.container}>
-      <FogetpasswordPage />
+      <MyAccount />
     </View>
   );
 }
