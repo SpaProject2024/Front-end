@@ -1,5 +1,7 @@
 import React from 'react';
-import { View, Text, Image, FlatList, StyleSheet, StatusBar } from 'react-native';
+import { View, Text, Image, FlatList, StyleSheet, StatusBar, TouchableOpacity } from 'react-native';
+import { Ionicons } from '@expo/vector-icons'; // Import Ionicons cho nút back
+import { useRouter } from 'expo-router'; // Import useRouter để điều hướng
 
 const favoritesData = [
   {
@@ -40,6 +42,8 @@ const favoritesData = [
 ];
 
 const Favorites = () => {
+  const router = useRouter(); // Sử dụng useRouter để điều hướng
+
   const renderItem = ({ item }) => (
     <View style={styles.card}>
       <Image source={item.image} style={styles.image} />
@@ -58,8 +62,11 @@ const Favorites = () => {
   return (
     <View style={styles.container}>
       <StatusBar barStyle="light-content" />
-      {/* Header with title */}
+      {/* Header with back button and title */}
       <View style={styles.header}>
+        <TouchableOpacity style={styles.backButton} onPress={() => router.back()}>
+          <Ionicons name="arrow-back" size={24} color="#fff" />
+        </TouchableOpacity>
         <Text style={styles.headerTitle}>Favorites</Text>
       </View>
       <FlatList
@@ -75,13 +82,16 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#f8f8f8',
-    paddingTop: StatusBar.currentHeight || 20,
   },
   header: {
-    backgroundColor: '#4CAF50',  // Màu nền cho tiêu đề
-    paddingVertical: 15,
+    backgroundColor: '#009999',  // Màu nền cho tiêu đề
+    paddingVertical: 25,
     paddingHorizontal: 16,
-  
+    flexDirection: 'row', // Xếp ngang tiêu đề và nút back
+    alignItems: 'center', // Canh giữa theo trục dọc
+  },
+  backButton: {
+    marginRight: 15, // Tạo khoảng cách giữa nút back và tiêu đề
   },
   headerTitle: {
     fontSize: 20,

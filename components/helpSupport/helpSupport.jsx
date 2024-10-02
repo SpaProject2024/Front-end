@@ -1,26 +1,33 @@
 import React from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
-import { Ionicons } from '@expo/vector-icons'; // Thêm biểu tượng quay lại
+import { Ionicons } from '@expo/vector-icons'; // Import Ionicons for the back icon
+import { useRouter } from 'expo-router'; // Import useRouter for navigation
 
 const HelpSupportScreen = () => {
+  const router = useRouter(); // Use useRouter for navigation
+
   return (
     <View style={styles.wrapper}>
-      {/* Header nằm ngoài ScrollView để không bị ảnh hưởng */}
+      {/* Header with Back button */}
       <View style={styles.header}>
-        <TouchableOpacity style={styles.backButton}>
+        <TouchableOpacity style={styles.backButton} onPress={() => router.back()}>
           <Ionicons name="arrow-back" size={24} color="white" />
         </TouchableOpacity>
         <Text style={styles.headerText}>Help & Support</Text>
       </View>
 
-      {/* ScrollView chứa các thành phần khác */}
+      {/* ScrollView containing form elements */}
       <ScrollView contentContainerStyle={styles.container}>
         <View style={styles.form}>
           <Text style={styles.label}>Name</Text>
           <TextInput style={styles.input} placeholder="Enter your name" />
 
           <Text style={styles.label}>Email Address</Text>
-          <TextInput style={styles.input} placeholder="Enter your email address" keyboardType="email-address" />
+          <TextInput
+            style={styles.input}
+            placeholder="Enter your email address"
+            keyboardType="email-address"
+          />
 
           <Text style={styles.label}>Message</Text>
           <TextInput
@@ -41,7 +48,7 @@ const HelpSupportScreen = () => {
 
 const styles = StyleSheet.create({
   wrapper: {
-    flex: 1, // Đảm bảo chiếm hết màn hình
+    flex: 1, // Ensure it takes the full screen
   },
   header: {
     backgroundColor: '#ff4d4d',
@@ -58,10 +65,9 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
     flex: 1,
-    textAlign: 'left', // Căn chỉnh văn bản về bên trái
+    textAlign: 'left', // Align the text to the left
   },
   container: {
-  
     backgroundColor: '#f2f2f2',
     padding: 20,
     justifyContent: 'center',

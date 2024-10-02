@@ -14,7 +14,7 @@ const data = [
   { label: "Register", value: "register" },
   { label: "Logout", value: "logout" },
   //Nghĩa
-  { label: "Favorites", value: "favorites" },
+  { label: "MyAccunt", value: "MyAccount" },
 ];
 
 const Header = () => {
@@ -60,8 +60,8 @@ const Header = () => {
                   } else if (item.value === "register") {
                     router.push("/Register/register");
                   }
-                  else if (item.value === "favorites") {
-                    router.push("/HelpSupport/HelpSupport");
+                  else if (item.value === "MyAccount") {
+                    router.push("/MyAccount/myAccount");
                   }
                 }}
                 renderLeftIcon={() => (

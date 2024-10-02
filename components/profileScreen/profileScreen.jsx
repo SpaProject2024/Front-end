@@ -1,76 +1,79 @@
 import React from 'react';
-import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity } from 'react-native';
-import { Icon } from 'react-native-elements';
+import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
+import { Ionicons } from '@expo/vector-icons'; // Icons for back button and user info
+import { LinearGradient } from 'expo-linear-gradient'; // For gradient background
+import { useNavigation } from '@react-navigation/native'; // Import useNavigation for navigation
 
 const ProfileScreen = () => {
+  const navigation = useNavigation(); // Initialize navigation
+
   return (
-    <ScrollView style={styles.container}>
-      <View style={styles.header}>
-        <Image 
-          source={{ uri: 'https://via.placeholder.com/150' }} 
-          style={styles.profileImage} 
-        />
-        <Text style={styles.name}>Md Abu Ubayda</Text>
-        <Text style={styles.phone}>+88001712346789</Text>
-        <TouchableOpacity style={styles.editIcon}>
-          <Icon name="edit" type="material" color="#fff" size={20} />
+    <View style={styles.wrapper}>
+      {/* Header with back button and gradient background */}
+      <LinearGradient colors={['#009966', '#005500']} style={styles.header}>
+        <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
+          <Ionicons name="arrow-back" size={24} color="white" />
         </TouchableOpacity>
+        <View style={styles.profileInfo}>
+          <Image 
+            source={{ uri: 'https://via.placeholder.com/150' }} 
+            style={styles.profileImage} 
+          />
+          <Text style={styles.name}>Anna Avetisyan</Text>
+        </View>
+      </LinearGradient>
+
+      {/* Profile details section */}
+      <View style={styles.infoSection}>
+        <View style={styles.infoRow}>
+          <Ionicons name="person-outline" size={24} color="#7f00ff" />
+          <Text style={styles.infoText}>Anna Avetisyan</Text>
+        </View>
+        <View style={styles.infoRow}>
+          <Ionicons name="calendar-outline" size={24} color="#7f00ff" />
+          <Text style={styles.infoText}>Birthday</Text>
+        </View>
+        <View style={styles.infoRow}>
+          <Ionicons name="call-outline" size={24} color="#7f00ff" />
+          <Text style={styles.infoText}>818 123 4567</Text>
+        </View>
+        <View style={styles.infoRow}>
+          <Ionicons name="mail-outline" size={24} color="#7f00ff" />
+          <Text style={styles.infoText}>info@aplusdesign.co</Text>
+        </View>
       </View>
 
-      <View style={styles.accountOverview}>
-        <Text style={styles.accountOverviewTitle}>Account Overview</Text>
-
-        <TouchableOpacity style={styles.optionRow}>
-          <Icon name="user" type="font-awesome" color="#6a5acd" size={24} />
-          <Text style={styles.optionText}>My Profile</Text>
-          <Icon name="chevron-right" type="material" color="#6a5acd" size={24} />
-        </TouchableOpacity>
-
-        <TouchableOpacity style={styles.optionRow}>
-          <Icon name="shopping-bag" type="font-awesome" color="#2e8b57" size={24} />
-          <Text style={styles.optionText}>My Favorites</Text>
-          <Icon name="chevron-right" type="material" color="#2e8b57" size={24} />
-        </TouchableOpacity>
-
-        <TouchableOpacity style={styles.optionRow}>
-          <Icon name="undo" type="font-awesome" color="#8a2be2" size={24} />
-          <Text style={styles.optionText}>History</Text>
-          <Icon name="chevron-right" type="material" color="#8a2be2" size={24} />
-        </TouchableOpacity>
-
-        <TouchableOpacity style={styles.optionRow}>
-          <Icon name="lock" type="font-awesome" color="#ff4500" size={24} />
-          <Text style={styles.optionText}>Change Password</Text>
-          <Icon name="chevron-right" type="material" color="#ff4500" size={24} />
-        </TouchableOpacity>
-
-        <TouchableOpacity style={styles.optionRow}>
-          <Icon name="language" type="font-awesome" color="#ff69b4" size={24} />
-          <Text style={styles.optionText}>Change Language</Text>
-          <Icon name="chevron-right" type="material" color="#ff69b4" size={24} />
-        </TouchableOpacity>
-      </View>
-    </ScrollView>
+    
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
+  wrapper: {
     flex: 1,
-    backgroundColor: '#f8f8f8',
+    backgroundColor: '#f2f2f2',
   },
   header: {
-    backgroundColor: '#004d40',
-    height: 250,
+    height: 220,
     justifyContent: 'center',
     alignItems: 'center',
+    borderBottomLeftRadius: 30,
+    borderBottomRightRadius: 30,
     position: 'relative',
+  },
+  backButton: {
+    position: 'absolute',
+    top: 40,
+    left: 20,
+  },
+  profileInfo: {
+    alignItems: 'center',
   },
   profileImage: {
     width: 100,
     height: 100,
     borderRadius: 50,
-    borderWidth: 3,
+    borderWidth: 2,
     borderColor: '#fff',
   },
   name: {
@@ -79,42 +82,36 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: '#fff',
   },
-  phone: {
-    fontSize: 14,
-    color: '#fff',
+  infoSection: {
+    marginTop: 20,
+    paddingHorizontal: 20,
   },
-  editIcon: {
-    position: 'absolute',
-    right: 20,
-    top: 20,
-    backgroundColor: '#ffa500',
-    borderRadius: 20,
-    padding: 5,
-  },
-  accountOverview: {
-    padding: 20,
-    backgroundColor: '#fff',
-    borderTopLeftRadius: 20,
-    borderTopRightRadius: 20,
-    marginTop: -20,
-  },
-  accountOverviewTitle: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    marginBottom: 20,
-  },
-  optionRow: {
+  infoRow: {
     flexDirection: 'row',
     alignItems: 'center',
     paddingVertical: 15,
-    borderBottomColor: '#eee',
     borderBottomWidth: 1,
+    borderBottomColor: '#ddd',
   },
-  optionText: {
+  infoText: {
     fontSize: 16,
     marginLeft: 15,
     flex: 1,
+    color: '#333',
   },
+  refreshIcon: {
+    marginLeft: 'auto',
+  },
+  editProfileButton: {
+    marginTop: 30,
+    paddingHorizontal: 20,
+  },
+  gradientButton: {
+    paddingVertical: 15,
+    borderRadius: 30,
+    alignItems: 'center',
+  },
+
 });
 
 export default ProfileScreen;
