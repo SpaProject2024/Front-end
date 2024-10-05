@@ -1,14 +1,15 @@
 import { StyleSheet } from "react-native";
 export const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        fontSize: 14,
-        padding: 20,
-        backgroundColor: '#f5f5f5',
+        // flex: 1,
+        // fontSize: 14,
+        // padding: 20,
+        // backgroundColor: '#f5f5f5',
+        backgroundColor: "#2B5F2F",
     },
     title: {
         marginLeft: 10,
-        color: '#2B5F2F',
+        color: '#e3ffe6',
         fontSize: 24,
         fontWeight: 'bold',
         textAlign: 'center',
@@ -16,29 +17,15 @@ export const styles = StyleSheet.create({
     header: {
         flexDirection: 'row',
         alignItems: 'center',
-        marginTop: 25,
+        marginTop: 35,
+        marginLeft: 20,
         marginBottom: 20,
-    },
-    // khung search
-    searchBar: {
-        flex: 1,
-        width: 10,
-        height: 30,
-        borderColor: '#ccc',
-        borderColor: '#A4DAA9',
-        borderWidth: 1,
-        borderRadius: 10,
-        paddingHorizontal: 10,
-    },
-    //thông báo
-    buttonbell: {
-        // marginLeft:30,
     },
     bell: {
         marginRight: 10,
         width: 20,
         height: 20,
-        tintColor: "#2B5F2F",
+        tintColor: "#e3ffe6",
     },
     // khung data
     scheduleItem: {
@@ -67,10 +54,6 @@ export const styles = StyleSheet.create({
     valueText: {
         flex: 1, // Chia đều không gian
     },
-    notesText: {
-        color: '#666',
-        marginTop: 5,
-    },
     viewDetailsButton: {
         flex: 1,
         marginTop: 5,
@@ -83,11 +66,16 @@ export const styles = StyleSheet.create({
         color: '#5C9161',
         fontWeight: 'bold',
     },
+    //khung ngày
     weekContainer: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
+        backgroundColor: "#deffe1",
         marginVertical: 10
+    },
+    Containerall: {
+        backgroundColor: "#e3ffe6",
     },
     weekNavButton: {
         fontWeight: 'bold',
@@ -118,62 +106,11 @@ export const styles = StyleSheet.create({
     statusText: {
         fontWeight: 'bold',
     },
+    //imcomplete
     underline: {
         height: 3,
         backgroundColor: '#A4D9AA',
         marginTop: 5,
-    },
-    //   mới thêm
-    footer: {
-        flexDirection: "row",
-        justifyContent: "space-around",
-        width: "100%",
-        paddingBottom: 20,
-    },
-    footerButton: {
-        width: "40%",
-        padding: 10,
-        backgroundColor: "#6200ee",
-        borderRadius: 8,
-        alignItems: "center",
-    },
-    //dropdown 
-    dropdownmenu: {
-        flex: 1,
-        flexDirection: 'row',
-        alignItems: 'center',
-        marginLeft: 70,
-    },
-    placeholderStyle: {
-        fontSize: 16,
-        color: "#999",
-    },
-    selectedTextStyle: {
-        fontSize: 14,
-        color: "#333",
-    },
-    dropdownWrapper: {
-        position: 'relative',
-        zIndex: 1000,  // Đảm bảo dropdown nằm phía trên các thành phần khác
-    },
-    dropdownContainer: {
-        position: 'absolute',  // Sử dụng absolute để dropdown không dịch chuyển các thành phần khác
-        top: 30,  // Tùy chỉnh vị trí thả xuống cho hợp lý
-        right: 0,
-        zIndex: 1000,
-        width: 100,
-    },
-    dropdownStyle: {
-        backgroundColor: '#fafafa',
-        borderWidth: 1,
-        borderColor: '#ccc',
-        elevation: 5,  // Tạo bóng cho dropdown để nổi bật
-    },
-    dropdownContainerStyle: {
-        marginTop: 10,  // Thêm khoảng cách từ trên xuống
-    },
-    dropdownListStyle: {
-        zIndex: 1000,
     },
     // logo
     logo: {
@@ -181,6 +118,36 @@ export const styles = StyleSheet.create({
         height: 30,
         borderRadius: 50,
         marginRight: 10,
+    },
+    //dropdown mới thêm
+    dropdownmenu: {
+        flex: 1,
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginLeft: 70,
+    },
+    dropdownWrappers: {
+        alignItems: "flex-start",  // Căn dropdown sang trái
+        justifyContent: "flex-start",
+        position: "relative",
+    },
+    dropdowns: {
+        width: 250,
+        alignSelf: 'flex-start',  // Đảm bảo dropdown nằm bên trái
+    },
+    // dropdownWrapper: {
+    //     position: "relative",
+    //     left: 0,
+    //     right: 'auto',
+    // },
+    // dropdown: {
+    //     zIndex: 1000,
+    //     width: 250,
+    //     alignSelf: 'flex-start', 
+    // },
+    iconStyles: {
+        width: 20,
+        height: 20,
     },
 });
 export const buttonStyles = StyleSheet.create({
@@ -192,5 +159,218 @@ export const buttonStyles = StyleSheet.create({
     textButton: {
         color: "#fff",
         fontWeight: "bold",
+    },
+});
+export const detailStyles = StyleSheet.create({
+    container: {
+        flex: 1,
+        fontSize: 14,
+        backgroundColor: '#f5f5f5',
+    },
+    header: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        paddingTop: 40,
+        marginBottom: 10,
+        backgroundColor: '#5C9161',
+    },
+    backButton: {
+        marginLeft: 10,
+    },
+    backButtonText: {
+        fontSize: 16,
+        marginLeft: 5,
+    },
+    title: {
+        color: '#ffffff',
+        fontSize: 24,
+        fontWeight: 'bold',
+        marginLeft: 20,
+        marginTop: 10,
+        marginBottom: 20,
+    },
+    detailContainer: {
+        marginBottom: 10,
+    },
+    card: {
+        backgroundColor: '#fff',
+        padding: 15,
+        margin: 10,
+        borderRadius: 10,
+        borderWidth: 1,
+        borderColor: '#A4DAA9',
+        shadowColor: '#000',
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 5, // Đổ bóng trên Android
+    },
+    label: {
+        flex: 1,
+        marginBottom: 10,
+    },
+    labeltext: {
+        flex: 1,
+        fontWeight: 'bold',
+        textTransform: 'uppercase',
+        marginBottom: 0,
+    },
+    value: {
+        flex: 1,
+        marginBottom: 10,
+    },
+    patientName: {
+        fontWeight: 'bold',
+    },
+    //dấu gạch dưới của tên bệnh nhân
+    separator: {
+        borderBottomWidth: 1,
+        borderBottomColor: '#A4DAA9',
+        marginVertical: 10,
+        width: 260,
+    },
+    separatorContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginVertical: 10,
+    },
+    row: {
+        flexDirection: 'row',
+        justifyContent: 'center', // Căn giữa nội dung
+        alignItems: 'center', // Căn giữa theo trục dọc
+        marginBottom: 5,
+    },
+    // nút edit
+    editButton: {
+        position: 'absolute',
+        right: 0,
+        top: 18, // Điều chỉnh khoảng cách nếu cần
+        backgroundColor: '#5C9161',
+        borderRadius: 50,
+        paddingVertical: 10,
+        paddingHorizontal: 10,
+    },
+    editButtonText: {
+        color: '#ffffff',
+        fontWeight: 'bold',
+    },
+    input: {
+        borderColor: '#A4DAA9',
+        borderWidth: 1,
+        borderRadius: 10,
+        padding: 10,
+        marginVertical: 5,
+        backgroundColor: '#fff',
+        width: '100%',
+    },
+    // form delete
+    deleteMessage: {
+        fontSize: 16,
+        marginVertical: 10,
+        textAlign: 'center',
+    },
+
+    cancelButton: {
+        paddingVertical: 10,
+        paddingHorizontal: 20,
+        backgroundColor: '#ccc',
+        borderRadius: 50,
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginLeft: 10,
+    },
+
+    cancelButtonText: {
+        color: '#fff',
+        fontWeight: 'bold',
+        fontSize: 16,
+    },
+    deleteButton: {
+        marginTop: 10,
+        backgroundColor: '#5C9161',
+        padding: 10,
+        borderRadius: 10,
+        marginRight: 5,
+    },
+    deleteButtonText: {
+        color: '#ffffff',
+        fontWeight: 'bold',
+        textAlign: 'center',
+    },
+    modalheaderdelete: {
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
+    modalContainerdelete: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    },
+    modalContentdelete: {
+        width: 300,
+        backgroundColor: '#fff',
+        padding: 20,
+        borderRadius: 10,
+        alignItems: 'center',
+    },
+    modalTitledelete: {
+        color: '#A4DAA9',
+        fontSize: 18,
+        fontWeight: 'bold',
+        marginTop: 10,
+        marginBottom: 10,
+    },
+    modalButtondelete: {
+        flexDirection: 'row',
+        justifyContent: 'center',
+        width: '100%',
+        marginTop: 10,
+    },
+    //form update 
+    modalheader: {
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
+    modalButtonContainer: {
+        flexDirection: 'row',
+        justifyContent: 'flex-end',
+        width: '100%',
+        marginTop: 10,
+    },
+    modalContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    },
+    modalContent: {
+        height: 600,
+        width: 300,
+        backgroundColor: '#fff',
+        padding: 15,
+        borderRadius: 10,
+        alignItems: 'flex-start',
+        overflow: 'hidden',
+    },
+    modalTitle: {
+        color: '#A4DAA9',
+        fontSize: 18,
+        fontWeight: 'bold',
+        marginLeft: 25,
+        marginTop: 10,
+        marginBottom: 10,
+    },
+    saveButton: {
+        paddingVertical: 10,
+        paddingHorizontal: 20,
+        backgroundColor: '#5C9161',
+        borderRadius: 50,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    saveButtonText: {
+        color: '#fff',
+        fontWeight: 'bold',
+        fontSize: 16,
     },
 });

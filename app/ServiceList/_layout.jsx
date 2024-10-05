@@ -1,5 +1,4 @@
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
-import { View, Text, StyleSheet, Pressable } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity,Pressable } from "react-native";
 import React, { useState } from "react";
 import ServiceList from "./../../components/ServiceList/ServiceList";
 import FilterService from "./../../components/ServiceList/FilterService";

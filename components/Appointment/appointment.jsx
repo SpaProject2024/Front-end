@@ -1,4 +1,4 @@
-import { View, Text, FlatList, StyleSheet, TextInput, TouchableOpacity, Image } from 'react-native';
+import { View, Text, FlatList, StyleSheet, TextInput, TouchableOpacity, Image, Button } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import { styles, buttonStyles } from "./styles";
 import Logo from "../../assets/images/logo2.png";
@@ -28,8 +28,8 @@ const scheduleData = [
 ];
 
 const items = [
-    { label: 'Profile', value: '1' },
-    { label: 'Send Appointment', value: '2' },
+    { label: 'Profile', value: 'profile' },
+    { label: 'Send Appointment', value: 'sendappointment' },
 ];
 
 const weekDays = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
@@ -110,15 +110,26 @@ export default function Appointment() {
                 <Text style={styles.labelText}>Date:</Text>
                 <Text style={styles.valueText}>{item.time}</Text>
             </View>
-            <View style={styles.infoRow}>
+            {/* <View style={styles.infoRow}>
                 <Text style={styles.labelText}>Patient Details:</Text>
                 <TouchableOpacity
                     style={styles.viewDetailsButton}
                     onPress={() => router.push('/appointmentdetail/appointmentdetail')}
                 >
+
                     <Text style={styles.buttonText}>View</Text>
                 </TouchableOpacity>
-
+            </View> */}
+            <View style={styles.infoRow}>
+                <Text style={styles.labelText}>Patient Details:</Text>
+                <TouchableOpacity
+                    style={styles.viewDetailsButton}
+                    onPress={() => {
+                        router.push('appointmentdetail/appointmentdetail', { appointmentID: item.id });
+                    }}
+                >
+                    <Text style={styles.buttonText}>View</Text>
+                </TouchableOpacity>
             </View>
         </View >
     );
@@ -129,105 +140,103 @@ export default function Appointment() {
                 <Image source={Logo} style={styles.logo} />
                 <Text style={styles.title}>Appointment </Text>
                 <View style={styles.dropdownmenu}>
-                    <TouchableOpacity onPress={() => router.push("/Sendappointment/sendappointment")}>
+                    <TouchableOpacity onPress={() => router.push("")}>
                         <Image source={Bell} style={styles.bell} />
                     </TouchableOpacity>
-                    {/* Thay thế button mặc định bằng TouchableOpacity */}
-                    <TouchableOpacity onPress={() => setOpen(!open)}>
-                        <Icon name="bars" size={24} color="#000" />
-                    </TouchableOpacity>
-                    {/* Dropdown menu */}
-                    {open && (
-                        <View style={styles.dropdownContainer}>
-                            <Dropdown
-                                open={open}
-                                value={value}
-                                items={items}
-                                setOpen={setOpen}
-                                setValue={setValue}
-                                showArrowIcon={false}
-                                placeholder=""
-                                style={styles.dropdownStyle}
-                                labelField="label"
-                                valueField="value"
-                                data={items}
-                                containerStyle={styles.dropdownContainerStyle}
-                                dropDownContainerStyle={styles.dropdownListStyle}
-                                onChange={item => {
-                                    setValue(item.value);
-                                    setOpen(false);
-                                    if (item.value === '2') {
-                                        router.push('/Sendappointment/sendappointment');
-                                    }
-                                }}
-                            />
-                        </View>
-                    )}
+                    <View style={styles.dropdownWrappers}>
+                        <Dropdown
+                            style={styles.dropdowns}
+                            inputSearchStyle={{ display: "none" }}
+                            iconStyle={styles.iconStyles}
+                            data={items}
+                            search={false}
+                            maxHeight={300}
+                            labelField="label"
+                            valueField="value"
+                            placeholder=""
+                            value={value}
+                            renderLeftIcon={() => (
+                                <Icon name="bars" size={20} color="black" /> // Icon 3 gạch
+                            )}
+                            onChange={(item) => {
+                                setValue(item.value);
+                                if (item.value === "sendappointment") {
+                                    router.push("/Login/login");
+                                } else if (item.value === "profile") {
+                                    router.push("/Sendappointment/sendappointment");
+                                }
+                            }}
+                        />
+                    </View>
                 </View>
             </View>
 
             {/* Week navigation */}
-            <View style={styles.weekContainer}>
-                <TouchableOpacity onPress={() => setWeekOffset(weekOffset - 1)}>
-                    <Text style={styles.weekNavButton}>{'<'}</Text>
-                </TouchableOpacity>
-                {getWeekDates().map((date, index) => (
-                    <TouchableOpacity
-                        key={index}
-                        style={styles.dayContainer}
-                        onPress={() => handleDatePress(date)}
-                    >
-                        <Text
-                            style={[
-                                styles.dayText,
-                                selectedDate?.toDateString() === date.toDateString() && styles.selectedDayText
-                            ]}
-                        >
-                            {weekDays[index]}
-                        </Text>
-                        <Text
-                            style={[
-                                styles.dateText,
-                                selectedDate?.toDateString() === date.toDateString() && styles.selectedDateText
-                            ]}
-                        >
-                            {date.getDate()}
-                        </Text>
+            <View style={styles.Containerall}>
+                <View style={styles.weekContainer}>
+                    <TouchableOpacity onPress={() => setWeekOffset(weekOffset - 1)}>
+                        <Text style={styles.weekNavButton}>{'<'}</Text>
                     </TouchableOpacity>
-                ))}
-                <TouchableOpacity onPress={() => setWeekOffset(weekOffset + 1)}>
-                    <Text style={styles.weekNavButton}>{'>'}</Text>
-                </TouchableOpacity>
-            </View>
+                    {getWeekDates().map((date, index) => (
+                        <TouchableOpacity
+                            key={index}
+                            style={styles.dayContainer}
+                            onPress={() => handleDatePress(date)}
+                        >
+                            <Text
+                                style={[
+                                    styles.dayText,
+                                    selectedDate?.toDateString() === date.toDateString() && styles.selectedDayText
+                                ]}
+                            >
+                                {weekDays[index]}
+                            </Text>
+                            <Text
+                                style={[
+                                    styles.dateText,
+                                    selectedDate?.toDateString() === date.toDateString() && styles.selectedDateText
+                                ]}
+                            >
+                                {date.getDate()}
+                            </Text>
+                        </TouchableOpacity>
+                    ))}
+                    <TouchableOpacity onPress={() => setWeekOffset(weekOffset + 1)}>
+                        <Text style={styles.weekNavButton}>{'>'}</Text>
+                    </TouchableOpacity>
+                </View>
 
-            {/* thanh lọc */}
-            <View style={styles.statusFilterContainer}>
-                <TouchableOpacity
-                    style={[
-                        styles.statusButton,
-                        statusFilter === false && styles.selectedStatusButton
-                    ]}
-                    onPress={() => hanldeStatusFilter(false)}
-                >
-                    <Text style={styles.statusText}>Incomplete</Text>
-                    {selectedStatus === 'incomplete' && <View style={styles.underline} />}
-                </TouchableOpacity>
-                <TouchableOpacity
-                    style={[
-                        styles.statusButton,
-                        statusFilter === true && styles.selectedStatusButton
-                    ]}
-                    onPress={() => hanldeStatusFilter(true)}
-                >
-                    <Text style={styles.statusText}>Complete</Text>
-                    {selectedStatus === 'complete' && <View style={styles.underline} />}
-                </TouchableOpacity>
+                {/* thanh lọc */}
+
+                <View style={styles.statusFilterContainer}>
+                    <TouchableOpacity
+                        style={[
+                            styles.statusButton,
+                            statusFilter === false && styles.selectedStatusButton
+                        ]}
+                        onPress={() => hanldeStatusFilter(false)}
+                    >
+                        <Text style={styles.statusText}>Incomplete</Text>
+                        {selectedStatus === 'incomplete' && <View style={styles.underline} />}
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                        style={[
+                            styles.statusButton,
+                            statusFilter === true && styles.selectedStatusButton
+                        ]}
+                        onPress={() => hanldeStatusFilter(true)}
+                    >
+                        <Text style={styles.statusText}>Complete</Text>
+                        {selectedStatus === 'complete' && <View style={styles.underline} />}
+                    </TouchableOpacity>
+                </View>
+                
+                <FlatList
+                    data={filteredData}
+                    renderItem={renderScheduleItem}
+                    keyExtractor={(item) => item.id}
+                />
             </View>
-            <FlatList
-                data={filteredData}
-                renderItem={renderScheduleItem}
-                keyExtractor={(item) => item.id}
-            />
         </View>
     );
 };
