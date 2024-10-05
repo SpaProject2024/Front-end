@@ -1,16 +1,26 @@
-
 import { StyleSheet } from "react-native";
 export const buttonStyles = StyleSheet.create({
-  baseButton: {
-    padding: 10,
-    borderRadius: 5,
+  button: {
+    width: "100%",
+    height: 40,
+    backgroundColor: "#2B5F2F",
+    flexDirection: "row",
+    justifyContent: "center",
     alignItems: "center",
-    flex: 1,
-    marginHorizontal: 5,
+    borderRadius: 5,
   },
   textButton: {
     color: "#fff",
     fontWeight: "bold",
+  },
+  baseButton: {
+    height: 40,
+    width: 100,
+    backgroundColor: "#2B5F2F",
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 5,
   },
   socialButton: {
     width: "50%",
@@ -71,6 +81,21 @@ export const styles = StyleSheet.create({
     width: "100%",
     marginVertical: 10,
   },
+  withGGContainer: {
+    flexDirection: "row",
+    width: "100%",
+    marginVertical: 10,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#2B5F2F",
+    borderRadius: 5,
+    paddingHorizontal: 10,
+    paddingVertical: 10,
+  },
+  withGGText: {
+    color: "#FFFFFF",
+    paddingLeft: 10,
+  },
   linkButton: {
     flex: 1,
     marginRight: 5,
@@ -85,8 +110,10 @@ export const styles = StyleSheet.create({
   },
   registerText: {
     color: "#fff",
-    fontSize: 10,
-    textAlign: "center",
+  },
+  fogotpasswordText: {
+    color: "#999",
+    textDecorationLine: "underline",
   },
   button: {
     backgroundColor: "#2B5F2F",
@@ -99,11 +126,7 @@ export const styles = StyleSheet.create({
     alignItems: "center",
     marginTop: 20,
   },
-  loginButtonText: {
-    color: "#fff",
-    fontWeight: "bold",
-    fontSize: 16,
-  },
+
   orText: {
     fontSize: 12,
     fontWeight: "bold",

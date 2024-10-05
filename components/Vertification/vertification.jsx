@@ -1,168 +1,125 @@
-import React, { useState, useEffect, useRef } from "react";
-import {
-  View,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  Alert,
-  Image,
-  ActivityIndicator,
-} from "react-native";
-import { useRouter } from "expo-router";
-import { styles } from "./styles";
-import Logo from "../../assets/images/Neutral Feminine Flower Line Art.png";
+import React, { useEffect, useState } from 'react';
+import { View, Text, TextInput, TouchableOpacity, Alert, Image } from 'react-native';
+import axios from 'axios';
+import { useRouter } from 'expo-router';
+import Logo from '../../assets/images/logo2.png'; // Update the path to your logo
+import { styles } from './styles';
 
-const Vertification = () => {
-  const router = useRouter();
-  const [code, setCode] = useState(["", "", "", "", "", ""]);
-  const [codeError, setCodeError] = useState("");
-  const [timeLeft, setTimeLeft] = useState(120);
-  const [isTimerActive, setIsTimerActive] = useState(true);
-  const [isTimerLoading, setIsTimerLoading] = useState(true);
+const VerifyPin = () => {
+    const router = useRouter();
+    const [email, setEmail] = useState('');
+    const [pin, setPin] = useState(Array(6).fill('')); // Array to store individual PIN characters
+    const [pinError, setPinError] = useState('');
+    const [loading, setLoading] = useState(false); // Loading state for API requests
 
-  const inputRefs = useRef([]);
+    // Get email from router params
+    useEffect(() => {
+        if (router.params && router.params.email) {
+            setEmail(router.params.email);
+        } else {
+            console.error('Email not found in router params.');
+        }
+    }, [router.params]);
 
-  useEffect(() => {
-    let timer;
-    if (isTimerActive && timeLeft > 0) {
-      setIsTimerLoading(true);
-      timer = setInterval(() => {
-        setTimeLeft((prevTime) => prevTime - 1);
-      }, 1000);
-    } else if (timeLeft <= 0) {
-      setIsTimerActive(false);
-      setIsTimerLoading(false);
-    } else {
-      setIsTimerLoading(false);
-    }
-    return () => clearInterval(timer);
-  }, [isTimerActive, timeLeft]);
+    // Verify PIN with backend
+    const handleVerifyPin = async () => {
+        setPinError('');
+        const pinString = pin.join(''); // Combine PIN array into a string
 
-  const handleInputChange = (value, index) => {
-    const newCode = [...code];
-    newCode[index] = value;
-    setCode(newCode);
+        if (!pinString) {
+            setPinError('PIN is required');
+            return;
+        }
 
-    if (value.length === 1 && index < code.length - 1) {
-      inputRefs.current[index + 1].focus();
-    }
-  };
+        try {
+            const response = await axios.post('http://192.168.1.3:8000/verifyPin', {
+                email,
+                pin: pinString, // Send the combined PIN string
+            });
 
-  const handleVerification = () => {
-    setCodeError("");
+            if (response.status === 200) {
+                Alert.alert('Success', 'Account activated successfully! Redirecting to the homepage.');
+                router.push('Home/home');
+            }
+        } catch (error) {
+            console.error('Verification error:', error);
+            const errorMessage = error.response?.data?.message || 'Verification failed. Please try again.';
+            Alert.alert('Error', errorMessage);
+        }
+    };
 
-    const codeString = code.join("");
+    // Request a new PIN
+    const handleRequestNewPin = async () => {
+        try {
+            setLoading(true); // Set loading state while sending request
+            const response = await axios.put('http://192.168.1.3:8000/verifyPin/resend', { email });
 
-    if (codeString.length !== 6) {
-      setCodeError("Please enter a valid 6-digit code");
-      return;
-    }
+            if (response.status === 200) {
+                Alert.alert('Success', 'A new PIN has been sent to your email.');
+            } else {
+                Alert.alert('Error', 'Failed to send new PIN. Please try again.');
+            }
+        } catch (error) {
+            console.error('Error requesting new PIN:', error);
+            Alert.alert('Error', 'Unable to request a new PIN.');
+        } finally {
+            setLoading(false); // Reset loading state
+        }
+    };
 
-    if (codeString === "123456") {
-      Alert.alert(
-        "Verification Successful",
-        "Your code has been verified. Choose your next action:",
-        [
-          {
-            text: "Go to Home",
-            onPress: () => {
-              setCode(["", "", "", "", "", ""]);
-              setTimeLeft(0);
-              setIsTimerActive(true);
-              router.push("Home/home");
-            },
-          },
-          {
-            text: "Login Again",
-            onPress: () => {
-              setCode(["", "", "", "", "", ""]);
-              setTimeLeft(0);
-              setIsTimerActive(true);
-              router.push("Login/login");
-            },
-          },
-        ]
-      );
-    } else {
-      setCodeError("Invalid code, please try again");
-    }
-  };
+    // Handle PIN input changes
+    const handlePinChange = (text, index) => {
+        if (/^\d*$/.test(text)) { // Ensure input is numeric
+            const newPin = [...pin];
+            newPin[index] = text;
+            setPin(newPin);
 
-  const handleResendCode = () => {
-    if (!isTimerActive) {
-      Alert.alert("Code Resent", "A new code has been sent to your email.");
-      setTimeLeft(120);
-      setIsTimerActive(true);
-    } else {
-      Alert.alert(
-        "Wait",
-        "Please wait until the current code expires before requesting a new one."
-      );
-    }
-  };
+            // Automatically move to the next input
+            if (text && index < 5) {
+                const nextInput = index + 1;
+                const nextInputRef = inputsRef[nextInput];
+                if (nextInputRef) {
+                    nextInputRef.focus();
+                }
+            }
+        }
+    };
 
-  const formatTime = (seconds) => {
-    const minutes = Math.floor(seconds / 60);
-    const secs = seconds % 60;
-    return `${String(minutes).padStart(2, "0")}:${String(secs).padStart(
-      2,
-      "0"
-    )}`;
-  };
+    // References for each input field
+    const inputsRef = [];
 
-  return (
-    <View style={styles.container}>
-      <Image source={Logo} style={styles.logo} />
-      <Text style={styles.title}>Verification</Text>
-      <Text style={styles.description}>
-        {"Please enter the 6-digit code sent to your email."}
-      </Text>
+    return (
+        <View style={styles.container}>
+            <Image source={Logo} style={styles.logo} />
+            <Text style={styles.title}>Verify Your PIN</Text>
+            <Text style={styles.subtitle}>Please enter the PIN sent to your email: {email}</Text>
 
-      <View style={styles.codeInputContainer}>
-        {code.map((digit, index) => (
-          <TextInput
-            key={index}
-            style={styles.codeInputBox}
-            value={digit}
-            onChangeText={(value) => handleInputChange(value, index)}
-            keyboardType="number-pad"
-            maxLength={1}
-            ref={(ref) => (inputRefs.current[index] = ref)}
-          />
-        ))}
-      </View>
+            <View style={styles.pinContainer}>
+                {pin.map((digit, index) => (
+                    <TextInput
+                        key={index}
+                        style={styles.pinInput}
+                        value={digit}
+                        onChangeText={(text) => handlePinChange(text, index)}
+                        keyboardType="numeric"
+                        maxLength={1}
+                        ref={(ref) => (inputsRef[index] = ref)} // Set input ref for focus handling
+                    />
+                ))}
+            </View>
 
-      {codeError ? <Text style={styles.errorText}>{codeError}</Text> : null}
+            {pinError ? <Text style={styles.errorText}>{pinError}</Text> : null}
 
-      <TouchableOpacity
-        style={styles.verifyButton}
-        onPress={handleVerification}
-      >
-        <Text style={styles.verifyButtonText}>Verify Now</Text>
-      </TouchableOpacity>
+            <TouchableOpacity style={styles.button} onPress={handleVerifyPin}>
+                <Text style={styles.buttonText}>Verify PIN</Text>
+            </TouchableOpacity>
 
-      <View style={styles.timerContainer}>
-        {isTimerLoading ? (
-          <ActivityIndicator
-            size="small"
-            color="#2B5F2F"
-            style={styles.timerLoadingSpinner}
-          />
-        ) : null}
-        <Text style={styles.timerText}>{formatTime(timeLeft)}</Text>
-      </View>
-      <TouchableOpacity onPress={handleResendCode} disabled={isTimerActive}>
-        <Text
-          style={[
-            styles.resendButton,
-            { texolor: isTimerActive ? "#2B5F2F" : "#999999" },
-          ]}
-        >
-          Resend
-        </Text>
-      </TouchableOpacity>
-    </View>
-  );
+            {/* Add a button for requesting a new PIN */}
+            <TouchableOpacity style={[styles.button, styles.requestButton]} onPress={handleRequestNewPin} disabled={loading}>
+                <Text style={styles.buttonText}>{loading ? 'Requesting...' : 'Request New PIN'}</Text>
+            </TouchableOpacity>
+        </View>
+    );
 };
 
-export default Vertification;
+export default VerifyPin;

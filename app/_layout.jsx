@@ -39,6 +39,9 @@ export default function RootLayout() {
       <Stack.Screen name="verification" />
       <Stack.Screen name="ServiceList" />
       <Stack.Screen name="Confirmation" />
+      <Stack.Screen name="DoctorList" />
+      <Stack.Screen name="FogotPassword" />
+      <Stack.Screen name="SecondaryPin" />
     </Stack>
   );
 }
