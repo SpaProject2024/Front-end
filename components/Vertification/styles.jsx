@@ -2,76 +2,61 @@ import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    alignItems: "center",
-    paddingLeft: 20,
-    paddingRight: 20,
-    overflow: 'hidden',
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+      padding: 20,
+      backgroundColor: '#f9f9f9',
   },
   logo: {
-    width: 200,
-    height: 100,
+      width: 100,
+      height: 100,
+      marginBottom: 20,
   },
   title: {
-    fontSize: 24,
-    fontWeight: "bold",
-    marginBottom: 20,
+      fontSize: 24,
+      fontWeight: 'bold',
+      marginBottom: 10,
   },
-  description: {
-    fontSize: 16,
-    textAlign: "center",
-    marginBottom: 20,
-    color: "#666",
+  subtitle: {
+      fontSize: 16,
+      textAlign: 'center',
+      marginBottom: 20,
+      color: '#555',
   },
-  codeInputContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    marginBottom: 20,
+  pinContainer: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      width: '100%',
+      marginBottom: 20,
   },
-codeInputBox: {
-   width: 45,
-    height: 45,
-    borderWidth: 1,
-    borderColor: "#ccc",
-    borderRadius: 5,
-    textAlign: "center",
-    fontSize: 24,
-    marginHorizontal: 5,
-    backgroundColor: "#fff",
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.3,
-    shadowRadius: 6,
-    elevation: 3,
+  pinInput: {
+      width: 40,
+      height: 40,
+      borderWidth: 1,
+      borderColor: '#ddd',
+      borderRadius: 5,
+      textAlign: 'center',
+      fontSize: 18,
   },
   errorText: {
-    color: "red",
-    marginBottom: 10,
+      color: 'red',
+      marginBottom: 10,
   },
-  verifyButton: {
-    backgroundColor: "#2B5F2F",
-    padding: 15,
-    borderRadius: 5,
-    width: "100%",
-    alignItems: "center",
-    marginTop: 10,
+  button: {
+      backgroundColor: '#007BFF',
+      padding: 15,
+      borderRadius: 5,
+      width: '100%',
+      alignItems: 'center',
+      marginBottom: 10,
   },
-  verifyButtonText: {
-    color: "#fff",
-    fontSize: 16,
-    fontWeight: "bold",
+  requestButton: {
+      backgroundColor: '#28a745', // Change color for "Request New PIN" button
   },
-  resendButton: {
-    marginTop: 15,
-    padding: 10,
-  },
-  resendButtonText: {
-    color: "#2B5F2F",
-  },
-  timerLoadingSpinner: {
-    marginTop: 10,
-  },
-  timerText: {
-    color: "#2B5F2F",
+  buttonText: {
+      color: '#fff',
+      fontSize: 16,
+      fontWeight: 'bold',
   },
 });
