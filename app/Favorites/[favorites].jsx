@@ -1,11 +1,11 @@
 import { View, Text, Image, StyleSheet } from "react-native";
 import React from "react";
-import DoctorLists from "../../components/DoctorList/DoctorList";
+import Favorites from "../../components/favorites/favorites";
 
-export default function DoctorList() {
+export default function Home() {
   return (
     <View style={styles.container}>
-      <DoctorLists />
+      <Favorites />
     </View>
   );
 }

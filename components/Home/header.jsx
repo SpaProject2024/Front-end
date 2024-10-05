@@ -22,6 +22,8 @@ const options = [
   { label: "Login", value: "login" },
   { label: "Register", value: "register" },
   { label: "Logout", value: "logout" },
+  //Nghĩa
+  { label: "MyAccunt", value: "MyAccount" },
 ];
 
 const Header = () => {
