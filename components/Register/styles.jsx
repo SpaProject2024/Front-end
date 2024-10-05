@@ -1,4 +1,3 @@
-
 import { StyleSheet } from "react-native";
 export const buttonStyles = StyleSheet.create({
   baseButton: {
@@ -12,8 +11,12 @@ export const buttonStyles = StyleSheet.create({
     color: "#fff",
     fontWeight: "bold",
   },
+  backIcon: {
+    flexDirection: "row",
+    justifyContent: "center",
+    paddingVertical: 90,
+  },
 });
-
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -22,8 +25,10 @@ export const styles = StyleSheet.create({
     paddingRight: 20,
   },
   logo: {
-    width: 200,
-    height: 100,
+    width: 80,
+    height: 80,
+    borderRadius: 50,
+    marginTop: 10,
   },
   title: {
     fontSize: 24,
@@ -74,5 +79,25 @@ export const styles = StyleSheet.create({
     color: "#fff",
     fontWeight: "bold",
     fontSize: 16,
+  },
+  dropdown: {
+    width: "100%",
+    height: 50,
+    backgroundColor: "#fff",
+    borderColor: "#ccc",
+    borderWidth: 1,
+    borderRadius: 5,
+    paddingHorizontal: 10,
+    marginBottom: 15,
+    color: "#cccc",
+    fontSize: 8,
+  },
+  dropdownPlaceholder: {
+    color: "#999",
+    fontSize: 14,
+  },
+  dropdownItemText: {
+    color: "#999",
+    fontSize: 14,
   },
 });
