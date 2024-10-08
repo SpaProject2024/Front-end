@@ -1,5 +1,5 @@
 import { View, DrawerLayoutAndroid } from "react-native";
-import React, { useState, useRef } from "react";
+import React, { useRef } from "react";
 import ServiceList from "./../../components/ServiceList/ServiceList";
 import FilterService from "./../../components/ServiceList/FilterService";
 import Header from "../../components/ServiceList/Header";

@@ -1,6 +1,6 @@
-import React, { useEffect } from "react";
-import { View, Text, StyleSheet, Image, Button } from "react-native";
-import { useRouter } from "expo-router";
+import React, { useEffect } from 'react';
+import { View, Text, StyleSheet, Image,Button} from 'react-native';
+import { useRouter } from 'expo-router';
 import Logo from "../assets/images/logo2.png";
 
 export default function IntroScreen() {
@@ -8,7 +8,7 @@ export default function IntroScreen() {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      // router.push("/Home/home");
+      router.push("/Home/home");
     }, 2000);
 
     return () => clearTimeout(timer);
@@ -20,12 +20,12 @@ export default function IntroScreen() {
       <Button
         title="Go to Login"
         // onPress={() => router.push('/Login/login')}
-        onPress={() => router.push("/ServiceList")}
+        onPress={() => router.push('/ServiceList')}
       />
-      <View style={styles.container}>
-        <Image source={Logo} style={styles.logo}></Image>
-        <Text style={styles.text}> Bellavita Beauty </Text>
-      </View>
+    <View style={styles.container}>    
+      <Image source={Logo} style={styles.logo}></Image>
+      <Text style={styles.text}> Bellavita Beauty </Text>
+    </View>
     </View>
   );
 }
@@ -33,18 +33,18 @@ export default function IntroScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   logo: {
     width: 100,
     height: 100,
     borderRadius: 50,
   },
-  text: {
-    fontSize: 14,
-    fontWeight: "bold",
-    color: "#999999",
+  text:{
+    fontSize:14,
+    fontWeight: 'bold',
+    color: '#999999',
     paddingTop: 5,
-  },
+  }
 });

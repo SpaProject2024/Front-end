@@ -1,11 +1,11 @@
 import { View, Text, Image, StyleSheet } from "react-native";
 import React from "react";
-import FogetpasswordPage from "../../components/Fogetpassword/fogetpassword";
+import DoctorLists from "../../components/DoctorList/DoctorList";
 
-export default function Home() {
+export default function DoctorList() {
   return (
     <View style={styles.container}>
-      <FogetpasswordPage />
+      <DoctorLists />
     </View>
   );
 }
@@ -15,3 +15,5 @@ const styles = StyleSheet.create({
     flex: 1,
   },
 });
+
+
