@@ -56,7 +56,7 @@ export default function Login() {
 
   const handleLogin = async () => {
     try {
-      const response = await axios.post("http://192.168.1.3:8000/login", {
+      const response = await axios.post("http://10.64.42.242:8000/login", {
         email,
         password,
       });
@@ -109,7 +109,7 @@ export default function Login() {
   const handleRefreshToken = async () => {
     try {
       const response = await axios.post(
-        "http://192.168.1.3:8000/login/refreshtoken",
+        "http://10.64.42.242:8000/login/refreshtoken",
         {
           email: tokenEmail,
           pinSecondary: pin,
