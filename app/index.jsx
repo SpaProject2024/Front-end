@@ -8,7 +8,7 @@ export default function IntroScreen() {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      // router.push("/Home/home");
+       router.push("/Home/home");
     }, 2000);
 
     return () => clearTimeout(timer);
@@ -19,8 +19,8 @@ export default function IntroScreen() {
       <Text>Welcome to the Intro Screen!</Text>
       <Button
         title="Go to Login"
-        // onPress={() => router.push('/Login/login')}
-        onPress={() => router.push('/ServiceList')}
+        onPress={() => router.push('/Login/login')}
+        // onPress={() => router.push('/ServiceList')}
       />
     <View style={styles.container}>    
       <Image source={Logo} style={styles.logo}></Image>

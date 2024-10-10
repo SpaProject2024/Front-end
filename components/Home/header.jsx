@@ -7,6 +7,7 @@ import {
   Text,
   Alert,
 } from "react-native";
+import { API_BASE_URL } from '../../LocalIP/localIP';
 import { useRouter } from "expo-router";
 import { Dropdown } from "react-native-element-dropdown";
 import EvilIcons from "@expo/vector-icons/EvilIcons";
@@ -44,7 +45,7 @@ const Header = () => {
         // Ensure both token and userId are present
         if (token && userId) {
           const response = await axios.get(
-            `http://192.168.1.3:8000/login/${userId}`,
+            `${API_BASE_URL}/login/${userId}`,
             {
               headers: {
                 Authorization: `Bearer ${token}`,
@@ -82,6 +83,9 @@ const Header = () => {
         break;
       case "myprofile":
         router.push("/profileScreen/profileScreen");
+        break;
+      case "appointment":
+        router.push("/appointmenttab/appointmenttab");
         break;
       default:
         break;
@@ -149,6 +153,8 @@ const Header = () => {
               />
             </TouchableOpacity>
             <Dropdown
+              placeholderStyle={styles.placeholderStyle}
+              selectedTextStyle={styles.selectedTextStyle}
               data={options}
               labelField="label"
               valueField="value"
@@ -156,13 +162,12 @@ const Header = () => {
               onChange={handleDropdownChange}
               style={styles.dropdown}
               containerStyle={styles.dropdownContainer}
-              placeholder=""
               renderRightIcon={() => (
                 <Image source={UserIcon} style={styles.userIcon} />
               )}
-              renderValue={() => (userInfo ? userInfo.name : "User")}
               itemTextStyle={styles.itemTextStyle}
             />
+
           </View>
         </View>
         {/* Display user information if available */}

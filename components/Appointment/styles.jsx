@@ -6,6 +6,7 @@ export const styles = StyleSheet.create({
         // padding: 20,
         // backgroundColor: '#f5f5f5',
         backgroundColor: "#2B5F2F",
+
     },
     title: {
         marginLeft: 10,
@@ -41,6 +42,10 @@ export const styles = StyleSheet.create({
         shadowRadius: 8,
         elevation: 3,
     },
+    containercard: {
+        backgroundColor: "#fff",
+        height: 390, // Thiết lập chiều cao tối đa cho ScrollView
+    },
     infoRow: {
         flexDirection: 'row',
         justifyContent: 'center', // Căn giữa nội dung
@@ -71,11 +76,11 @@ export const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        backgroundColor: "#deffe1",
+        backgroundColor: "#fff",
         marginVertical: 10
     },
     Containerall: {
-        backgroundColor: "#e3ffe6",
+        backgroundColor: "#fff",
     },
     weekNavButton: {
         fontWeight: 'bold',
@@ -135,16 +140,6 @@ export const styles = StyleSheet.create({
         width: 250,
         alignSelf: 'flex-start',  // Đảm bảo dropdown nằm bên trái
     },
-    // dropdownWrapper: {
-    //     position: "relative",
-    //     left: 0,
-    //     right: 'auto',
-    // },
-    // dropdown: {
-    //     zIndex: 1000,
-    //     width: 250,
-    //     alignSelf: 'flex-start', 
-    // },
     iconStyles: {
         width: 20,
         height: 20,

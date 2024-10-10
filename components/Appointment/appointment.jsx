@@ -1,8 +1,7 @@
-import { View, Text, FlatList, StyleSheet, TextInput, TouchableOpacity, Image, Button } from 'react-native';
+import { View, Text, FlatList, StyleSheet, TextInput, TouchableOpacity, Image, Button, ScrollView } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import { styles, buttonStyles } from "./styles";
 import Logo from "../../assets/images/logo2.png";
-import DropDownPicker from 'react-native-dropdown-picker';
 import Icon from 'react-native-vector-icons/FontAwesome'; // Import FontAwesome icon
 import { useNavigation } from '@react-navigation/native';
 import Bell from "../../assets/images/bell.png";
@@ -10,21 +9,21 @@ import { Dropdown } from "react-native-element-dropdown";
 import { useRouter } from "expo-router";
 
 const scheduleData = [
-    { id: '1', time: '2024-09-17T08:00:00', patient: 'Nguyễn Văn A', service: 'face', notes: 'Khám tổng quát', completed: false },
-    { id: '2', time: '2024-09-18T10:30:00', patient: 'Trần Thị B', service: 'face', notes: 'Kiểm tra huyết áp', completed: true },
-    { id: '3', time: '2024-09-19T11:00:00', patient: 'Lê Văn C', service: 'face', notes: 'Khám tai mũi họng', completed: false },
-    { id: '4', time: '2024-09-20T14:00:00', patient: 'Phạm Văn D', service: 'face', notes: 'Khám mắt', completed: true },
-    { id: '5', time: '2024-09-20T16:00:00', patient: 'Nguyễn Thị E', service: 'face', notes: 'Kiểm tra tim mạch', completed: false },
-    { id: '6', time: '2024-09-21T16:00:00', patient: 'Nguyễn Thị E', service: 'face', notes: 'Kiểm tra tim mạch', completed: false },
-    { id: '7', time: '2024-09-22T08:00:00', patient: 'Nguyễn Văn A', service: 'face', notes: 'Khám tổng quát', completed: false },
-    { id: '8', time: '2024-09-23T10:30:00', patient: 'Trần Thị B', service: 'face', notes: 'Kiểm tra huyết áp', completed: true },
-    { id: '9', time: '2024-09-23T11:00:00', patient: 'Lê Văn C', service: 'face', notes: 'Khám tai mũi họng', completed: false },
-    { id: '10', time: '2024-09-24T14:00:00', patient: 'Phạm Văn D', service: 'face', notes: 'Khám mắt', completed: true },
-    { id: '11', time: '2024-09-24T16:00:00', patient: 'Nguyễn Thị E', service: 'face', notes: 'Kiểm tra tim mạch', completed: false },
-    { id: '12', time: '2024-09-25T16:00:00', patient: 'Nguyễn Thị E', service: 'face', notes: 'Kiểm tra tim mạch', completed: false },
-    { id: '13', time: '2024-09-25T14:00:00', patient: 'Phạm Văn D', service: 'face', notes: 'Khám mắt', completed: true },
-    { id: '14', time: '2024-09-26T16:00:00', patient: 'Nguyễn Thị E', service: 'face', notes: 'Kiểm tra tim mạch', completed: false },
-    { id: '15', time: '2024-09-26T16:00:00', patient: 'Nguyễn Thị E', service: 'face', notes: 'Kiểm tra tim mạch', completed: false },
+    { id: '1', time: '2024-10-6T08:00:00', patient: 'Nguyễn Văn A', service: 'face', notes: 'Khám tổng quát', completed: false },
+    { id: '2', time: '2024-10-6T10:30:00', patient: 'Trần Thị B', service: 'face', notes: 'Kiểm tra huyết áp', completed: true },
+    { id: '3', time: '2024-10-6T11:00:00', patient: 'Lê Văn C', service: 'face', notes: 'Khám tai mũi họng', completed: false },
+    { id: '4', time: '2024-10-6T14:00:00', patient: 'Phạm Văn D', service: 'face', notes: 'Khám mắt', completed: true },
+    { id: '5', time: '2024-10-6T16:00:00', patient: 'Nguyễn Thị E', service: 'face', notes: 'Kiểm tra tim mạch', completed: false },
+    { id: '6', time: '2024-10-7T16:00:00', patient: 'Nguyễn Thị E', service: 'face', notes: 'Kiểm tra tim mạch', completed: false },
+    { id: '7', time: '2024-10-7T08:00:00', patient: 'Nguyễn Văn A', service: 'face', notes: 'Khám tổng quát', completed: false },
+    { id: '8', time: '2024-10-7T10:30:00', patient: 'Trần Thị B', service: 'face', notes: 'Kiểm tra huyết áp', completed: false },
+    { id: '9', time: '2024-10-7T11:00:00', patient: 'Lê Văn C', service: 'face', notes: 'Khám tai mũi họng', completed: false },
+    { id: '10', time: '2024-10-7T14:00:00', patient: 'Phạm Văn D', service: 'face', notes: 'Khám mắt', completed: false },
+    { id: '11', time: '2024-10-7T16:00:00', patient: 'Nguyễn Thị E', service: 'face', notes: 'Kiểm tra tim mạch', completed: false },
+    { id: '12', time: '2024-10-7T16:00:00', patient: 'Nguyễn Thị E', service: 'face', notes: 'Kiểm tra tim mạch', completed: false },
+    { id: '13', time: '2024-10-8T14:00:00', patient: 'Phạm Văn D', service: 'face', notes: 'Khám mắt', completed: true },
+    { id: '14', time: '2024-10-8T16:00:00', patient: 'Nguyễn Thị E', service: 'face', notes: 'Kiểm tra tim mạch', completed: false },
+    { id: '15', time: '2024-10-8T16:00:00', patient: 'Nguyễn Thị E', service: 'face', notes: 'Kiểm tra tim mạch', completed: false },
 ];
 
 const items = [
@@ -110,16 +109,6 @@ export default function Appointment() {
                 <Text style={styles.labelText}>Date:</Text>
                 <Text style={styles.valueText}>{item.time}</Text>
             </View>
-            {/* <View style={styles.infoRow}>
-                <Text style={styles.labelText}>Patient Details:</Text>
-                <TouchableOpacity
-                    style={styles.viewDetailsButton}
-                    onPress={() => router.push('/appointmentdetail/appointmentdetail')}
-                >
-
-                    <Text style={styles.buttonText}>View</Text>
-                </TouchableOpacity>
-            </View> */}
             <View style={styles.infoRow}>
                 <Text style={styles.labelText}>Patient Details:</Text>
                 <TouchableOpacity
@@ -230,12 +219,18 @@ export default function Appointment() {
                         {selectedStatus === 'complete' && <View style={styles.underline} />}
                     </TouchableOpacity>
                 </View>
-                
-                <FlatList
-                    data={filteredData}
-                    renderItem={renderScheduleItem}
-                    keyExtractor={(item) => item.id}
-                />
+                    {filteredData.length === 0 ? (
+                        <View style={{ backgroundColor: '#fff', height: 400, alignItems: 'center', }}>
+                            <Text>No appointments available</Text>
+                        </View>
+                    ) : (
+                        <FlatList
+                            style={styles.containercard}
+                            data={filteredData}
+                            renderItem={renderScheduleItem}
+                            keyExtractor={(item) => item.id}
+                        />
+                    )}
             </View>
         </View>
     );

@@ -4,7 +4,7 @@ import axios from 'axios';
 import { useRouter } from 'expo-router';
 import Logo from '../../assets/images/logo2.png'; // Update the path to your logo
 import { styles } from './styles';
-
+import { API_BASE_URL } from '../../LocalIP/localIP';
 const VerifyPin = () => {
     const router = useRouter();
     const [email, setEmail] = useState('');
@@ -32,7 +32,7 @@ const VerifyPin = () => {
         }
 
         try {
-            const response = await axios.post('http://192.168.1.3:8000/verifyPin', {
+            const response = await axios.post(`${API_BASE_URL}/verifyPin`, {
                 email,
                 pin: pinString, // Send the combined PIN string
             });
@@ -52,7 +52,7 @@ const VerifyPin = () => {
     const handleRequestNewPin = async () => {
         try {
             setLoading(true); // Set loading state while sending request
-            const response = await axios.put('http://192.168.1.3:8000/verifyPin/resend', { email });
+            const response = await axios.put(`${API_BASE_URL}/verifyPin/resend`, { email });
 
             if (response.status === 200) {
                 Alert.alert('Success', 'A new PIN has been sent to your email.');

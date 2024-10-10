@@ -10,6 +10,7 @@ import {
   Button,
 } from "react-native";
 import axios from "axios";
+import { API_BASE_URL } from '../../LocalIP/localIP';
 import { buttonStyles, styles } from "./styles"; // Ensure styles.js is imported
 import { useRouter } from "expo-router"; // Fixed the import
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -17,10 +18,6 @@ import Logo from "../../assets/images/logo2.png";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import AntDesign from "@expo/vector-icons/AntDesign";
 export default function Login() {
-  // const [email, setEmail] = useState("doctor@gmail.com");
-  // const [password, setPassword] = useState("123456");
-  const [emailError, setEmailError] = useState("");
-  const [passwordError, setPasswordError] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [pin, setPin] = useState(""); // State for secondary PIN
@@ -43,19 +40,6 @@ export default function Login() {
     }
   };
 
-    if (hasError) return;
-    //phúc tự thêm*
-    // if (email === "doctor@gmail.com" && password === "123456") {
-    //   Alert.alert("Login Success", "Welcome Doctor", [
-    //     { text: "OK", onPress: () => router.push("Appointments/appointment") },
-    //   ]);
-    // } else {
-    //   Alert.alert("Login Failed", "Invalid credentials");
-    // }
-    //*
-    Alert.alert("Login Success", `Welcome ${email}`, [
-      { text: "OK", onPress: () => router.push("/Home/home") },
-    ]);
   useEffect(() => {
     checkTokenValidity(); // Check validity when component mounts
   }, [token, tokenExpiry]);
@@ -73,7 +57,7 @@ export default function Login() {
 
   const handleLogin = async () => {
     try {
-      const response = await axios.post("http://192.168.1.3:8000/login", {
+      const response = await axios.post(`${API_BASE_URL}/login`, {
         email,
         password,
       });
@@ -126,7 +110,7 @@ export default function Login() {
   const handleRefreshToken = async () => {
     try {
       const response = await axios.post(
-        "http://192.168.1.3:8000/login/refreshtoken",
+        `${API_BASE_URL}/login/refreshtoken`,
         {
           email: tokenEmail,
           pinSecondary: pin,

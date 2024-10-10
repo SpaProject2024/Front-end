@@ -1,10 +1,10 @@
 import { View, Text, Image, StyleSheet } from "react-native";
 import React from "react";
-import AppointmentPage from "../../components/Appointment/appointment";
+import MyTabs from "../../components/Appointment/mytabs";
 export default function appointment() {
   return (
     <View style={styles.container}>
-      <AppointmentPage />
+      <MyTabs />
     </View>
   );
 }

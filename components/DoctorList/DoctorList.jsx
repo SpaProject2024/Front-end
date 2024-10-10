@@ -198,6 +198,7 @@ import {
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { API_BASE_URL } from '../../LocalIP/localIP';
 import { useRouter } from "expo-router";
 
 export default function DoctorList() {
@@ -209,7 +210,7 @@ export default function DoctorList() {
   // Function to fetch doctors from the API
   const fetchDoctors = async () => {
     try {
-      const response = await axios.get('http://192.168.1.3:8000/doctors');
+      const response = await axios.get(`${API_BASE_URL}/doctors`);
       console.log("API Response:", response.data); // In toàn bộ phản hồi để kiểm tra
 
       const fetchedDoctors = response.data.data; // Điều chỉnh lại cách truy cập dữ liệu
