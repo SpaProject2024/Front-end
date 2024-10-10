@@ -10,6 +10,7 @@ import {
   Button,
 } from "react-native";
 import axios from "axios";
+import { API_BASE_URL } from '../../LocalIP/localIP';
 import { buttonStyles, styles } from "./styles"; // Ensure styles.js is imported
 import { useRouter } from "expo-router"; // Fixed the import
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -56,7 +57,7 @@ export default function Login() {
 
   const handleLogin = async () => {
     try {
-      const response = await axios.post("http://192.168.1.3:8000/login", {
+      const response = await axios.post(`${API_BASE_URL}/login`, {
         email,
         password,
       });
@@ -109,7 +110,7 @@ export default function Login() {
   const handleRefreshToken = async () => {
     try {
       const response = await axios.post(
-        "http://192.168.1.3:8000/login/refreshtoken",
+        `${API_BASE_URL}/login/refreshtoken`,
         {
           email: tokenEmail,
           pinSecondary: pin,

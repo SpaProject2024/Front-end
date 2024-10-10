@@ -1,4 +1,6 @@
 import { StyleSheet } from "react-native";
+import { Colors } from './../../constants/Colors.ts'
+
 export const styles = StyleSheet.create({
     container: {
       backgroundColor: "#2B5F2F",
@@ -85,6 +87,12 @@ export const styles = StyleSheet.create({
       fontSize: 14,
       color: "#2B5F2F",
     },
+    placeholderStyle: {
+      color: Colors.PRIMARY
+    },
+    selectedTextStyle: {
+      color: Colors.PRIMARY
+    }
   });
 
   

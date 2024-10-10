@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { View, Text, TextInput, Button, Alert } from "react-native";
+import { API_BASE_URL } from '../../LocalIP/localIP';
 import axios from "axios";
 import { router } from "expo-router";
 import { styles } from "./styles";
@@ -14,7 +15,7 @@ export default function PasswordReset() {
   const handleForgotPassword = async () => {
     try {
       const response = await axios.post(
-        "http://192.168.1.3:8000/fogetPassword",
+        `${API_BASE_URL}/fogetPassword`,
         { email }
       );
       Alert.alert("Success", response.data.message);
@@ -39,7 +40,7 @@ export default function PasswordReset() {
 
     try {
       const response = await axios.put(
-        "http://192.168.1.3:8000/fogetPassword/reset",
+        `${API_BASE_URL}/fogetPassword/reset`,
         {
           email,
           pin, // Chỉ cần gửi mã PIN

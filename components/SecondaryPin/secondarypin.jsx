@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { View, Text, TextInput, TouchableOpacity, Alert, StyleSheet } from "react-native";
+import { API_BASE_URL } from '../../LocalIP/localIP';
 import axios from "axios";
 import { router } from "expo-router";
 import { styles } from "./styles";
@@ -17,7 +18,7 @@ const SetSecondaryPin = ({ email }) => {
     try {
       // Gửi yêu cầu tới back-end để đặt mã PIN phụ
       const response = await axios.post(
-        "http://192.168.1.3:8000/register/secondaryPin",
+        `${API_BASE_URL}/register/secondaryPin`,
         {
           email,
           pinSecondary,
