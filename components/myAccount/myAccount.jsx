@@ -49,7 +49,9 @@ const MyAccount = () => {
           <Icon name="chevron-right" type="material" color="#2e8b57" size={24} />
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.optionRow}>
+        <TouchableOpacity 
+        style={styles.optionRow} 
+         onPress={() => router.push('/History/history.jsx')}>
           <Icon name="undo" type="font-awesome" color="#8a2be2" size={24} />
           <Text style={styles.optionText}>History</Text>
           <Icon name="chevron-right" type="material" color="#8a2be2" size={24} />
