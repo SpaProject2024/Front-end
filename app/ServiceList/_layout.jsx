@@ -1,8 +1,8 @@
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity,Pressable } from "react-native";
 import React, { useState } from "react";
-import ServiceList from "./../../components/ServiceList/ServiceList";
-import FilterService from "./../../components/ServiceList/FilterService";
-import SearchService from "./../../components/ServiceList/SearchService";
+import ServiceList from "../../components/ServiceList/ServiceList";
+import FilterService from "../../components/ServiceList/FilterService";
+import SearchService from "../../components/ServiceList/SearchService";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { useRouter } from "expo-router";
 import { Colors } from "../../constants/Colors";
@@ -21,26 +21,25 @@ export default function _layout() {
               name="arrow-back-outline"
               size={28}
               color="white"
-              onPress={() => router.push("/Home/home")}
+              onPress={() => router.back()}
             />
             <Text style={styles.text}>Search</Text>
           </View>
-          <TouchableOpacity onPress={() => setFilterVisible(!isFilterVisible)}>
+          <Pressable onPress={() => setFilterVisible(!isFilterVisible)}>
             <Ionicons name="filter-circle" size={40} color="white" />
-          </TouchableOpacity>
+          </Pressable>
         </View>
         <SearchService />
-      </View>      
+      </View>
 
       {/* List of services */}
       <ServiceList />
 
       {/* Filter */}
-      {isFilterVisible && (
-        <View style={styles.filterContainer}>
-          <FilterService />
-        </View>
-      )}
+      <FilterService
+        closeFilter={() => setFilterVisible(!isFilterVisible)}
+        isFilterVisible={isFilterVisible}
+      />
     </View>
   );
 }
@@ -68,6 +67,5 @@ const styles = StyleSheet.create({
     right: 0,
     bottom: 0,
     backgroundColor: "white",
-    padding: 20,
   },
 });

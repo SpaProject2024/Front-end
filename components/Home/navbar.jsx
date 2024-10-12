@@ -1,6 +1,14 @@
 import React from "react";
-import { View, Image, StyleSheet, TextInput, Text } from "react-native";
+import {
+  View,
+  Image,
+  StyleSheet,
+  TextInput,
+  Text,
+  TouchableOpacity,
+} from "react-native";
 import Swiper from "react-native-swiper";
+import { useRouter } from "expo-router";
 import Carousel1 from "../../assets/images/carousel1.jpg";
 import Carousel2 from "../../assets/images/carousel2.jpg";
 import Carousel3 from "../../assets/images/carousel3.jpg";
@@ -10,6 +18,7 @@ import Handbook from "../../assets/images/handbook.png";
 import Spa from "../../assets/images/spa.png";
 import Doctor from "../../assets/images/doctor.png";
 import Cosmetic from "../../assets/images/cosmetic.png";
+
 const carouselItems = [
   {
     id: "1",
@@ -25,7 +34,8 @@ const carouselItems = [
   },
 ];
 
-const Header = () => {
+const Navbar = () => {
+  const router = useRouter();
   return (
     <View style={styles.container}>
       {/* Carousel */}
@@ -64,12 +74,15 @@ const Header = () => {
           </View>
           <Text style={styles.text}>Schedule</Text>
         </View>
-        <View style={styles.categoryItem}>
+        <TouchableOpacity
+          style={styles.categoryItem}
+          onPress={() => router.push("/DoctorList/DoctorList")} // Correct navigation method
+        >
           <View style={styles.imageWrapper}>
             <Image source={Doctor} style={styles.location} />
           </View>
           <Text style={styles.text}>Doctor</Text>
-        </View>
+        </TouchableOpacity>
         <View style={styles.categoryItem}>
           <View style={styles.imageWrapper}>
             <Image source={Cosmetic} style={styles.location} />
@@ -91,11 +104,12 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#2B5F2F",
-    height:250,
+    height: 250,
   },
+
   swiper: {
-    overflow: "hidden",
-    position: "relative",
+    overflow: "visible",
+    position: "absolute",
   },
   carouselItem: {
     flex: 1,
@@ -157,4 +171,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Header;
+export default Navbar;
