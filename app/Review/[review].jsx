@@ -1,11 +1,11 @@
 import { View, Text, Image, StyleSheet } from "react-native";
 import React from "react";
-import History from "../../components/History/history"
+import Review from "../../components/Review/review";
 
 export default function Home() {
   return (
     <View style={styles.container}>
-     <History></History>
+     <Review></Review>
     </View>
   );
 }
