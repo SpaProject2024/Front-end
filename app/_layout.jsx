@@ -41,6 +41,8 @@ export default function RootLayout() {
       <Stack.Screen name="DoctorList" />
       <Stack.Screen name="FogotPassword" />
       <Stack.Screen name="SecondaryPin" />
+      <Stack.Screen name="supplierdetail" />
+      <Stack.Screen name="suppliermanager" />
     </Stack>
 
   );

@@ -25,7 +25,7 @@ const options = [
   { label: "Logout", value: "logout" },
   { label: "appointment", value: "appointment" },
   //Nghĩa
-  { label: "MyAccunt", value: "MyAccount" },
+  { label: "MyAccount", value: "MyAccount" },
 ];
 
 const Header = () => {
@@ -86,6 +86,9 @@ const Header = () => {
         break;
       case "appointment":
         router.push("/appointmenttab/appointmenttab");
+        break;
+      case "MyAccount":
+        router.push("/MyAccount/myAccount");
         break;
       default:
         break;
