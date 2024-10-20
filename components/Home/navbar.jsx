@@ -76,7 +76,7 @@ const Navbar = () => {
         </View>
         <TouchableOpacity
           style={styles.categoryItem}
-          onPress={() => router.push("/DoctorList/DoctorList")} // Correct navigation method
+          onPress={() => router.push("/ManagerDoctors/managerdoctor")} // Correct navigation method
         >
           <View style={styles.imageWrapper}>
             <Image source={Doctor} style={styles.location} />
