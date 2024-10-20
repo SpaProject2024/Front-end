@@ -92,6 +92,9 @@ const Header = () => {
         case "managerbooking":
           router.push("/ManagerBooking/managerbooking");
           break;
+      case "MyAccount":
+        router.push("/MyAccount/myAccount");
+        break;
       default:
         break;
     }
