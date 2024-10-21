@@ -1,5 +1,6 @@
 import React from 'react';
 import { Stack } from 'expo-router';
+// import '../firebase/config';
 export default function RootLayout() {
   return (
     <Stack
@@ -41,6 +42,9 @@ export default function RootLayout() {
       <Stack.Screen name="DoctorList" />
       <Stack.Screen name="FogotPassword" />
       <Stack.Screen name="SecondaryPin" />
+      <Stack.Screen name="ManagerDoctors" />
+      <Stack.Screen name="supplierdetail" />
+      <Stack.Screen name="suppliermanager" />
     </Stack>
 
   );
