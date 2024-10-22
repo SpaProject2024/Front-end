@@ -57,7 +57,7 @@ export default function Login() {
 
   const handleLogin = async () => {
     try {
-      const response = await axios.post(`${API_BASE_URL}/login`, {
+      const response = await axios.post("http://10.64.42.242:8000/login", {
         email,
         password,
       });
@@ -110,7 +110,7 @@ export default function Login() {
   const handleRefreshToken = async () => {
     try {
       const response = await axios.post(
-        `${API_BASE_URL}/login/refreshtoken`,
+        "http://10.64.42.242:8000/login/refreshtoken",
         {
           email: tokenEmail,
           pinSecondary: pin,
