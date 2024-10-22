@@ -7,6 +7,7 @@ import {
   Text,
   Alert,
 } from "react-native";
+import { API_BASE_URL } from '../../LocalIP/localIP';
 import { useRouter } from "expo-router";
 import { Dropdown } from "react-native-element-dropdown";
 import EvilIcons from "@expo/vector-icons/EvilIcons";
@@ -22,8 +23,10 @@ const options = [
   { label: "Login", value: "login" },
   { label: "Register", value: "register" },
   { label: "Logout", value: "logout" },
+  { label: "appointment", value: "appointment" },
   //Nghĩa
   { label: "MyAccunt", value: "MyAccount" },
+  { label: "managerbooking", value: "managerbooking" },
 ];
 
 const Header = () => {
@@ -68,6 +71,7 @@ const Header = () => {
 
     fetchUserInfo(); // Call the function when the component is mounted
   }, []);
+  
   const handleDropdownChange = async (item) => {
     switch (item.value) {
       case "login":
@@ -81,6 +85,15 @@ const Header = () => {
         break;
       case "myprofile":
         router.push("/profileScreen/profileScreen");
+        break;
+      case "appointment":
+        router.push("/appointmenttab/appointmenttab");
+        break;
+        case "managerbooking":
+          router.push("/ManagerBooking/managerbooking");
+          break;
+      case "MyAccount":
+        router.push("/MyAccount/myAccount");
         break;
       default:
         break;
@@ -148,6 +161,8 @@ const Header = () => {
               />
             </TouchableOpacity>
             <Dropdown
+              placeholderStyle={styles.placeholderStyle}
+              selectedTextStyle={styles.selectedTextStyle}
               data={options}
               labelField="label"
               valueField="value"
@@ -155,19 +170,17 @@ const Header = () => {
               onChange={handleDropdownChange}
               style={styles.dropdown}
               containerStyle={styles.dropdownContainer}
-              placeholder=""
               renderRightIcon={() => (
                 <Image source={UserIcon} style={styles.userIcon} />
               )}
-              renderValue={() => (userInfo ? userInfo.name : "User")}
               itemTextStyle={styles.itemTextStyle}
             />
+
           </View>
         </View>
         {/* Display user information if available */}
         {userInfo && (
           <View style={styles.userInfoContainer}>
-            <Text style={styles.userInfoText}>Name: {userInfo.fullName}</Text>
             <Text style={styles.userInfoText}>Email: {userInfo.email}</Text>
           </View>
         )}

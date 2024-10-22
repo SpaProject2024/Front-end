@@ -10,6 +10,7 @@ import {
   Button,
 } from "react-native";
 import axios from "axios";
+import { API_BASE_URL } from '../../LocalIP/localIP';
 import { buttonStyles, styles } from "./styles"; // Ensure styles.js is imported
 import { useRouter } from "expo-router"; // Fixed the import
 import AsyncStorage from "@react-native-async-storage/async-storage";

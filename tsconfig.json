@@ -18,6 +18,7 @@
     "app/index.jsx",
     "expo-env.d.ts",
     "app/_layout.jsx",
+    "app/index.jsx",
     "components/Login/login.jsx"
   ]
 }

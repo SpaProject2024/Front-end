@@ -9,6 +9,7 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
 } from "react-native";
+import { API_BASE_URL } from '../../LocalIP/localIP';
 import { Dropdown } from "react-native-element-dropdown";
 import Logo from "../../assets/images/logo2.png";
 import { useRouter } from "expo-router";
@@ -76,7 +77,7 @@ const Register = () => {
     if (hasError) return;
 
     try {
-      const response = await axios.post("http://192.168.1.3:8000/register", {
+      const response = await axios.post(`${API_BASE_URL}/register`, {
         email,
         password,
         role,
@@ -156,7 +157,7 @@ const Register = () => {
   //   if (hasError) return;
 
   //   try {
-  //     const response = await axios.post("http://192.168.1.3:8000/register", {
+  //     const response = await axios.post("http://10.64.42.212:8000/register", {
   //       email,
   //       password,
   //       role,
