@@ -45,6 +45,7 @@ export default function RootLayout() {
       <Stack.Screen name="ManagerDoctors" />
       <Stack.Screen name="supplierdetail" />
       <Stack.Screen name="suppliermanager" />
+      <Stack.Screen name="appointmentdetail" />
     </Stack>
 
   );
