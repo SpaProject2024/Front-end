@@ -46,7 +46,7 @@ const Header = () => {
         // Ensure both token and userId are present
         if (token && userId) {
           const response = await axios.get(
-            `${API_BASE_URL}/login/${userId}`,
+            `http://10.64.42.242:8000/login/${userId}`,
             {
               headers: {
                 Authorization: `Bearer ${token}`,

@@ -17,7 +17,7 @@ export default function FilterRatting() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Ratting</Text>
+      <Text>Ratting</Text>
       <View style={styles.content}>{ratting}</View>
     </View>
   );
@@ -26,9 +26,6 @@ export default function FilterRatting() {
 const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 20,
-  },
-  title: {
-    fontWeight: "bold"
   },
   rattingBox: {
     flexDirection: "row",
