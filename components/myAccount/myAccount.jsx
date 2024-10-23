@@ -21,7 +21,7 @@ const MyAccount = () => {
         />
         <Text style={styles.name}>Md Abu Ubayda</Text>
         <Text style={styles.phone}>+88001712346789</Text>
-        <TouchableOpacity style={styles.editIcon}>
+        <TouchableOpacity style={styles.editIcon} onPress={() => router.push('/EditProfile/editprofile.jsx')}>
           <Icon name="edit" type="material" color="#fff" size={20} />
         </TouchableOpacity>
       </View>

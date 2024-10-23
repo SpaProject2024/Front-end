@@ -24,7 +24,6 @@ const options = [
   { label: "Register", value: "register" },
   { label: "Logout", value: "logout" },
   { label: "appointment", value: "appointment" },
-  //Nghĩa
   { label: "MyAccunt", value: "MyAccount" },
   { label: "managerbooking", value: "managerbooking" },
 ];
@@ -39,10 +38,11 @@ const Header = () => {
       try {
         const token = await AsyncStorage.getItem("token");
         const userId = await AsyncStorage.getItem("userId"); // Retrieve userId from AsyncStorage
+        const doctorId = await AsyncStorage.getItem("doctorId"); // Retrieve userId from AsyncStorage
 
         console.log("Token:", token); // Logging token
         console.log("User ID:", userId); // Logging user ID
-
+        console.log("doctor ID:", doctorId); // Logging user ID
         // Ensure both token and userId are present
         if (token && userId) {
           const response = await axios.get(
@@ -58,6 +58,10 @@ const Header = () => {
           console.log("Full response data:", response.data);
           console.log("Your email:", response.data.data.email);
           setUserInfo(response.data.data); // Save user info in state
+          //lưu id của doctorID
+          const doctorId = response.data.data.doctorId;
+          console.log("Doctor ID:", doctorId);
+          await AsyncStorage.setItem("doctorId", doctorId);
         } else {
           console.log("No token or user ID found");
         }
@@ -71,7 +75,7 @@ const Header = () => {
 
     fetchUserInfo(); // Call the function when the component is mounted
   }, []);
-  
+
   const handleDropdownChange = async (item) => {
     switch (item.value) {
       case "login":
@@ -89,9 +93,9 @@ const Header = () => {
       case "appointment":
         router.push("/appointmenttab/appointmenttab");
         break;
-        case "managerbooking":
-          router.push("/ManagerBooking/managerbooking");
-          break;
+      case "managerbooking":
+        router.push("/ManagerBooking/managerbooking");
+        break;
       case "MyAccount":
         router.push("/MyAccount/myAccount");
         break;

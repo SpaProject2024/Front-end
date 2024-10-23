@@ -17,6 +17,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import Logo from "../../assets/images/logo2.png";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import AntDesign from "@expo/vector-icons/AntDesign";
+
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -65,9 +66,9 @@ export default function Login() {
       if (response.data && response.data.data) {
         const userData = response.data.data;
         const isActive = response.data.data.isActive;
-
+        const role = response.data.data.role;
         console.log("isActive:", isActive);
-
+        console.log("isActive:", role);
         // Nếu tài khoản chưa được kích hoạt, hiển thị thông báo và chuyển hướng đến trang kích hoạt
         if (isActive === false) {
           Alert.alert("Tài khoản chưa được kích hoạt.");
@@ -82,16 +83,21 @@ export default function Login() {
         setTokenExpiry(Date.now() + 3600 * 1000);
         await AsyncStorage.setItem("token", token);
         await AsyncStorage.setItem("userId", userId.toString());
-
         Alert.alert("Login Success", "Welcome BellaVita Beauty", [
           {
             text: "OK",
             onPress: () => {
               setTokenEmail(email);
-              router.push("/Home/home");
+              // router.push("/Home/home");
+              if (role === "doctor") {
+                router.push("/appointmenttab/appointmenttab");
+              } else {
+                router.push("/Home/home");
+              }
             },
           },
         ]);
+
       } else {
         // Kiểm tra thông báo lỗi từ API
         Alert.alert(

@@ -31,6 +31,7 @@ export const styles = StyleSheet.create({
     // khung data
     scheduleItem: {
         padding: 10,
+        margin:10,
         backgroundColor: '#fff',
         marginBottom: 10,
         borderRadius: 8,
@@ -211,6 +212,7 @@ export const detailStyles = StyleSheet.create({
     },
     value: {
         flex: 1,
+        color: '#000000',
         marginBottom: 10,
     },
     patientName: {
@@ -339,8 +341,8 @@ export const detailStyles = StyleSheet.create({
         backgroundColor: 'rgba(0, 0, 0, 0.5)',
     },
     modalContent: {
-        height: 600,
-        width: 300,
+        height: 400,
+        width: '80%',
         backgroundColor: '#fff',
         padding: 15,
         borderRadius: 10,
@@ -353,7 +355,7 @@ export const detailStyles = StyleSheet.create({
         fontWeight: 'bold',
         marginLeft: 25,
         marginTop: 10,
-        marginBottom: 10,
+        marginBottom: 20,
     },
     saveButton: {
         paddingVertical: 10,
