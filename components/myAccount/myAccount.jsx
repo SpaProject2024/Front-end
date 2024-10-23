@@ -21,7 +21,7 @@ const MyAccount = () => {
         />
         <Text style={styles.name}>Md Abu Ubayda</Text>
         <Text style={styles.phone}>+88001712346789</Text>
-        <TouchableOpacity style={styles.editIcon} onPress={() => router.push('/EditProfile/editprofile.jsx')}>
+        <TouchableOpacity style={styles.editIcon}  onPress={() => router.push('/EditProfile/editprofile.jsx')}>
           <Icon name="edit" type="material" color="#fff" size={20} />
         </TouchableOpacity>
       </View>
@@ -49,13 +49,16 @@ const MyAccount = () => {
           <Icon name="chevron-right" type="material" color="#2e8b57" size={24} />
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.optionRow}>
+        <TouchableOpacity 
+        style={styles.optionRow} 
+         onPress={() => router.push('/History/history.jsx')}>
           <Icon name="undo" type="font-awesome" color="#8a2be2" size={24} />
           <Text style={styles.optionText}>History</Text>
           <Icon name="chevron-right" type="material" color="#8a2be2" size={24} />
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.optionRow}>
+        <TouchableOpacity style={styles.optionRow}
+   onPress={() => router.push('/Review/review.jsx')}>
           <Icon name="lock" type="font-awesome" color="#ff4500" size={24} />
           <Text style={styles.optionText}>Change Password</Text>
           <Icon name="chevron-right" type="material" color="#ff4500" size={24} />
