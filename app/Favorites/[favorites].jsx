@@ -2,7 +2,7 @@ import { View, Text, Image, StyleSheet } from "react-native";
 import React from "react";
 import Favorites from "../../components/favorites/favorites";
 
-export default function Home() {
+export default function Favorite() {
   return (
     <View style={styles.container}>
       <Favorites />

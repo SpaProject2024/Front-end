@@ -1,11 +1,11 @@
 import { View, Text, Image, StyleSheet } from "react-native";
 import React from "react";
-import History from "../../components/History/history"
+import HistoryPage from "../../components/History/history"
 
-export default function Home() {
+export default function History() {
   return (
     <View style={styles.container}>
-     <History></History>
+     <HistoryPage></HistoryPage>
     </View>
   );
 }

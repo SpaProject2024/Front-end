@@ -1,11 +1,11 @@
 import { View, Text, Image, StyleSheet } from "react-native";
 import React from "react";
-import ProfileScreenPage from "../../components/profileScreen/profileScreen";
+import WarehousePage from "../../components/Warehouse/warehouse"
 
-export default function Home() {
+export default function Warehosue() {
   return (
     <View style={styles.container}>
-      <ProfileScreenPage />
+    <WarehousePage></WarehousePage>
     </View>
   );
 }
@@ -15,5 +15,3 @@ const styles = StyleSheet.create({
     flex: 1,
   },
 });
-
-

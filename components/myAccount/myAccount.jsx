@@ -73,6 +73,8 @@ const MyAccount = () => {
           <Text style={styles.optionText}>Help & Support</Text>
           <Ionicons name="chevron-forward" size={24} color="#ff69b4" />
         </TouchableOpacity>
+
+      
       </ScrollView>
     </View>
   );

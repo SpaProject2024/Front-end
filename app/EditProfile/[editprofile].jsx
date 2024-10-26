@@ -1,11 +1,11 @@
 import { View, Text, Image, StyleSheet } from "react-native";
 import React from "react";
-import EditProflie from "../../components/EditProfile/editprofile"
+import EditProfliePage from "../../components/EditProfile/editprofile"
 
-export default function Home() {
+export default function EditProfile() {
   return (
     <View style={styles.container}>
-     <EditProflie></EditProflie>
+     <EditProfliePage></EditProfliePage>
     </View>
   );
 }
