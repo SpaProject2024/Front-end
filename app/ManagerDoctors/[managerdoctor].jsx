@@ -1,11 +1,11 @@
 import { View, Text, Image, StyleSheet } from "react-native";
 import React from "react";
-import Review from "../../components/Review/review";
+import ManagerDoctorsPage from "../../components/ManagerDoctors/managerdoctor";
 
-export default function Home() {
+export default function ManagerPage() {
   return (
     <View style={styles.container}>
-     <Review></Review>
+      <ManagerDoctorsPage />
     </View>
   );
 }
@@ -15,5 +15,3 @@ const styles = StyleSheet.create({
     flex: 1,
   },
 });
-
-

@@ -26,6 +26,10 @@ const options = [
   { label: "appointment", value: "appointment" },
   //Nghĩa
   { label: "MyAccunt", value: "MyAccount" },
+  { label: "managerbooking", value: "managerbooking" },
+  { label: "warehouse", value: "warehouse" },
+  { label: "Dashboard", value: "dashboard" },
+
 ];
 
 const Header = () => {
@@ -70,6 +74,7 @@ const Header = () => {
 
     fetchUserInfo(); // Call the function when the component is mounted
   }, []);
+
   const handleDropdownChange = async (item) => {
     switch (item.value) {
       case "login":
@@ -87,8 +92,14 @@ const Header = () => {
       case "appointment":
         router.push("/appointmenttab/appointmenttab");
         break;
+      case "managerbooking":
+        router.push("/ManagerBooking/managerbooking");
+        break;
       case "MyAccount":
         router.push("/MyAccount/myAccount");
+        break;
+      case "dashboard":
+        router.push("/Dashboard/dashboard");
         break;
       default:
         break;
@@ -176,7 +187,6 @@ const Header = () => {
         {/* Display user information if available */}
         {userInfo && (
           <View style={styles.userInfoContainer}>
-            <Text style={styles.userInfoText}>Name: {userInfo.fullName}</Text>
             <Text style={styles.userInfoText}>Email: {userInfo.email}</Text>
           </View>
         )}

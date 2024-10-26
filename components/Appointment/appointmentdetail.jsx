@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, detailStylesheet, TouchableOpacity, Alert, Button, TextInput, Modal, ScrollView } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { detailStyles } from "./styles";
+import { API_BASE_URL } from '../../LocalIP/localIP';
+
 const AppointmentDetail = () => {
     const navigation = useNavigation();
     const route = useRoute();
@@ -12,14 +14,21 @@ const AppointmentDetail = () => {
 
     const [isUpdating, setIsUpdating] = useState(false);
     const [isDeleting, setIsDeleting] = useState(false);
-    const [appointment, setAppointment] = useState({
-        id: '1',
-        time: '2024-09-17T08:00:00',
-        patient: 'Nguyễn Văn A',
-        service: 'face',
-        notes: 'Khám tổng quát',
-        completed: false,
-    });
+    const [appointment, setAppointment] = useState(null);
+
+    useEffect(() => {
+        const fetchAppointmentDetails = async () => {
+            try {
+                const response = await fetch(`${API_BASE_URL}/appointments/${appointmentID}`); // Cập nhật với endpoint API của bạn
+                const data = await response.json();
+                setAppointment(data); // Giả định dữ liệu trả về có cấu trúc giống như bạn cần
+            } catch (error) {
+                console.error('Error fetching appointment details:', error);
+            }
+        };
+
+        fetchAppointmentDetails();
+    }, [appointmentID]);
 
     const goBack = () => {
         navigation.goBack();
@@ -53,7 +62,13 @@ const AppointmentDetail = () => {
                 },
             ]);
     };
-
+    if (!appointment) {
+        return (
+            <View style={detailStyles.container}>
+                <Text>Loading...</Text>
+            </View>
+        );
+    }
     return (
         <View style={detailStyles.container}>
             <View style={detailStyles.header}>
@@ -78,19 +93,19 @@ const AppointmentDetail = () => {
                     <View style={detailStyles.separator} />
                     <View style={detailStyles.row}>
                         <Text style={detailStyles.label}>Thời gian:</Text>
-                        <Text style={detailStyles.value}>{new Date(appointment.time).toLocaleTimeString()}</Text>
+                        <Text style={detailStyles.value}>{appointment.appointmentDate}</Text>
                     </View>
                     <View style={detailStyles.row}>
                         <Text style={detailStyles.label}>Dịch vụ:</Text>
-                        <Text style={detailStyles.value}>{appointment.service.charAt(0).toUpperCase() + appointment.service.slice(1)}</Text>
+                        <Text style={detailStyles.value}>{appointment.services.map(service => service.name).join(', ')}</Text>
                     </View>
                     <View style={detailStyles.row}>
                         <Text style={detailStyles.label}>Ghi chú:</Text>
-                        <Text style={detailStyles.value}>{appointment.notes}</Text>
+                        <Text style={detailStyles.value}>{appointment.status}</Text>
                     </View>
                     <View style={detailStyles.row}>
                         <Text style={detailStyles.label}>Trạng thái:</Text>
-                        <Text style={detailStyles.value}>{appointment.completed ? 'Hoàn thành' : 'Chưa hoàn thành'}</Text>
+                        <Text style={detailStyles.value}>{appointment.status}</Text>
                     </View>
                     {!appointment.completed && (
                         <TouchableOpacity style={detailStyles.deleteButton} onPress={handleDelete}>

@@ -1,11 +1,11 @@
 import { View, Text, Image, StyleSheet } from "react-native";
 import React from "react";
-import ProfileScreenPage from "../../components/profileScreen/profileScreen";
+import ManagerBookingPage from "../../components/ManagerBooking/managerbooking.jsx";
 
-export default function Home() {
+export default function ManagerBooking() {
   return (
     <View style={styles.container}>
-      <ProfileScreenPage />
+      <ManagerBookingPage />
     </View>
   );
 }
@@ -15,5 +15,3 @@ const styles = StyleSheet.create({
     flex: 1,
   },
 });
-
-

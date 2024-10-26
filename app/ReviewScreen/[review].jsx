@@ -1,11 +1,11 @@
 import { View, Text, Image, StyleSheet } from "react-native";
 import React from "react";
-import ProfileScreenPage from "../../components/profileScreen/profileScreen";
+import ReviewPage from "../../components/Review/review";
 
-export default function Home() {
+export default function Review() {
   return (
     <View style={styles.container}>
-      <ProfileScreenPage />
+     <ReviewPage></ReviewPage>
     </View>
   );
 }
