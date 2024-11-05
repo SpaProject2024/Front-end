@@ -37,9 +37,18 @@ const SupplierDetail = () => {
     const handleUpdate = async () => {
         if (validateForm()) {
             try {
+                const token = await AsyncStorage.getItem('token');
                 const supplierId = await AsyncStorage.getItem('supplierId');
                 if (supplierId) {
-                    await axios.put(`${API_BASE_URL}/suppliers/${supplierId}`, updatedSupplier);
+                    await axios.put(`${API_BASE_URL}/suppliers/${supplierId}`, updatedSupplier,
+                        {
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Authorization': `Bearer ${token}`, // Use the token for authorization
+                                'ngrok-skip-browser-warning': '69420'
+                            },
+                        }
+                    );
                     setSupplier(updatedSupplier);
                     setModalVisible(false); // Đóng modal sau khi cập nhật
                 }
@@ -51,10 +60,19 @@ const SupplierDetail = () => {
 
     const handleDelete = async () => {
         try {
+            const token = await AsyncStorage.getItem('token');
             const supplierId = await AsyncStorage.getItem('supplierId');
             if (supplierId) {
                 // Xóa nhà cung cấp
-                await axios.delete(`${API_BASE_URL}/suppliers/${supplierId}`);
+                await axios.delete(`${API_BASE_URL}/suppliers/${supplierId}`,
+                    {
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${token}`, // Use the token for authorization
+                            'ngrok-skip-browser-warning': '69420'
+                        },
+                    }
+                );
                 setSupplier(null); // Xóa supplier khỏi UI sau khi xóa thành công
                 router.push('/suppliermanager/suppliermanager'); // Quay lại danh sách nhà cung cấp
             }
@@ -97,29 +115,34 @@ const SupplierDetail = () => {
 
             {supplier ? (
                 <>
-                    <TouchableOpacity onPress={goBack} style={styles.backButton}>
-                        <Icon name='arrow-back' size={24} color="#b0b0b0" />
+                    <View style={styles.header}>
+                        <TouchableOpacity onPress={goBack} style={styles.backButton}>
+                            <Icon name='arrow-back' size={24} color="#ffffff" />
+                        </TouchableOpacity>
+                        <Text style={styles.title}>Supplier Detail</Text>
+                    </View>
+                    <View style={styles.card}>
                         <Text style={styles.titlename}>{supplier.name}</Text>
-                    </TouchableOpacity>
-                    <Text style={styles.detailText}>Phone: {supplier.numberphone}</Text>
-                    <Text style={styles.detailText}>Address: {supplier.address}</Text>
+                        <Text style={styles.detailText}>Phone: 0{supplier.numberphone}</Text>
+                        <Text style={styles.detailText}>Address: {supplier.address}</Text>
 
 
-                    {/* Nút Update */}
-                    <View style={styles.buttonContainer}>
-                        <TouchableOpacity onPress={() => {
-                            setModalVisible(true);
-                            setUpdatedSupplier({
-                                name: supplier.name,
-                                numberphone: supplier.numberphone,
-                                address: supplier.address
-                            });
-                        }}>
-                            <Icon name="pencil" size={30} color="green" />
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress={() => setConfirmDeleteVisible(true)}>
-                            <Icon name="trash" size={30} color="red" />
-                        </TouchableOpacity>
+                        {/* Nút Update */}
+                        <View style={styles.buttonContainer}>
+                            <TouchableOpacity onPress={() => {
+                                setModalVisible(true);
+                                setUpdatedSupplier({
+                                    name: supplier.name,
+                                    numberphone: supplier.numberphone,
+                                    address: supplier.address
+                                });
+                            }}>
+                                <Icon name="pencil" size={30} color="green" />
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress={() => setConfirmDeleteVisible(true)}>
+                                <Icon name="trash" size={30} color="red" />
+                            </TouchableOpacity>
+                        </View>
                     </View>
                     {/* Form Popup */}
                     <Modal visible={modalVisible} animationType="slide" transparent={true}>
@@ -137,8 +160,9 @@ const SupplierDetail = () => {
                                 <TextInput
                                     style={styles.input}
                                     placeholder="Phone Number"
-                                    value={updatedSupplier.numberphone}
+                                    value={String(updatedSupplier.numberphone)}
                                     onChangeText={(text) => setUpdatedSupplier({ ...updatedSupplier, numberphone: text })}
+                                    keyboardType="numeric"
                                 />
                                 {validationErrors.numberphone && <Text style={styles.errorText}>{validationErrors.numberphone}</Text>}
 

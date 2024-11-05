@@ -39,7 +39,7 @@ const VerifyPin = () => {
 
             if (response.status === 200) {
                 Alert.alert('Success', 'Account activated successfully! Redirecting to the homepage.');
-                router.push('Home/home');
+                router.push('Login/login');
             }
         } catch (error) {
             console.error('Verification error:', error);

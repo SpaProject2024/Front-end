@@ -8,24 +8,17 @@ export default function IntroScreen() {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-       router.push("/Home/home");
+      router.push("/hometab/hometab");
     }, 2000);
 
     return () => clearTimeout(timer);
   }, [router]);
 
   return (
+
     <View style={styles.container}>
-      <Text>Welcome to the Intro Screen!</Text>
-      <Button
-        title="Go to Login"
-        onPress={() => router.push('/Login/login')}
-        // onPress={() => router.push('/ServiceList')}
-      />
-    <View style={styles.container}>    
       <Image source={Logo} style={styles.logo}></Image>
       <Text style={styles.text}> Bellavita Beauty </Text>
-    </View>
     </View>
   );
 }
@@ -41,8 +34,8 @@ const styles = StyleSheet.create({
     height: 100,
     borderRadius: 50,
   },
-  text:{
-    fontSize:14,
+  text: {
+    fontSize: 14,
     fontWeight: 'bold',
     color: '#999999',
     paddingTop: 5,

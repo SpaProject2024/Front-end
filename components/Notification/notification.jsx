@@ -1,145 +1,73 @@
-import React, { useState } from "react";
-import {
-  View,
-  Text,
-  Image,
-  StyleSheet,
-  SectionList,
-  ActivityIndicator,
-} from "react-native";
-
-// Dữ liệu menu gốc
-const notificationToDisplay = [
-  {
-    id: "0",
-    title: "Notification",
-    data: [
-      {
-        id: "0",
-        status: "New appoiltment",
-        content:
-          "Booked an your appointment 21 June 2022 at lee nails and makeover",
-      },
-      {
-        id: "1",
-        status: "New appoiltment",
-        content:
-          "Booked an your appointment 21 June 2022 at lee nails and makeover",
-      },
-      {
-        id: "2",
-        status: "New appoiltment",
-        content:
-          "Booked an your appointment 21 June 2022 at lee nails and makeover",
-      },
-      {
-        id: "3",
-        status: "New appoiltment",
-        content:
-          "Booked an your appointment 21 June 2022 at lee nails and makeover",
-      },
-      {
-        id: "4",
-        status: "New appoiltment",
-        content:
-          "Booked an your appointment 21 June 2022 at lee nails and makeover",
-      },
-      {
-        id: "5",
-        status: "New appoiltment",
-        content:
-          "Booked an your appointment 21 June 2022 at lee nails and makeover",
-      },
-      {
-        id: "6",
-        status: "New appoiltment",
-        content:
-          "Booked an your appointment 21 June 2022 at lee nails and makeover",
-      },
-      {
-        id: "7",
-        status: "New appoiltment",
-        content:
-          "Booked an your appointment 21 June 2022 at lee nails and makeover",
-      },
-      // More items
-    ],
-  },
-  // More sections
-];
-
-const Item = ({ status, content }) => (
-  <View style={menuStyles.innerContainer}>
-    <View>
-      <Text style={menuStyles.statusText}>{status}</Text>
-      <Text style={menuStyles.contentText}>{content}</Text>
-    </View>
-  </View>
-);
+import React, { useState, useEffect } from "react";
+import { View, Text, FlatList, TouchableOpacity, StyleSheet, ActivityIndicator } from 'react-native';
+import axios from "axios";
+import Icon from 'react-native-vector-icons/Ionicons';
+import { API_BASE_URL } from '../../LocalIP/localIP';
+import { useNavigation } from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const MenuItems = () => {
-  const [visibleItems, setVisibleItems] = useState(
-    notificationToDisplay.map((section) => ({
-      ...section,
-      data: section.data.slice(0, 6),
-    }))
-  );
-  const [loading, setLoading] = useState(false);
-  const [hasMore, setHasMore] = useState(true);
+  const [visibleItems, setVisibleItems] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const navigation = useNavigation();
 
-  const loadMoreItems = () => {
-    if (!hasMore) return;
-    setLoading(true);
-    setTimeout(() => {
-      let moreDataAvailable = false;
-      const updatedItems = visibleItems.map((section, index) => {
-        const originalSection = notificationToDisplay[index];
-        const currentLength = section.data.length;
-        const moreItems = originalSection.data.slice(
-          currentLength,
-          currentLength + 6
-        );
-        if (moreItems.length > 0) moreDataAvailable = true;
-        return {
-          ...section,
-          data: [...section.data, ...moreItems],
-        };
-      });
-      setVisibleItems(updatedItems);
-      setHasMore(moreDataAvailable);
+  // Fetch data from API
+  const fetchNotifications = async () => {
+    try {
+      setLoading(true);
+      const userId = await AsyncStorage.getItem('userId');
+      const response = await axios.get(`${API_BASE_URL}/notification`);
+      const newNotifications = response.data.data; // Điều chỉnh theo cấu trúc phản hồi của bạn
+
+      // Lọc các thông báo có senderID trùng với userId
+      const filteredNotifications = newNotifications.filter(notification => notification.senderID === userId);
+      setVisibleItems(filteredNotifications);
+    } catch (error) {
+      console.error("Không thể lấy thông báo:", error);
+    } finally {
       setLoading(false);
-    }, 1000);
+    }
   };
 
-  const renderItem = ({ item }) => (
-    <Item status={item.status} content={item.content} />
-  );
+  // Initial fetch
+  useEffect(() => {
+    fetchNotifications();
+  }, []);
 
   const renderFooter = () => {
     if (loading) {
       return <ActivityIndicator size="large" color="#F4CE14" />;
-    } else if (!hasMore) {
-      return (
-        <Text style={menuStyles.noMoreText}>
-          There are no more notifications to display.
-        </Text>
-      );
     }
     return null;
   };
 
+  const goBack = () => {
+    navigation.goBack();
+  };
+
+  const Item = ({ item }) => ( // Nhận từng item làm props
+    <View style={menuStyles.innerContainer}>
+      <View>
+        <Text style={menuStyles.statusText}>{item.notification_type}</Text>
+        <Text style={menuStyles.titleText}>{item.title}</Text>
+        <Text style={menuStyles.contentText}>{item.content}</Text>
+      </View>
+    </View>
+  );
+
   return (
     <View style={menuStyles.container}>
-      <SectionList
-        sections={visibleItems}
-        renderItem={renderItem}
-        renderSectionHeader={({ section }) => (
-          <Text style={menuStyles.sectionHeader}>{section.title}</Text>
-        )}
-        keyExtractor={(item) => item.id}
-        onEndReached={hasMore ? loadMoreItems : null}
-        onEndReachedThreshold={0.5}
-        ListFooterComponent={renderFooter()}
+      <View style={menuStyles.header}>
+        <TouchableOpacity onPress={goBack} style={menuStyles.backButton}>
+          <Icon name='arrow-back' size={24} color="#b0b0b0" />
+        </TouchableOpacity>
+        <Text style={menuStyles.title}>Notification</Text>
+      </View>
+      <FlatList
+        data={visibleItems}
+        renderItem={Item} // Sử dụng hàm Item để render
+        keyExtractor={(item) => item._id} // Đảm bảo item có _id
+        ListFooterComponent={renderFooter}
       />
     </View>
   );
@@ -148,35 +76,20 @@ const MenuItems = () => {
 const menuStyles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: "#FFFFFF",
+  },
+  title: {
+    color: '#ffffff',
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginLeft: 50,
   },
   innerContainer: {
     paddingHorizontal: 15,
     paddingVertical: 15,
+    marginLeft:20,
     flexDirection: "row",
     alignItems: "center",
-  },
-  itemText: {
-    color: "#000",
-    fontSize: 20,
-  },
-  itemImage: {
-    width: 50,
-    height: 50,
-    marginRight: 20,
-  },
-  sectionHeader: {
-    fontSize: 20,
-    color: "#fff",
-    fontWeight: "bold",
-    backgroundColor: "#2B5F2F",
-    padding: 10,
-    textAlign: "center",
-  },
-  noMoreText: {
-    textAlign: "center",
-    padding: 20,
-    fontSize: 16,
-    color: "#888",
   },
   statusText: {
     color: "#2B5F2F",
@@ -187,6 +100,17 @@ const menuStyles = StyleSheet.create({
     color: "#333",
     marginTop: 5,
     fontSize: 16,
+  },
+  header: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingTop: 40,
+    paddingBottom: 10,
+    paddingHorizontal: 20,
+    backgroundColor: '#5C9161',
+  },
+  backButton: {
+    marginRight: 20,
   },
 });
 

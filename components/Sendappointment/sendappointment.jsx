@@ -1,14 +1,15 @@
 import { View, Text, TextInput, Button, StyleSheet, ScrollView, Alert, Image, TouchableOpacity, Modal, FlatList } from 'react-native';
 import React, { useState, useEffect } from 'react';
-import Logo from "../../assets/images/logo2.png";
 import { API_BASE_URL } from '../../LocalIP/localIP';
 import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { useRouter } from "expo-router";
 import { styles } from "./styles";
 
-export default function sendappointment() {
+export default function SendAppointment() {
     const router = useRouter();
+    const [userData, setUserData] = useState(null);
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [doctorID, setDoctorID] = useState(''); // ID của doctor
@@ -18,49 +19,87 @@ export default function sendappointment() {
 
     const fetchManagers = async () => {
         try {
-            const response = await axios.get(`${API_BASE_URL}/managers`);
-            console.log(response.data);
-            setManagers(response.data); // Giả sử API trả về mảng quản lý
+            const response = await axios.get(`${API_BASE_URL}/user`);
+            const managersList = response.data.data.filter(user => user.role === 'manager');
+            setManagers(managersList); // Update state with filtered managers list
+            console.log(managersList);
         } catch (error) {
-            Alert.alert('Lỗi', 'Không thể lấy danh sách quản lý');
+            Alert.alert('Error', 'Could not get management list');
         }
     };
 
     useEffect(() => {
-        fetchManagers(); // Gọi hàm để lấy danh sách quản lý khi component mount
+        const fetchData = async () => {
+            try {
+                const user = await AsyncStorage.getItem('userdata');
+                if (user !== null) {
+                    const parsedData = JSON.parse(user);
+                    setUserData(parsedData.data);
+                    setDoctorID(parsedData.data.doctorId);
+                    console.log("Doctor ID", doctorID);
+                }
+            } catch (error) {
+                console.error('Failed to load user data from AsyncStorage or API:', error);
+            }
+        };
+        fetchData();
+        fetchManagers(); // Fetch managers when component mounts
     }, []);
-
 
     const handleSubmit = async () => {
         if (title && description && selectedManager && doctorID) {
             try {
+                const token = await AsyncStorage.getItem('token');
                 const response = await axios.post(`${API_BASE_URL}/sendappointment`, {
-                    managerID: selectedManager.id,
+                    managerID: selectedManager._id, // Ensure to use the correct ID
                     doctorID,
                     content: description,
                     title,
                     datasent: new Date(),
+                }, {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`, // Use the token for authorization
+                        'ngrok-skip-browser-warning': '69420'
+                    },
                 });
+
+                console.log("Response:", response); // Log response from server
+
                 if (response.status === 201) {
-                    Alert.alert('Thông báo', 'đơn dã được gửi thành công!');
+                    Alert.alert('Notification', 'Application submitted successfully!', [
+                        {
+                            text: 'OK',
+                            onPress: () => {
+                                // Reset the input fields
+                                setTitle('');
+                                setDescription('');
+                                setSelectedManager(null);
+                                setIsModalVisible(false); // Ensure modal is closed
+                                // Navigate back to Appointment/appointment
+                                router.push("/appointment/appointment");
+                            }
+                        }
+                    ]);
                 } else {
-                    Alert.alert('Lỗi', data.message);
+                    Alert.alert('Error', response.data.message);
                 }
             } catch (error) {
-                Alert.alert('Lỗi', 'có lỗi xảy ra trong quá trình gửi đơn');
+                console.error("Error sending appointment:", error); // Log detailed error
+                Alert.alert('Error', 'An error occurred while submitting the application');
             }
         } else {
-            Alert.alert('Thông báo', 'Vui lòng điền đầy đủ thông tin!');
+            Alert.alert('Notice', 'Please fill in all information!');
         }
     };
 
     const renderManagerItem = ({ item }) => {
         return (
             <TouchableOpacity onPress={() => {
-                setSelectedManager(item); // Lưu thông tin quản lý đã chọn
-                setIsModalVisible(false); // Đóng modal
+                setSelectedManager(item); // Save selected manager's info
+                setIsModalVisible(false); // Close modal
             }}>
-                <Text style={styles.managerItem}>{item.email ? item.email : 'Không có email'}</Text> {/* Hiển thị email hoặc thông báo không có */}
+                <Text style={styles.managerItem}>{item.email ? item.email : 'None email'}</Text>
             </TouchableOpacity>
         );
     };
@@ -88,7 +127,7 @@ export default function sendappointment() {
                 />
                 <TextInput
                     style={styles.textArea}
-                    placeholder="Mô tả lý do xin nghỉ"
+                    placeholder="Describe the reason for leaving"
                     value={description}
                     onChangeText={setDescription}
                     multiline
@@ -96,11 +135,11 @@ export default function sendappointment() {
                 />
                 <TouchableOpacity onPress={() => setIsModalVisible(true)}>
                     <Text style={styles.selectedManager}>
-                        {selectedManager ? selectedManager.email : 'Chọn quản lý'}
+                        {selectedManager ? selectedManager.email : 'Select management'}
                     </Text>
                 </TouchableOpacity>
 
-                {/* Modal để chọn quản lý */}
+                {/* Modal to select manager */}
                 <Modal visible={isModalVisible} transparent={true}>
                     <View style={styles.modalContainer}>
                         <View style={styles.modalContent}>
@@ -115,11 +154,9 @@ export default function sendappointment() {
                 </Modal>
 
                 <View style={styles.buttonContainer}>
-                    <Button title="Gửi đơn" onPress={handleSubmit} color="#4CAF50" />
+                    <Button title="Submit application" onPress={handleSubmit} color="#4CAF50" />
                 </View>
             </View>
-
-        </ScrollView >
+        </ScrollView>
     );
 }
-

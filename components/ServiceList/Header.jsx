@@ -1,11 +1,10 @@
 import { View, Text, StyleSheet, Pressable } from "react-native";
 import React from "react";
-import SearchService from "./../../components/ServiceList/SearchService";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { Colors } from "../../constants/Colors";
 import { useRouter } from "expo-router";
 
-export default function Header({setFilterVisible}) {
+export default function Header({ setFilterVisible }) {
   const router = useRouter();
 
   return (
@@ -24,7 +23,7 @@ export default function Header({setFilterVisible}) {
           <Ionicons name="filter-circle" size={40} color="white" />
         </Pressable>
       </View>
-      <SearchService />
+      {/* <SearchService /> */}
     </View>
   );
 }
@@ -32,8 +31,9 @@ export default function Header({setFilterVisible}) {
 const styles = StyleSheet.create({
   header: {
     backgroundColor: Colors.PRIMARY,
-    paddingTop: 30,
-    padding: 20,
+    paddingTop: 40,
+    padding: 10,
+    height: 100,
   },
   header1: {
     flexDirection: "row",
@@ -43,7 +43,12 @@ const styles = StyleSheet.create({
   text: {
     color: "white",
     fontSize: 24,
+    marginLeft: 10,
+    marginTop: 2,
     paddingLeft: 10,
     alignContent: "center",
+  },
+  backIcon: {
+    marginTop: 5,
   },
 });

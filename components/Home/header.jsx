@@ -19,13 +19,12 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 import { styles } from "./styles";
 const options = [
-  { label: "View my profile", value: "myprofile" },
   { label: "Login", value: "login" },
   { label: "Register", value: "register" },
   { label: "Logout", value: "logout" },
   { label: "appointment", value: "appointment" },
-  { label: "MyAccunt", value: "MyAccount" },
   { label: "managerbooking", value: "managerbooking" },
+  { label: "dashboard", value: "dashboard" },
 ];
 
 const Header = () => {
@@ -39,6 +38,7 @@ const Header = () => {
         const token = await AsyncStorage.getItem("token");
         const userId = await AsyncStorage.getItem("userId"); // Retrieve userId from AsyncStorage
         const doctorId = await AsyncStorage.getItem("doctorId"); // Retrieve userId from AsyncStorage
+        const userdata = await AsyncStorage.getItem("data"); // Retrieve userId from AsyncStorage
 
         console.log("Token:", token); // Logging token
         console.log("User ID:", userId); // Logging user ID
@@ -46,7 +46,7 @@ const Header = () => {
         // Ensure both token and userId are present
         if (token && userId) {
           const response = await axios.get(
-            `http://10.64.42.242:8000/login/${userId}`,
+            `${API_BASE_URL}/login/${userId}`,
             {
               headers: {
                 Authorization: `Bearer ${token}`,
@@ -56,6 +56,12 @@ const Header = () => {
 
           // Logging the full response data
           console.log("Full response data:", response.data);
+          const userdata = response.data;
+          const userrole = response.data.data.role;
+          await AsyncStorage.setItem("userdata", JSON.stringify(userdata));
+          await AsyncStorage.setItem("userrole", JSON.stringify(userrole));
+          console.log("userdata:", userdata);
+          console.log("userrole:", userrole);
           console.log("Your email:", response.data.data.email);
           setUserInfo(response.data.data); // Save user info in state
           //lưu id của doctorID
@@ -63,13 +69,9 @@ const Header = () => {
           console.log("Doctor ID:", doctorId);
           await AsyncStorage.setItem("doctorId", doctorId);
         } else {
-          console.log("No token or user ID found");
+          // console.log("No token or user ID found");
         }
       } catch (error) {
-        console.error(
-          "Error fetching user info:",
-          error.response ? error.response.data : error.message
-        );
       }
     };
 
@@ -87,17 +89,14 @@ const Header = () => {
       case "logout":
         await confirmLogout();
         break;
-      case "myprofile":
-        router.push("/profileScreen/profileScreen");
-        break;
       case "appointment":
         router.push("/appointmenttab/appointmenttab");
         break;
       case "managerbooking":
         router.push("/ManagerBooking/managerbooking");
         break;
-      case "MyAccount":
-        router.push("/MyAccount/myAccount");
+      case "dashboard":
+        router.push("/Dashboard/dashboard");
         break;
       default:
         break;
@@ -118,7 +117,7 @@ const Header = () => {
               await AsyncStorage.removeItem("userId");
               router.push("/Home/home");
             } catch (error) {
-              console.error("Error logging out:", error);
+              // console.error("Error logging out:", error);
             }
           },
         },
@@ -135,9 +134,8 @@ const Header = () => {
             <Image source={Logo} style={styles.logo} />
             <View style={styles.searchBox}>
               <View style={styles.searchRow}>
-                <EvilIcons name="search" size={18} color="#2B5F2F" />
+                <EvilIcons name="search" size={20} color="#2B5F2F" />
                 <TextInput style={styles.input} placeholder="Search" />
-                <Ionicons name="mic-outline" size={18} color="#2B5F2F" />
               </View>
             </View>
           </View>
@@ -148,9 +146,9 @@ const Header = () => {
             >
               <Ionicons
                 name="location-outline"
-                size={18}
+                size={20}
                 color="#fff"
-                style={{ marginRight: 10 }}
+                style={{ marginLeft: -15 }}
               />
             </TouchableOpacity>
             <TouchableOpacity
@@ -159,9 +157,9 @@ const Header = () => {
             >
               <Feather
                 name="bell"
-                size={18}
+                size={20}
                 color="#fff"
-                style={{ marginLeft: 40 }}
+                style={{ marginLeft: 20 }}
               />
             </TouchableOpacity>
             <Dropdown

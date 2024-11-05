@@ -3,6 +3,7 @@ import React from "react";
 import { StarRatingDisplay } from "react-native-star-rating-widget";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { Colors } from "../../constants/Colors";
+import AsyncStorage from '@react-native-async-storage/async-storage'; // Import AsyncStorage
 
 export default function ServiceItem({
   service,
@@ -14,14 +15,14 @@ export default function ServiceItem({
       <View style={styles.item}>
         <Image
           style={styles.picture}
-          source={require("./../../assets/images/hasaki.jpg")}
+          source={{ uri: service.image }}
         />
         <View style={styles.info}>
           <View
             style={{ flexDirection: "row", justifyContent: "space-between" }}
           >
             <Text numberOfLines={1} ellipsizeMode="tail" style={styles.title}>
-              {service.title}
+              {service.name}
             </Text>
             <TouchableOpacity
               style={{ justifyContent: "center" }}
@@ -38,8 +39,11 @@ export default function ServiceItem({
             style={{ marginVertical: 5 }}
             color="orange"
             starSize={16}
-            rating={service.rate}
+            rating={service.rate} // Sử dụng rate để hiển thị sao
           />
+          <Text style={styles.ratingText}>
+            {service.averageRating} / 5
+          </Text>
           <Text
             style={styles.description}
             numberOfLines={2}
@@ -69,7 +73,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 16,
     width: 160,
-    fontWeight: "bold"
+    fontWeight: "bold",
   },
   description: {
     fontSize: 13,
@@ -82,5 +86,10 @@ const styles = StyleSheet.create({
     borderBottomLeftRadius: 10,
     width: 120,
     height: 120,
+  },
+  ratingText: {
+    fontSize: 14,
+    color: "grey",
+    marginVertical: 5,
   },
 });

@@ -18,8 +18,8 @@ export default function FilterService({ closeFilter, isFilterVisible }) {
       <View>
         <Text style={styles.title}>Filter</Text>
 
-        <FilterCategory />
-        <View style={styles.line} />
+        {/* <FilterCategory />
+        <View style={styles.line} /> */}
 
         <FilterRatting />
         <View style={styles.line} />

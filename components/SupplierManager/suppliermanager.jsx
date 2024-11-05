@@ -3,11 +3,13 @@ import { View, Text, FlatList, TouchableOpacity, ActivityIndicator, Alert, Modal
 import axios from "axios";
 import Icon from 'react-native-vector-icons/Ionicons';
 import { styles } from "./styles";
+import { useNavigation } from '@react-navigation/native';
 import { useRouter } from "expo-router"; // Hoặc từ 'react-router-dom'
 import AsyncStorage from '@react-native-async-storage/async-storage';  // Import AsyncStorage
 import { API_BASE_URL } from '../../LocalIP/localIP';
 
 const SupplierManager = () => {
+    const navigation = useNavigation();
     const [suppliers, setSuppliers] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -38,11 +40,18 @@ const SupplierManager = () => {
     const handleAddSupplier = async () => {
         if (validateForm()) {
             try {
+                const token = await AsyncStorage.getItem('token');
                 // Chỉ gửi thông tin name, numberphone và address
                 const response = await axios.post(`${API_BASE_URL}/suppliers`, {
                     name: newSupplier.name,
                     numberphone: newSupplier.numberphone,
                     address: newSupplier.address,
+                }, {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`, // Use the token for authorization
+                        'ngrok-skip-browser-warning': '69420'
+                    },
                 });
                 setSuppliers([...suppliers, response.data.data]); // Thêm nhà cung cấp mới vào danh sách
                 closeModal(); // Đóng modal
@@ -93,10 +102,17 @@ const SupplierManager = () => {
     if (error) {
         return <Text>Error: {error}</Text>;
     }
-
+    const goBack = () => {
+        router.push('/Dashboard/dashboard');
+    };
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>Supplier List</Text>
+            <View style={styles.header}>
+                <TouchableOpacity onPress={goBack} style={styles.backButton}>
+                    <Icon name='arrow-back' size={24} color="#fff" />
+                </TouchableOpacity>
+                <Text style={styles.title}>Supplier List</Text>
+            </View>
             <TouchableOpacity onPress={openModal} style={styles.addButton}>
                 <Icon name="add" size={30} color="#fff" />
             </TouchableOpacity>
@@ -106,10 +122,18 @@ const SupplierManager = () => {
                 renderItem={({ item }) => (
                     <View style={styles.supplierItem}>
                         <View style={styles.infoContainer}>
-                            <Text style={styles.supplierName}>{item._id}</Text>
-                            <Text style={styles.supplierName}>Name: {item.name}</Text>
-                            <Text style={styles.supplierPhone}>Phone: {item.numberphone}</Text>
-                            <Text style={styles.supplierAddress}>Address: {item.address}</Text>
+                            <View style={styles.row}>
+                                <Text style={styles.label}>Name:</Text>
+                                <Text style={styles.value}>{item.name}</Text>
+                            </View>
+                            <View style={styles.row}>
+                                <Text style={styles.label}>Phone:</Text>
+                                <Text style={styles.value}>0{item.numberphone}</Text>
+                            </View>
+                            <View style={styles.row}>
+                                <Text style={styles.label}>Address:</Text>
+                                <Text style={styles.value}>{item.address}</Text>
+                            </View>
                             <TouchableOpacity onPress={() => handleViewDetail(item)} style={styles.viewButton}>
                                 <Text style={styles.buttonText}>View</Text>
                             </TouchableOpacity>

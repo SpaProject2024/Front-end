@@ -58,7 +58,7 @@ export default function Login() {
 
   const handleLogin = async () => {
     try {
-      const response = await axios.post("http://10.64.42.242:8000/login", {
+      const response = await axios.post(`${API_BASE_URL}/login`, {
         email,
         password,
       });
@@ -91,8 +91,11 @@ export default function Login() {
               // router.push("/Home/home");
               if (role === "doctor") {
                 router.push("/appointmenttab/appointmenttab");
-              } else {
-                router.push("/Home/home");
+              } else if (role === "staff") {
+                router.push("/Dashboard/dashboard");
+              }
+              else {
+                router.push("/hometab/hometab");
               }
             },
           },
@@ -116,7 +119,7 @@ export default function Login() {
   const handleRefreshToken = async () => {
     try {
       const response = await axios.post(
-        "http://10.64.42.242:8000/login/refreshtoken",
+        `${API_BASE_URL}/login/refreshtoken`,
         {
           email: tokenEmail,
           pinSecondary: pin,

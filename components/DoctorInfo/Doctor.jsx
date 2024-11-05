@@ -1,11 +1,4 @@
-import {
-  View,
-  Text,
-  Image,
-  StyleSheet,
-  Dimensions,
-  TouchableOpacity,
-} from "react-native";
+import { View, Text, Image, StyleSheet, Dimensions, TouchableOpacity, } from "react-native";
 import React, { useState } from "react";
 import { StarRatingDisplay } from "react-native-star-rating-widget";
 

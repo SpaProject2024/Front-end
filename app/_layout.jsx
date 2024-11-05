@@ -46,6 +46,8 @@ export default function RootLayout() {
       <Stack.Screen name="supplierdetail" />
       <Stack.Screen name="suppliermanager" />
       <Stack.Screen name="appointmentdetail" />
+      <Stack.Screen name="dateappoinemt" />
+      <Stack.Screen name="acceptappointment" />
     </Stack>
 
   );

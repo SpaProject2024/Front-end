@@ -36,7 +36,7 @@ export default function Appointment() {
     const fetchAppointments = async () => {
         try {
             const doctorId = await AsyncStorage.getItem('doctorId'); // Lấy doctorId từ AsyncStorage
-            const response = await fetch(`${API_BASE_URL}/appointments`); // Update with your API URL
+            const response = await fetch(`${API_BASE_URL}/appointments`);
             const data = await response.json();
             //thanh lọc
             const filteredAppointments = data.data.filter((appointment) => appointment.doctor === doctorId);
@@ -62,7 +62,6 @@ export default function Appointment() {
         try {
             const response = await fetch(`${API_BASE_URL}/services/${serviceId}`);
             const data = await response.json();
-            console.log('Service Data:', data); // Thêm log ở đây
             return data; // Giả sử bạn nhận được thông tin dịch vụ với trường `name`
         } catch (error) {
             console.error(`Error fetching service with ID ${serviceId}:`, error);
@@ -115,10 +114,6 @@ export default function Appointment() {
     };
 
     const renderScheduleItem = ({ item }) => {
-        const appointmentDateTime = DateTime.fromISO(item.appointmentDate, { setZone: 'UTC' }); // Giả định dữ liệu là UTC
-        const localDateTime = appointmentDateTime.setZone('Asia/Ho_Chi_Minh'); // Chỉnh sửa theo múi giờ của bạn
-        const formattedTime = localDateTime.toFormat('hh:mm a'); // Định dạng giờ
-
         return (
             <View style={styles.scheduleItem}>
                 <View style={styles.infoRow}>
@@ -130,8 +125,8 @@ export default function Appointment() {
                     <Text style={styles.valueText}>{item.services.join(', ')}</Text>
                 </View>
                 <View style={styles.infoRow}>
-                    <Text style={styles.labelText}>Date:</Text>
-                    <Text style={styles.valueText}>{formattedTime}</Text>
+                    <Text style={styles.labelText}>Slot:</Text>
+                    <Text style={styles.valueText}>{item.slot}</Text>
                 </View>
                 <View style={styles.infoRow}>
                     <Text style={styles.labelText}>Status:</Text>
@@ -154,6 +149,7 @@ export default function Appointment() {
             </View>
         );
     };
+    //comment
     return (
         <View style={styles.container}>
             <View style={styles.header}>

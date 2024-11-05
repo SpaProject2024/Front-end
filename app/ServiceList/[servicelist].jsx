@@ -1,7 +1,7 @@
 import { View, DrawerLayoutAndroid } from "react-native";
 import React, { useRef } from "react";
-import ServiceList from "./../../components/ServiceList/ServiceList";
-import FilterService from "./../../components/ServiceList/FilterService";
+import ServiceList from "../../components/ServiceList/ServiceList";
+import FilterService from "../../components/ServiceList/FilterService";
 import Header from "../../components/ServiceList/Header";
 
 export default function _layout() {
