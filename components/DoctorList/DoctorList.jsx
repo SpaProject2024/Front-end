@@ -1,4 +1,4 @@
-import { 
+import {
   View,
   Text,
   FlatList,
@@ -25,7 +25,7 @@ export default function DoctorList() {
       try {
         // Gọi API lấy danh sách bác sĩ
         const response = await axios.get(`${API_BASE_URL}/doctor`);
-        
+
         // Kiểm tra phản hồi và cập nhật danh sách bác sĩ
         const fetchedDoctors = response.data.data || [];
         if (fetchedDoctors.length > 0) {
@@ -47,37 +47,55 @@ export default function DoctorList() {
   }, []);
 
   // Component để hiển thị thông tin của một bác sĩ
-  const Doctor = ({ doctor }) => (
-    <View style={styles.card}>
-      <Image
-        style={styles.image}
-        source={{
-          uri:
-            doctor.avatar ||
-            "https://imgcdn.stablediffusionweb.com/2024/5/20/e4b6d281-aa03-4d46-b322-0f32374bc98b.jpg",
-        }}
-      />
-      <View style={styles.details}>
-        <Text style={styles.name} numberOfLines={1} ellipsizeMode="tail">
-          {doctor.fullName}
-        </Text>
-        <TouchableOpacity
-          style={styles.button}
-          onPress={async () => {
-            // Lưu doctor ID vào AsyncStorage và chuyển trang
-            try {
-              await AsyncStorage.setItem("selectedDoctorId", doctor._id);
-              router.push(`/ManagerDoctors/managerdoctor?doctorId=${doctor._id}`);
-            } catch (error) {
-              console.error("Error saving doctor ID:", error);
-            }
+  const Doctor = ({ doctor }) => ( // Nhận doctor như là một prop
+    <TouchableOpacity
+      onPress={() => {
+        router.push({
+          pathname: 'doctordetail/doctordetail',
+          params: { doctorId: doctor.doctorId._id }, // Truyền ID qua params
+        });
+      }}
+    >
+      <View>
+        <Image
+          style={styles.image}
+          source={{
+            uri: doctor.avatar || // Sửa thành doctor.avatar
+              "https://imgcdn.stablediffusionweb.com/2024/5/20/e4b6d281-aa03-4d46-b322-0f32374bc98b.jpg",
           }}
-        >
-          <Text style={styles.buttonText}>View Details</Text>
-        </TouchableOpacity>
+        />
+        <Text style={styles.name} numberOfLines={1} ellipsizeMode="tail">
+        {doctor.doctorId.fullName}
+        </Text>
       </View>
-    </View>
+    </TouchableOpacity>
+    // <View style={styles.card}>
+    //   <Image
+    //     style={styles.image}
+    //     source={{
+    //       uri: doctor.avatar || // Sửa thành doctor.avatar
+    //         "https://imgcdn.stablediffusionweb.com/2024/5/20/e4b6d281-aa03-4d46-b322-0f32374bc98b.jpg",
+    //     }}
+    //   />
+    //   <View style={styles.details}>
+    //     <Text style={styles.name} numberOfLines={1} ellipsizeMode="tail">
+    //       {doctor.doctorId.fullName}
+    //     </Text>
+    //     <TouchableOpacity
+    //       style={styles.button}
+    //       onPress={() => {
+    //         router.push({
+    //           pathname: 'doctordetail/doctordetail',
+    //           params: { doctorId: doctor.doctorId._id }, // Truyền ID qua params
+    //         });
+    //       }}
+    //     >
+    //       <Text style={styles.buttonText}>View Details</Text>
+    //     </TouchableOpacity>
+    //   </View>
+    // </View>
   );
+
 
   // Hiển thị khi đang loading
   if (loading) {
@@ -115,7 +133,9 @@ export default function DoctorList() {
         data={doctors}
         renderItem={({ item }) => <Doctor doctor={item} />}
         keyExtractor={(item) => item._id || Math.random().toString()}
-        ItemSeparatorComponent={() => <View style={{ height: 20 }} />}
+        horizontal={true} // Thêm thuộc tính này để cuộn ngang
+        showsHorizontalScrollIndicator={false} // Tùy chọn: Ẩn thanh cuộn ngang nếu không cần
+        ItemSeparatorComponent={() => <View style={{ width: 20 }} />} // Tạo khoảng cách giữa các item
       />
     </View>
   );
@@ -133,31 +153,15 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     marginVertical: 20,
   },
-  card: {
-    backgroundColor: "#fff",
-    borderRadius: 10,
-    padding: 10,
-    flexDirection: "row",
-    alignItems: "center",
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 5,
-  },
   image: {
-    borderRadius: 50,
+    borderRadius: 100,
     width: 80,
     height: 80,
-    marginRight: 10,
-  },
-  details: {
-    flex: 1,
-    justifyContent: "space-between",
   },
   name: {
-    fontWeight: "bold",
-    fontSize: 16,
+    textAlign: "center",
+    width: 80,
+    fontSize: 13
   },
   button: {
     marginTop: 5,

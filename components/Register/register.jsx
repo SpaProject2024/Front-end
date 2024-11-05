@@ -1,14 +1,5 @@
 import React, { useState } from "react";
-import {
-  View,
-  Text,
-  TextInput,
-  Image,
-  TouchableOpacity,
-  Alert,
-  TouchableWithoutFeedback,
-  Keyboard,
-} from "react-native";
+import { View, Text, TextInput, Image, TouchableOpacity, Alert, TouchableWithoutFeedback, Keyboard } from "react-native";
 import { API_BASE_URL } from '../../LocalIP/localIP';
 import { Dropdown } from "react-native-element-dropdown";
 import Logo from "../../assets/images/logo2.png";
@@ -83,7 +74,7 @@ const Register = () => {
         password,
         role,
       });
-
+     
       if (response.status === 201) {
         Alert.alert("Success", "Registration successful");
         router.push({
@@ -91,11 +82,10 @@ const Register = () => {
         });
       }
     } catch (error) {
-      console.error("Registration error:", error);
+      // console.error("Registration error:", error);
       const errorMessage =
         error.response?.data?.message ||
         "Registration failed. Please try again.";
-
       // Kiểm tra nếu email đã tồn tại và isActive là false
       if (error.response?.data?.isActive === false) {
         Alert.alert(
@@ -121,64 +111,6 @@ const Register = () => {
       }
     }
   };
-
-  // const performRegistration = async () => {
-  //   let hasError = false;
-
-  //   setEmailError("");
-  //   setPasswordError("");
-  //   setPasswordMatchError("");
-
-  //   if (!email) {
-  //     setEmailError("Email is required");
-  //     hasError = true;
-  //   } else if (!validateEmail(email)) {
-  //     setEmailError("Email is invalid");
-  //     hasError = true;
-  //   }
-
-  //   if (!password) {
-  //     setPasswordError("Password is required");
-  //     hasError = true;
-  //   } else if (password.length < 6) {
-  //     setPasswordError("Password must be at least 6 characters long");
-  //     hasError = true;
-  //   }
-
-  //   if (password !== passwordAgain) {
-  //     setPasswordMatchError("Passwords do not match");
-  //     hasError = true;
-  //   }
-
-  //   if (!role) {
-  //     Alert.alert("Error", "Please select a role");
-  //     hasError = true;
-  //   }
-
-  //   if (hasError) return;
-
-  //   try {
-  //     const response = await axios.post("http://10.64.42.212:8000/register", {
-  //       email,
-  //       password,
-  //       role,
-  //     });
-
-  //     if (response.status === 201) {
-  //       Alert.alert("Success", "Registration successful");
-  //       router.push({
-  //         pathname: "SecondaryPin/secondarypin",
-  //       });
-  //     }
-  //   } catch (error) {
-  //     console.error("Registration error:", error);
-  //     const errorMessage =
-  //       error.response?.data?.message ||
-  //       "Registration failed. Please try again.";
-  //     Alert.alert("Error", errorMessage);
-  //   }
-  // };
-
   return (
     <TouchableWithoutFeedback
       onPress={() => {

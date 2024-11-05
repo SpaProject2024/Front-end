@@ -5,7 +5,7 @@ import EditProflie from "../../components/EditProfile/editprofile"
 export default function Home() {
   return (
     <View style={styles.container}>
-     <EditProflie></EditProflie>
+     <EditProflie/>
     </View>
   );
 }

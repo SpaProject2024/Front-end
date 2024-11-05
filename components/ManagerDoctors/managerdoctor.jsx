@@ -13,6 +13,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 import axios from "axios";
+import Icon from 'react-native-vector-icons/Ionicons';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { API_BASE_URL } from "../../LocalIP/localIP"; // Đường dẫn đến API của bạn
 import { useNavigation } from "@react-navigation/native";
@@ -61,7 +62,9 @@ const ManagerDoctors = () => {
       if (token) {
         const response = await axios.get(`${API_BASE_URL}/doctor/${doctorId}`, {
           headers: {
-            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`, // Use the token for authorization
+            'ngrok-skip-browser-warning': '69420'
           },
         });
         console.log("Fetched doctor details:", response.data.data);
@@ -84,6 +87,10 @@ const ManagerDoctors = () => {
     fetchDoctorById(doctorId);
   };
 
+  const goBack = () => {
+    navigation.goBack();
+  };
+
   // Hàm để cập nhật thông tin bác sĩ
   const handleUpdate = async () => {
     try {
@@ -94,7 +101,9 @@ const ManagerDoctors = () => {
           { doctorId: updatedDoctor }, // Cập nhật phần doctorId
           {
             headers: {
-              Authorization: `Bearer ${token}`,
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${token}`, // Use the token for authorization
+              'ngrok-skip-browser-warning': '69420'
             },
           }
         );
@@ -127,7 +136,9 @@ const ManagerDoctors = () => {
         console.log("Deleting doctor:", selectedDoctor);
         await axios.delete(`${API_BASE_URL}/doctor/${selectedDoctor._id}`, {
           headers: {
-            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`, // Use the token for authorization
+            'ngrok-skip-browser-warning': '69420'
           },
         });
         Alert.alert("Success", "Doctor deleted successfully!");
@@ -354,6 +365,12 @@ const ManagerDoctors = () => {
 
   return (
     <View style={styles.container}>
+      <View style={styles.header}>
+        <TouchableOpacity onPress={goBack} style={styles.backButton}>
+          <Icon name='arrow-back' size={24} color="#b0b0b0" />
+        </TouchableOpacity>
+        <Text style={styles.title}>Doctor Detail</Text>
+      </View>
       {selectedDoctor ? (
         renderDoctorDetails() // Hiển thị chi tiết bác sĩ
       ) : (
@@ -371,12 +388,12 @@ const ManagerDoctors = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
     backgroundColor: "#F8F9FA",
   },
   card: {
     backgroundColor: "#fff",
     padding: 15,
+    margin: 10,
     borderRadius: 10,
     flexDirection: "row",
     alignItems: "center",
@@ -449,6 +466,24 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     marginTop: 20,
+  },
+  header: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingTop: 40,
+    paddingBottom: 10,
+    paddingHorizontal: 20, // Padding bên
+    backgroundColor: '#5C9161',
+    marginBottom: 10,
+  },
+  backButton: {
+    marginRight: 20,
+  },
+  title: {
+    color: '#ffffff',
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginLeft: 10,
   },
 });
 

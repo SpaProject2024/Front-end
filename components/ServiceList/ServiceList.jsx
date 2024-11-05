@@ -1,267 +1,91 @@
-import { View, Text, FlatList, StyleSheet } from "react-native";
-import React, { useState } from "react";
+import { View, FlatList, StyleSheet, ActivityIndicator } from "react-native";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import { useRouter } from "expo-router";
 import ServiceItem from "./ServiceItem";
-
-const serviceList = [
-  {
-    id: "1",
-    title: "First Item",
-    image: "./../../assets/images/hasaki.jpg",
-    category: "A",
-    description:
-      "A performant interface for rendering basic, flat lists, supporting the most handy feature. A performant interface for rendering basic, flat lists, supporting the most handy feature",
-    isFavorite: true,
-    rate: 3,
-    review: [
-      {
-        id: 1,
-        name: "Isabella Harris",
-        image: "./../../assets/images/user.jpg",
-        rate: 4,
-        comment: "A performant interface for rendering basic, flat lists, supporting the most handy feature. A performant interface for rendering basic, flat lists, supporting the most handy feature"
-      },
-      {
-        id: 2,
-        name: "Isabella Harris",
-        image: "./../../assets/images/user.jpg",
-        rate: 4,
-        comment: "A performant interface for rendering basic, flat lists, supporting the most handy feature. A performant interface for rendering basic, flat lists, supporting the most handy feature"
-      },
-      {
-        id: 3,
-        name: "Isabella Harris",
-        image: "./../../assets/images/user.jpg",
-        rate: 4,
-        comment: "A performant interface for rendering basic, flat lists, supporting the most handy feature. A performant interface for rendering basic, flat lists, supporting the most handy feature"
-      },
-      {
-        id: 4,
-        name: "Isabella Harris",
-        image: "./../../assets/images/user.jpg",
-        rate: 4,
-        comment: "A performant interface for rendering basic, flat lists, supporting the most handy feature. A performant interface for rendering basic, flat lists, supporting the most handy feature"
-      },
-      {
-        id: 5,
-        name: "Isabella Harris",
-        image: "./../../assets/images/user.jpg",
-        rate: 4,
-        comment: "A performant interface for rendering basic, flat lists, supporting the most handy feature. A performant interface for rendering basic, flat lists, supporting the most handy feature"
-      },
-    ]
-  },
-  {
-    id: "2",
-    title: "Second Item Second Item",
-    image: "./../../assets/images/hasaki.jpg",
-    category: "B",
-    description:
-      "A performant interface for rendering basic, flat lists, supporting the most handy feature. A performant interface for rendering basic, flat lists, supporting the most handy feature",
-    isFavorite: false,
-    rate: 5,
-    review: [
-      {
-        id: 1,
-        name: "Isabella Harris",
-        image: "./../../assets/images/user.jpg",
-        rate: 4,
-        comment: "A performant interface for rendering basic, flat lists, supporting the most handy feature. A performant interface for rendering basic, flat lists, supporting the most handy feature"
-      },
-      {
-        id: 2,
-        name: "Isabella Harris",
-        image: "./../../assets/images/user.jpg",
-        rate: 4,
-        comment: "A performant interface for rendering basic, flat lists, supporting the most handy feature. A performant interface for rendering basic, flat lists, supporting the most handy feature"
-      },
-      {
-        id: 3,
-        name: "Isabella Harris",
-        image: "./../../assets/images/user.jpg",
-        rate: 4,
-        comment: "A performant interface for rendering basic, flat lists, supporting the most handy feature. A performant interface for rendering basic, flat lists, supporting the most handy feature"
-      },
-      {
-        id: 4,
-        name: "Isabella Harris",
-        image: "./../../assets/images/user.jpg",
-        rate: 4,
-        comment: "A performant interface for rendering basic, flat lists, supporting the most handy feature. A performant interface for rendering basic, flat lists, supporting the most handy feature"
-      },
-      {
-        id: 5,
-        name: "Isabella Harris",
-        image: "./../../assets/images/user.jpg",
-        rate: 4,
-        comment: "A performant interface for rendering basic, flat lists, supporting the most handy feature. A performant interface for rendering basic, flat lists, supporting the most handy feature"
-      },
-    ]
-  },
-  {
-    id: "3",
-    title: "Third Item",
-    image: "./../../assets/images/hasaki.jpg",
-    category: "C",
-    description:
-      "A performant interface for rendering basic, flat lists, supporting the most handy feature. A performant interface for rendering basic, flat lists, supporting the most handy feature",
-    isFavorite: true,
-    rate: 4,
-    review: [
-      {
-        id: 1,
-        name: "Isabella Harris",
-        image: "./../../assets/images/user.jpg",
-        rate: 4,
-        comment: "A performant interface for rendering basic, flat lists, supporting the most handy feature. A performant interface for rendering basic, flat lists, supporting the most handy feature"
-      },
-      {
-        id: 2,
-        name: "Isabella Harris",
-        image: "./../../assets/images/user.jpg",
-        rate: 4,
-        comment: "A performant interface for rendering basic, flat lists, supporting the most handy feature. A performant interface for rendering basic, flat lists, supporting the most handy feature"
-      },
-      {
-        id: 3,
-        name: "Isabella Harris",
-        image: "./../../assets/images/user.jpg",
-        rate: 4,
-        comment: "A performant interface for rendering basic, flat lists, supporting the most handy feature. A performant interface for rendering basic, flat lists, supporting the most handy feature"
-      },
-      {
-        id: 4,
-        name: "Isabella Harris",
-        image: "./../../assets/images/user.jpg",
-        rate: 4,
-        comment: "A performant interface for rendering basic, flat lists, supporting the most handy feature. A performant interface for rendering basic, flat lists, supporting the most handy feature"
-      },
-      {
-        id: 5,
-        name: "Isabella Harris",
-        image: "./../../assets/images/user.jpg",
-        rate: 4,
-        comment: "A performant interface for rendering basic, flat lists, supporting the most handy feature. A performant interface for rendering basic, flat lists, supporting the most handy feature"
-      },
-    ]
-  },
-  {
-    id: "4",
-    title: "First Item",
-    image: "./../../assets/images/hasaki.jpg",
-    category: "A",
-    description:
-      "A performant interface for rendering basic, flat lists, supporting the most handy feature. A performant interface for rendering basic, flat lists, supporting the most handy feature",
-    isFavorite: false,
-    rate: 3,
-    review: [
-      {
-        id: 1,
-        name: "Isabella Harris",
-        image: "./../../assets/images/user.jpg",
-        rate: 4,
-        comment: "A performant interface for rendering basic, flat lists, supporting the most handy feature. A performant interface for rendering basic, flat lists, supporting the most handy feature"
-      },
-      {
-        id: 2,
-        name: "Isabella Harris",
-        image: "./../../assets/images/user.jpg",
-        rate: 4,
-        comment: "A performant interface for rendering basic, flat lists, supporting the most handy feature. A performant interface for rendering basic, flat lists, supporting the most handy feature"
-      },
-      {
-        id: 3,
-        name: "Isabella Harris",
-        image: "./../../assets/images/user.jpg",
-        rate: 4,
-        comment: "A performant interface for rendering basic, flat lists, supporting the most handy feature. A performant interface for rendering basic, flat lists, supporting the most handy feature"
-      },
-      {
-        id: 4,
-        name: "Isabella Harris",
-        image: "./../../assets/images/user.jpg",
-        rate: 4,
-        comment: "A performant interface for rendering basic, flat lists, supporting the most handy feature. A performant interface for rendering basic, flat lists, supporting the most handy feature"
-      },
-      {
-        id: 5,
-        name: "Isabella Harris",
-        image: "./../../assets/images/user.jpg",
-        rate: 4,
-        comment: "A performant interface for rendering basic, flat lists, supporting the most handy feature. A performant interface for rendering basic, flat lists, supporting the most handy feature"
-      },
-    ]
-  },
-  {
-    id: "5",
-    title: "Second Item",
-    image: "./../../assets/images/hasaki.jpg",
-    category: "B",
-    description:
-      "A performant interface for rendering basic, flat lists, supporting the most handy feature. A performant interface for rendering basic, flat lists, supporting the most handy feature",
-    isFavorite: false,
-    rate: 2,
-    review: [
-      {
-        id: 1,
-        name: "Isabella Harris",
-        image: "./../../assets/images/user.jpg",
-        rate: 4,
-        comment: "A performant interface for rendering basic, flat lists, supporting the most handy feature. A performant interface for rendering basic, flat lists, supporting the most handy feature"
-      },
-      {
-        id: 2,
-        name: "Isabella Harris",
-        image: "./../../assets/images/user.jpg",
-        rate: 4,
-        comment: "A performant interface for rendering basic, flat lists, supporting the most handy feature. A performant interface for rendering basic, flat lists, supporting the most handy feature"
-      },
-      {
-        id: 3,
-        name: "Isabella Harris",
-        image: "./../../assets/images/user.jpg",
-        rate: 4,
-        comment: "A performant interface for rendering basic, flat lists, supporting the most handy feature. A performant interface for rendering basic, flat lists, supporting the most handy feature"
-      },
-      {
-        id: 4,
-        name: "Isabella Harris",
-        image: "./../../assets/images/user.jpg",
-        rate: 4,
-        comment: "A performant interface for rendering basic, flat lists, supporting the most handy feature. A performant interface for rendering basic, flat lists, supporting the most handy feature"
-      },
-      {
-        id: 5,
-        name: "Isabella Harris",
-        image: "./../../assets/images/user.jpg",
-        rate: 4,
-        comment: "A performant interface for rendering basic, flat lists, supporting the most handy feature. A performant interface for rendering basic, flat lists, supporting the most handy feature"
-      },
-    ]
-  },
-];
-
-const initialServiceList = serviceList;
+import SearchService from "./SearchService";  // Make sure this path is correct
+import { API_BASE_URL } from '../../LocalIP/localIP';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function ServiceList() {
-  const [serviceList, setServiceList] = useState(initialServiceList);
+  const [serviceList, setServiceList] = useState([]);
+  const [filteredServices, setFilteredServices] = useState([]);  // For displaying search results
+  const [loading, setLoading] = useState(true);
+  const router = useRouter();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(`${API_BASE_URL}/services`);
+        const services = response.data.data;
+
+        await AsyncStorage.setItem('serviceId', JSON.stringify(services.map(service => service._id)));
+
+        const servicesWithRatings = await Promise.all(
+          services.map(async (service) => {
+            try {
+              const ratingResponse = await axios.get(`${API_BASE_URL}/review/average/${service._id}`);
+              const averageRating = parseFloat(ratingResponse.data.averageRating) || 0;
+              return { ...service, rate: averageRating, averageRating };
+            } catch (error) {
+              // console.error(`Error fetching rating for service ${service._id}:`, error);
+              return { ...service, rate: 0, averageRating: 0 };
+            }
+          })
+        );
+
+        setServiceList(servicesWithRatings);
+        setFilteredServices(servicesWithRatings);  // Initially display all services
+      } catch (error) {
+        console.error("Error fetching services:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  // Define handleSearch function
+  const handleSearch = (query) => {
+    if (query) {
+      const filteredData = serviceList.filter((service) =>
+        service.name.toLowerCase().includes(query.toLowerCase())
+      );
+      setFilteredServices(filteredData);
+    } else {
+      setFilteredServices(serviceList);
+    }
+  };
+
   const toggleFavorite = (id) => {
     setServiceList((prevList) =>
       prevList.map((item) =>
-        item.id === id ? { ...item, isFavorite: !item.isFavorite } : item
+        item._id === id ? { ...item, isFavorite: !item.isFavorite } : item
       )
     );
   };
-  const router = useRouter();
+
+  if (loading) {
+    return (
+      <View style={styles.loaderContainer}>
+        <ActivityIndicator size="large" color="#0000ff" />
+      </View>
+    );
+  }
 
   return (
     <View style={styles.container}>
+      {/* Fixed height for the search bar */}
+      <View style={styles.searchContainer}>
+        <SearchService placeholder="Search Services..." onSearch={handleSearch} />
+      </View>
       <FlatList
-        data={serviceList}
+        data={filteredServices}  // Use filtered data for display
         renderItem={({ item }) => (
           <ServiceItem
             service={item}
-            toggleFavorite={() => toggleFavorite(item.id)} // Bao trong hàm
+            toggleFavorite={() => toggleFavorite(item._id)}
             onServicePress={() =>
               router.push(
                 "/ServiceInfo/" + encodeURIComponent(JSON.stringify(item))
@@ -269,7 +93,8 @@ export default function ServiceList() {
             }
           />
         )}
-        keyExtractor={(item) => item.id}
+        keyExtractor={(item) => item._id.toString()}
+        contentContainerStyle={styles.listContent}
       />
     </View>
   );
@@ -280,18 +105,17 @@ const styles = StyleSheet.create({
     backgroundColor: "#F2F2F2",
     flex: 1,
   },
-  info: {
-    padding: 10,
+  searchContainer: {
+    height: 60,
+    justifyContent: 'center',
+    paddingHorizontal: 10, // Optional: Padding for aesthetics
   },
-  description: {
-    fontSize: 16,
-    lineHeight: 24,
-    width: 390,
+  loaderContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
   },
-  picture: {
-    borderTopLeftRadius: 10,
-    borderBottomLeftRadius: 10,
-    width: 150,
-    height: 150,
+  listContent: {
+    paddingBottom: 20, // Optional: Add some padding at the bottom
   },
 });

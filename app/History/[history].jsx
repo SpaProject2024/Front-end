@@ -5,7 +5,7 @@ import History from "../../components/History/history"
 export default function Home() {
   return (
     <View style={styles.container}>
-     <History></History>
+      <History />
     </View>
   );
 }

@@ -1,203 +1,137 @@
-import React, { useState } from 'react';
-import { View, Text, FlatList, StyleSheet, TouchableOpacity, Alert } from 'react-native';
-import { Ionicons } from '@expo/vector-icons'; // Import Ionicons for the back icon
-import { useRouter } from 'expo-router'; // Import useRouter for navigation
+import { View, Text, FlatList, StyleSheet, TextInput, TouchableOpacity, Image } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { styles } from "./styles";
+import Icon from 'react-native-vector-icons/Ionicons';
+import Logo from "../../assets/images/logo2.png";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { API_BASE_URL } from '../../LocalIP/localIP';
+import { useNavigation } from '@react-navigation/native';
+import { router } from 'expo-router';
 
-// Dữ liệu cứng cho các booking đang diễn ra và đã qua sử dụng
-const dummyOngoingBookings = [
-  { id: 1, doctorName: 'Dr. John Doe', serviceName: 'Consultation', dateTime: '2024-10-25 10:00', rating: null },
-  { id: 2, doctorName: 'Dr. Jane Smith', serviceName: 'Therapy', dateTime: '2024-10-26 14:00', rating: null },
-  { id: 3, doctorName: 'Dr. Emily Davis', serviceName: 'Checkup', dateTime: '2024-10-27 16:00', rating: null },
-];
+const Appointment = () => {
+  const navigation = useNavigation();
+  const [appointments, setAppointments] = useState([]);
+  const [filteredData, setFilteredData] = useState([]);
+  const [statusFilter, setStatusFilter] = useState(false);
+  const [selectedStatus, setSelectedStatus] = useState('Booked');
 
-const dummyPastBookings = [
-  { id: 4, doctorName: 'Dr. Sarah Brown', serviceName: 'Surgery', dateTime: '2024-10-05 09:00', rating: 5 },
-  { id: 5, doctorName: 'Dr. Michael White', serviceName: 'Consultation', dateTime: '2024-10-07 11:00', rating: 4 },
-  { id: 6, doctorName: 'Dr. Lisa Green', serviceName: 'Therapy', dateTime: '2024-10-09 13:00', rating: 3 },
-];
+  useEffect(() => {
+    fetchAppointments();
+  }, []);
 
-// Card cho từng booking
+  useEffect(() => {
+    // Filter appointments based on status
+    const filtered = appointments.filter(appointment =>
+      (statusFilter && appointment.status === 'Canceled') ||
+      (!statusFilter && appointment.status === 'Booked' || appointment.status === 'Pending')
+    );
+    setFilteredData(filtered);
+  }, [appointments, statusFilter]);
 
-const BookingCard = ({ doctorName, serviceName, dateTime, rating, onViewDetails }) => {
-  const formattedDate = dateTime.split(' ')[0].replace(/-/g, '/'); // Chuyển đổi định dạng ngày
-  const isPastBooking = new Date(dateTime) < new Date(); // Kiểm tra nếu booking đã qua ngày
+  const fetchAppointments = async () => {
+    try {
+      const userId = await AsyncStorage.getItem('userId');
+      const response = await fetch(`${API_BASE_URL}/appointments`);
+      const data = await response.json();
+      // Filter by userId
+      const filteredAppointments = data.data.filter(appointment => appointment.user === userId);
+      // Fetch services for appointments
+      const appointmentsWithServices = await Promise.all(filteredAppointments.map(async (appointment) => {
+        const serviceNames = await Promise.all(appointment.services.map(async (serviceId) => {
+          const serviceData = await fetchServiceById(serviceId);
+          return serviceData ? serviceData.data.name : 'Unknown service';
+        }));
+        return {
+          ...appointment,
+          services: serviceNames,
+        };
+      }));
 
-  return (
-    <View style={styles.card}>
-    <View style={styles.cardRow}>
-      <Text style={styles.cardLabel}>Doctor:</Text>
-      <Text style={styles.cardValue}>{doctorName}</Text>
-    </View>
-    <View style={styles.cardRow}>
-      <Text style={styles.cardLabel}>Date:</Text>
-      <Text style={styles.cardValue}>{formattedDate}</Text>
-    </View>
-    <View style={styles.cardRow}>
-      <Text style={styles.cardLabel}>Service:</Text>
-      <Text style={styles.cardValue}>{serviceName}</Text>
-    </View>
-  
-    {/* Hiển thị số sao nếu là booking đã qua ngày */}
-    {rating !== null && (
-      <View style={styles.cardRow}>
-        <Text style={styles.cardLabel}>Rating:</Text>
-        <Text style={styles.cardValue}>{rating} ⭐</Text>
-      </View>
-    )}
-  
-    <TouchableOpacity style={styles.viewButton} onPress={onViewDetails}>
-      <Text style={styles.viewButtonText}>View</Text>
-    </TouchableOpacity>
-  </View>
-  
-  );
-};
-
-// Màn hình lịch sử booking
-const BookingHistory = () => {
-  const [showOngoing, setShowOngoing] = useState(true);
-  const router = useRouter(); // Sử dụng useRouter để điều hướng
-
-  const handleViewDetails = (id) => {
-    Alert.alert(`View details for booking ID: ${id}`);
+      setAppointments(appointmentsWithServices);
+    } catch (error) {
+      console.error('Error fetching appointments:', error);
+    }
   };
+
+  const fetchServiceById = async (serviceId) => {
+    try {
+      const response = await fetch(`${API_BASE_URL}/services/${serviceId}`);
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.error(`Error fetching service with ID ${serviceId}:`, error);
+      return null;
+    }
+  };
+
+  const handleStatusFilter = (status) => {
+    setStatusFilter(status);
+    setSelectedStatus(status ? 'Canceled' : 'Booked');
+  };
+  const goBack = () => {
+    router.push('hometab/hometab');
+  };
+  const renderScheduleItem = ({ item }) => (
+    <View style={styles.scheduleItem}>
+      <View style={styles.infoRow}>
+        <Text style={styles.labelText}>FullName:</Text>
+        <Text style={styles.valueText}>{item.fullName}</Text>
+      </View>
+      <View style={styles.infoRow}>
+        <Text style={styles.labelText}>Service:</Text>
+        <Text style={styles.valueText}>{item.services.join(', ')}</Text>
+      </View>
+      <View style={styles.infoRow}>
+        <Text style={styles.labelText}>Slot:</Text>
+        <Text style={styles.valueText}>{item.slot}</Text>
+      </View>
+      <View style={styles.infoRow}>
+        <Text style={styles.labelText}>Status:</Text>
+        <Text style={styles.valueText}>{item.status}</Text>
+      </View>
+    </View>
+  );
 
   return (
     <View style={styles.container}>
-      {/* Header với icon back và tiêu đề */}
       <View style={styles.header}>
-        <TouchableOpacity onPress={() => router.back()}>
-          <Ionicons name="arrow-back" size={24} color="black" />
+        <TouchableOpacity onPress={goBack} style={styles.backButton}>
+          <Icon name='arrow-back' size={24} color="#b0b0b0" />
         </TouchableOpacity>
-        <Text style={styles.headerTitle}>History</Text>
+        <Text style={styles.title}>Appointment History</Text>
       </View>
-
-      <View style={styles.buttonContainer}>
+      {/* Status filter */}
+      <View style={styles.statusFilterContainer}>
         <TouchableOpacity
-          style={styles.button}
-          onPress={() => setShowOngoing(true)}
+          style={[styles.statusButton, !statusFilter && styles.selectedStatusButton]}
+          onPress={() => handleStatusFilter(false)}
         >
-          <Text style={[styles.buttonText, showOngoing && styles.activeButtonText]}>
-            Ongoing Bookings
-          </Text>
-          {showOngoing && <View style={styles.activeIndicator} />}
+          <Text style={styles.statusText}>Booked</Text>
+          {selectedStatus === 'Booked' && <View style={styles.underline} />}
         </TouchableOpacity>
-
         <TouchableOpacity
-          style={styles.button}
-          onPress={() => setShowOngoing(false)}
+          style={[styles.statusButton, statusFilter && styles.selectedStatusButton]}
+          onPress={() => handleStatusFilter(true)}
         >
-          <Text style={[styles.buttonText, !showOngoing && styles.activeButtonText]}>
-            Past Bookings
-          </Text>
-          {!showOngoing && <View style={styles.activeIndicator} />}
+          <Text style={styles.statusText}>Canceled</Text>
+          {selectedStatus === 'Canceled' && <View style={styles.underline} />}
         </TouchableOpacity>
       </View>
 
-      <View style={styles.listContainer}>
+      {filteredData.length === 0 ? (
+        <View style={{ backgroundColor: '#fff', height: 400, alignItems: 'center' }}>
+          <Text>No appointments available</Text>
+        </View>
+      ) : (
         <FlatList
-          data={showOngoing ? dummyOngoingBookings : dummyPastBookings}
-          keyExtractor={(item) => item.id.toString()}
-          renderItem={({ item }) => (
-            <BookingCard
-              doctorName={item.doctorName}
-              serviceName={item.serviceName}
-              dateTime={item.dateTime}
-              rating={item.rating} 
-              onViewDetails={() => handleViewDetails(item.id)}
-            />
-          )}
-          ListEmptyComponent={<Text>No bookings available.</Text>}
+          style={styles.containercard}
+          data={filteredData}
+          renderItem={renderScheduleItem}
+          keyExtractor={(item) => item._id}
         />
-      </View>
+      )}
     </View>
   );
 };
 
-export default BookingHistory;
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-  },
-  header: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor:'#A1D9A8',
-    height: 50,
-    marginBottom:10,
-  },
-  headerTitle: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    marginLeft: 10,
-  },
-  buttonContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    marginBottom: 20,
-  },
-  button: {
-    alignItems: 'center',
-  },
-  buttonText: {
-    padding: 15,
-    color: '#0F0F0F',
-    fontWeight: 'bold',
-  },
-  activeIndicator: {
-    marginTop: 5,
-    height: 3,
-    width: '100%',
-    backgroundColor: '#A4DAA9',
-    borderRadius: 2,
-  },
-  listContainer: {
-    flex: 1,
-    padding:20,
-  },
-  card: {
-    padding: 10,
-    marginVertical: 10,
-    backgroundColor: '#fff',
-    borderRadius: 8,
-    shadowColor: '#000',
-    shadowOpacity: 0.1,
-    shadowRadius: 5,
-    elevation: 3,
-  },
-  cardRow: {
-    flexDirection: 'row',  // Các phần tử trong hàng sẽ nằm ngang
-    justifyContent: 'space-between',  // Đẩy hai phần tử ra hai bên
-    marginBottom: 8,
-  },
-  cardLabel: {
-    fontSize: 13,
-    fontWeight: 'bold',
-    color: '#333',
-  },
-  cardValue: {
-    fontSize: 13,
-    color: '#555',
-  },
-  cardRating: {
-    fontSize: 13,
-    color: '#555',
-  },
-  viewButton: {
-    flex: 1,
-    marginTop: 5,
-    padding: 5,
-    backgroundColor: '#A4D8A8',
-    borderRadius: 8,
-    alignItems: 'center',
-    width: 80,
-    alignSelf: 'flex-end',
-  },
-  viewButtonText: {
-    color: '#5C9161',
-    fontWeight: 'bold',
-    fontSize: 13,
-  },
-});
+export default Appointment;

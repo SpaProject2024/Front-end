@@ -2,18 +2,21 @@ import { StyleSheet } from "react-native";
 export const styles = StyleSheet.create({
     container: {
         flex: 1,
-        padding: 20,
         backgroundColor: '#f9f9f9',
+    },
+    card: {
+        padding: 20,
     },
     title: {
         fontSize: 24,
         fontWeight: 'bold',
+        marginTop: 20,
         marginBottom: 20,
         textAlign: 'center',
-        color: '#333',
+        color: '#ffffff',
     },
     supplierItem: {
-        padding: 15,
+        margin: 15,
         borderBottomWidth: 1,
         borderBottomColor: '#ccc',
         backgroundColor: 'white',
@@ -25,22 +28,26 @@ export const styles = StyleSheet.create({
     },
     infoContainer: {
         flex: 1,
+        width: 270,
+        padding: 20,
         marginRight: 10,
     },
-    supplierName: {
-        fontSize: 18,
+    row: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginBottom: 15,
+    },
+    label: {
+        fontSize: 14,
         fontWeight: 'bold',
+        width: 80, // Set a fixed width for label alignment
     },
-    supplierTime: {
+    value: {
         fontSize: 14,
-        color: '#666',
-    },
-    supplierMeeting: {
-        fontSize: 14,
-        color: '#666',
+        color: '#333',
     },
     viewButton: {
-        marginLeft: 'auto',
+        marginLeft: 190,
         width: 100,
         marginTop: 10,
         backgroundColor: '#4CAF50',
@@ -85,11 +92,16 @@ export const styles = StyleSheet.create({
         borderRadius: 5,
         marginTop: 20,
     },
-    backButton: {
+    header: {
         flexDirection: 'row',
-        textAlign: "center",
-        marginTop: 20,
-        marginLeft: 10,
+        alignItems: 'center',
+        paddingTop: 40,
+        paddingBottom: 10,
+        paddingHorizontal: 20,
+        backgroundColor: '#5C9161',
+    },
+    backButton: {
+        marginRight: 20,
     },
     titlename: {
         fontSize: 24,
@@ -136,7 +148,7 @@ export const styles = StyleSheet.create({
     },
     detailText: {
         fontSize: 18,
-        color: '#555',
+        color: '#000000',
         marginBottom: 10,
     },
     saveButton: {

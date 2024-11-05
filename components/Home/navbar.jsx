@@ -56,24 +56,33 @@ const Navbar = () => {
       </Swiper>
       <View style={styles.header}></View>
       <View style={styles.rowCategory}>
+
         <View style={styles.categoryItem}>
           <View style={styles.imageWrapper}>
             <Image source={Menu} style={styles.location} />
           </View>
           <Text style={styles.text}>Menu</Text>
         </View>
-        <View style={styles.categoryItem}>
-          <View style={styles.imageWrapper}>
-            <Image source={Spa} style={styles.location} />
+
+        <TouchableOpacity
+          style={styles.categoryItem}
+          onPress={() => router.push("/ServiceList/servicelist")} // Correct navigation method
+        >
+          <View style={styles.categoryItem}>
+            <View style={styles.imageWrapper}>
+              <Image source={Spa} style={styles.location} />
+            </View>
+            <Text style={styles.text}>Clinic & Spa</Text>
           </View>
-          <Text style={styles.text}>Clinic & Spa</Text>
-        </View>
+        </TouchableOpacity>
+
         <View style={styles.categoryItem}>
           <View style={styles.imageWrapper}>
             <Image source={Schedule} style={styles.location} />
           </View>
           <Text style={styles.text}>Schedule</Text>
         </View>
+
         <TouchableOpacity
           style={styles.categoryItem}
           onPress={() => router.push("/ManagerDoctors/managerdoctor")} // Correct navigation method
@@ -83,17 +92,12 @@ const Navbar = () => {
           </View>
           <Text style={styles.text}>Doctor</Text>
         </TouchableOpacity>
+
         <View style={styles.categoryItem}>
           <View style={styles.imageWrapper}>
             <Image source={Cosmetic} style={styles.location} />
           </View>
           <Text style={styles.text}>Cosmetic</Text>
-        </View>
-        <View style={styles.categoryItem}>
-          <View style={styles.imageWrapper}>
-            <Image source={Handbook} style={styles.location} />
-          </View>
-          <Text style={styles.text}>Handbook</Text>
         </View>
       </View>
     </View>
