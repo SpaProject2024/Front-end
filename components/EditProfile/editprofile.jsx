@@ -17,21 +17,18 @@ const EditProfile = () => {
     const [numberPhone, setNumberPhone] = useState(null);
     const [address, setAddress] = useState('');
     const [birthday, setBirthday] = useState(null);
-
     // Thông tin bổ sung cho doctor
     const [avatar, setAvatar] = useState('');
     const [experience, setExperience] = useState(0);
     const [description, setDescription] = useState('');
     const [workingtime, setWorkingtime] = useState(0);
-
     // Thông tin bổ sung cho staff
     const [membershipLevel, setMembershipLevel] = useState('Bronze');
-
     // Thông tin bổ sung cho customer
     const [position, setPosition] = useState('');
     const [salary, setSalary] = useState(0);
     const [error, setError] = useState('');
-
+    const [errors, setErrors] = useState({});
     // Lấy thông tin từ AsyncStorage khi component được mount
     useEffect(() => {
         const fetchData = async () => {
@@ -40,8 +37,7 @@ const EditProfile = () => {
                 if (user !== null) {
                     const parsedData = JSON.parse(user);
                     setUserData(parsedData.data);
-                    console.log("phuc", parsedData.data.doctorId);
-                    // Only fetch detailed info for doctors
+
                     if (parsedData.data.role === 'doctor') {
                         const response = await axios.get(`${API_BASE_URL}/doctor/${parsedData.data.doctorId}`);
                         const doctorData = response.data;
@@ -56,8 +52,6 @@ const EditProfile = () => {
                     } else if (parsedData.data.role === 'customer') {
                         const response = await axios.get(`${API_BASE_URL}/customer/${parsedData.data.customerId}`);
                         const customerData = response.data;
-                        // console.log("hau", customerData);
-                        // Set default values for staff
                         setFullName(customerData.data.fullName || '');
                         setNumberPhone(customerData.data.numberPhone || '');
                         setAddress(customerData.data.address || '');
@@ -66,8 +60,6 @@ const EditProfile = () => {
                     } else if (parsedData.data.role === 'staff') {
                         const response = await axios.get(`${API_BASE_URL}/staff/${parsedData.data.staffId}`);
                         const staffData = response.data;
-                        console.log("hau", staffData);
-                        // Set default values for customers
                         setFullName(staffData.data.fullName || '');
                         setNumberPhone(staffData.data.numberPhone || '');
                         setAddress(staffData.data.address || '');
@@ -77,8 +69,6 @@ const EditProfile = () => {
                     } else if (parsedData.data.role === 'manager') {
                         const response = await axios.get(`${API_BASE_URL}/manager/${parsedData.data.managerId}`);
                         const managerData = response.data;
-                        console.log("hau", managerData);
-                        // Set default values for customers
                         setFullName(managerData.fullName || '');
                         setNumberPhone(managerData.numberPhone || '');
                         setAddress(managerData.address || '');
@@ -109,9 +99,25 @@ const EditProfile = () => {
     //     }
     // };
 
+    const validateInputs = () => {
+        let newErrors = {};
+        if (!fullName.trim()) newErrors.fullName = 'Full Name is required.';
+        if (!numberPhone) {
+            newErrors.numberPhone = 'Phone number is required.';
+        } else if (!/^\d{10}$/.test(numberPhone)) {
+            newErrors.numberPhone = 'Phone number must be a 10-digit number.';
+        }
+        if (birthday && !/^\d{4}-\d{2}-\d{2}$/.test(birthday)) {
+            newErrors.birthday = 'Birthday must be in YYYY-MM-DD format.';
+        }
+
+        setErrors(newErrors);
+        return Object.keys(newErrors).length === 0;
+    };
     // Function để lưu thông tin sau khi chỉnh sửa
     const saveChanges = async () => {
-        
+        if (!validateInputs()) return;
+
         if (!userData) return;
         let apiUrl = '';
         let updateData = {};
@@ -199,13 +205,13 @@ const EditProfile = () => {
             </View>
 
             <View style={styles.inputContainer}>
-                {/* Input chung cho các vai trò */}
                 <Text style={styles.label}>Full Name</Text>
                 <TextInput
                     style={styles.input}
                     value={fullName}
                     onChangeText={setFullName}
                 />
+                {errors.fullName && <Text style={{ color: 'red' }}>{errors.fullName}</Text>}
 
                 <Text style={styles.label}>Number Phone</Text>
                 <TextInput
@@ -214,6 +220,7 @@ const EditProfile = () => {
                     onChangeText={(text) => setNumberPhone(text)}
                     keyboardType="numeric"
                 />
+                {errors.numberPhone && <Text style={{ color: 'red' }}>{errors.numberPhone}</Text>}
 
                 <Text style={styles.label}>Address</Text>
                 <TextInput
@@ -229,9 +236,7 @@ const EditProfile = () => {
                     onChangeText={setBirthday}
                     placeholder="YYYY-MM-DD"
                 />
-
-
-                {error ? <Text style={{ color: 'red' }}>{error}</Text> : null}
+                {errors.birthday && <Text style={{ color: 'red' }}>{errors.birthday}</Text>}
                 {/* Input riêng cho doctor */}
                 {userData && userData.role === 'doctor' && (
                     <>
@@ -249,25 +254,15 @@ const EditProfile = () => {
                             onChangeText={setExperience}
                             keyboardType="numeric"
                         />
-
+                        {/* {errors.experience && <Text style={{ color: 'red' }}>{errors.experience}</Text>} */}
                         <Text style={styles.label}>Description</Text>
                         <TextInput
                             style={styles.input}
                             value={description}
                             onChangeText={setDescription}
                         />
-                    </>
-                )}
+                        {/* {errors.description && <Text style={{ color: 'red' }}>{errors.description}</Text>} */}
 
-                {/* Input riêng cho staff */}
-                {userData && userData.role === 'customer' && (
-                    <>
-                        <Text style={styles.label}>Membership Level</Text>
-                        <TextInput
-                            style={styles.input}
-                            value={membershipLevel}
-                            onChangeText={setMembershipLevel}
-                        />
                     </>
                 )}
 

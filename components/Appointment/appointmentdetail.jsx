@@ -4,7 +4,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { detailStyles } from "./styles";
 import { API_BASE_URL } from '../../LocalIP/localIP';
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
 const AppointmentDetail = () => {
     const navigation = useNavigation();
     const route = useRoute();
@@ -13,6 +13,7 @@ const AppointmentDetail = () => {
     const [isUpdating, setIsUpdating] = useState(false);
     const [isDeleting, setIsDeleting] = useState(false);
     const [appointment, setAppointment] = useState(null);
+    const [fullName, setFullName] = useState(null);
     const [diagnosisContent, setDiagnosisContent] = useState('');
     const [diagnoses, setDiagnoses] = useState([]); // Danh sách chuẩn đoán
     useEffect(() => {
@@ -20,6 +21,9 @@ const AppointmentDetail = () => {
             try {
                 const response = await fetch(`${API_BASE_URL}/appointments/${appointmentID}`); // Cập nhật với endpoint API của bạn
                 const result = await response.json();
+                const userdata = await fetch(`${API_BASE_URL}/customer/${result.data.user.customerId}`); // Cập nhật với endpoint API của bạn
+                const fullName = await userdata.json();
+                setFullName(fullName);
                 setAppointment(result.data); // Giả định dữ liệu trả về có cấu trúc giống như bạn cần
                 fetchDiagnoses(result.data.user._id);
             } catch (error) {
@@ -28,25 +32,25 @@ const AppointmentDetail = () => {
         };
         const fetchDiagnoses = async (userId) => {
             try {
-                const response = await fetch(`${API_BASE_URL}/diagnose`); // Endpoint để lấy tất cả các chuẩn đoán
-                // Kiểm tra xem phản hồi có thành công hay không
+                const response = await fetch(`${API_BASE_URL}/diagnose`);
                 if (!response.ok) {
                     const errorText = await response.text();
                     console.error('Error fetching diagnoses:', errorText);
                     throw new Error(`Error fetching diagnoses: ${response.statusText}`);
                 }
                 const result = await response.json();
-                // Lọc các chuẩn đoán có userId trùng
-                const userDiagnoses = result.filter((diagnosis) => diagnosis.userId._id === userId);
+                console.log("abssc",result.data)
+                const userDiagnoses = result.data.filter((diagnosis) => diagnosis.userId._id === userId);
+                
                 setDiagnoses(userDiagnoses);
-                console.log("Filtered User Diagnoses:", userDiagnoses);
+                
             } catch (error) {
-                console.error('Error fetching diagnoses:', error);
+                // console.error('Error fetching diagnoses:', error);
             }
         };
         fetchAppointmentDetails();
     }, [appointmentID]);
-
+    console.log("abc",diagnoses)
     const goBack = () => {
         navigation.goBack();
     };
@@ -61,10 +65,13 @@ const AppointmentDetail = () => {
 
     const handleSave = async () => {
         try {
+            const token = await AsyncStorage.getItem('token');
             const diagnosisResponse = await fetch(`${API_BASE_URL}/diagnose`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`,
+                    'ngrok-skip-browser-warning': '69420'
                 },
                 body: JSON.stringify({
                     appointmentId: appointment._id,
@@ -83,7 +90,7 @@ const AppointmentDetail = () => {
             // Cập nhật lại nội dung chuẩn đoán trong trạng thái nếu cần
             setDiagnosisContent('');
         } catch (error) {
-            console.error('Error saving diagnosis:', error);
+            // console.error('Error saving diagnosis:', error);
             Alert.alert('Lỗi', error.message || 'Thêm chuẩn đoán thất bại. Vui lòng thử lại!');
         }
     };
@@ -125,7 +132,7 @@ const AppointmentDetail = () => {
                     <View>
                         <View style={detailStyles.row}>
                             <Text style={detailStyles.labeltext}>
-                                <Text style={detailStyles.patientName}>{appointment.user.name}</Text>
+                                <Text style={detailStyles.patientName}>{fullName.data.fullName || 'N/A'}</Text>
                             </Text>
                             {!appointment.completed && (
                                 <TouchableOpacity style={detailStyles.editButton} onPress={handleEdit}>
@@ -135,15 +142,14 @@ const AppointmentDetail = () => {
                         </View>
                         <View style={detailStyles.separator} />
                         <View style={detailStyles.row}>
-                            <Text style={detailStyles.label}>Doctor:</Text>
-                            <Text style={detailStyles.value}>{appointment.doctor.fullName}</Text>
+
                         </View>
                         <View style={detailStyles.row}>
                             <Text style={detailStyles.label}>Time:</Text>
                             <Text style={detailStyles.value}>{new Date(appointment.appointmentDate).toLocaleString()}</Text>
                         </View>
                         <View style={detailStyles.row}>
-                            <Text style={detailStyles.label}>Diagnosis:</Text>
+                            <Text style={detailStyles.label}>Service:</Text>
                             <Text style={detailStyles.value}>
                                 {appointment.services.map(service => service.name).join(', ')}
                             </Text>
@@ -167,13 +173,13 @@ const AppointmentDetail = () => {
                             <View key={index} style={detailStyles.diagnosisContainer}>
                                 <View style={detailStyles.row}>
                                     <Text style={detailStyles.labeltext}>
-                                        <Text style={detailStyles.patientName}>{appointment.user.name}</Text>
+                                        {/* <Text style={detailStyles.patientName}>{appointment.user.name || 'N/A'}</Text> */}
                                     </Text>
                                 </View>
                                 <View style={detailStyles.separator} />
                                 <View style={detailStyles.row}>
                                     <Text style={detailStyles.label}>Doctor:</Text>
-                                    <Text style={detailStyles.value}>{appointment.doctor.fullName}</Text>
+                                    <Text style={detailStyles.value}></Text>
                                 </View>
                                 <View style={detailStyles.row}>
                                     <Text style={detailStyles.label}>Time:</Text>
@@ -215,9 +221,6 @@ const AppointmentDetail = () => {
                                         <Icon name='arrow-back' size={24} color="#b0b0b0" />
                                     </TouchableOpacity>
                                     <Text style={detailStyles.modalTitle}>Update Appointment</Text>
-                                </View>
-                                <View style={detailStyles.row}>
-                                    <Text style={detailStyles.input}>{appointment.user.name}</Text>
                                 </View>
                                 <View style={detailStyles.row}>
                                     <Text style={detailStyles.input}>{new Date(appointment.appointmentDate).toLocaleString()}</Text>

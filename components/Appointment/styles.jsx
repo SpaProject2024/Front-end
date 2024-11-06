@@ -339,9 +339,9 @@ export const detailStyles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: 'rgba(0, 0, 0, 0.5)',
+        height: "100%",
     },
     modalContent: {
-        height: 400,
         width: '80%',
         backgroundColor: '#fff',
         padding: 15,

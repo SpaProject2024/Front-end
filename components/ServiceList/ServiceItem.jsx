@@ -1,22 +1,23 @@
 import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 import { StarRatingDisplay } from "react-native-star-rating-widget";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { Colors } from "../../constants/Colors";
-import AsyncStorage from '@react-native-async-storage/async-storage'; // Import AsyncStorage
+import AsyncStorage from "@react-native-async-storage/async-storage"; // Import AsyncStorage
 
 export default function ServiceItem({
   service,
   onServicePress,
-  toggleFavorite,
 }) {
+  const [isFavorite, setIsFavorite] = useState(service.isFavorite);
+  const toggleFavorite = (id) => {
+    console.log("Service ID:", id);
+    setIsFavorite(!isFavorite);
+  };
   return (
     <TouchableOpacity onPress={onServicePress}>
       <View style={styles.item}>
-        <Image
-          style={styles.picture}
-          source={{ uri: service.image }}
-        />
+        <Image style={styles.picture} source={{ uri: service.image }} />
         <View style={styles.info}>
           <View
             style={{ flexDirection: "row", justifyContent: "space-between" }}
@@ -26,10 +27,10 @@ export default function ServiceItem({
             </Text>
             <TouchableOpacity
               style={{ justifyContent: "center" }}
-              onPress={toggleFavorite}
+              onPress={() => toggleFavorite(service._id)}
             >
               <Ionicons
-                name={service.isFavorite ? "heart-sharp" : "heart-outline"}
+                name={isFavorite ? "heart-sharp" : "heart-outline"}
                 size={20}
                 color={Colors.PRIMARY}
               />
@@ -41,9 +42,7 @@ export default function ServiceItem({
             starSize={16}
             rating={service.rate} // Sử dụng rate để hiển thị sao
           />
-          <Text style={styles.ratingText}>
-            {service.averageRating} / 5
-          </Text>
+          <Text style={styles.ratingText}>{service.averageRating} / 5</Text>
           <Text
             style={styles.description}
             numberOfLines={2}

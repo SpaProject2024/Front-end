@@ -31,6 +31,12 @@ const Appointment = () => {
   const fetchAppointments = async () => {
     try {
       const userId = await AsyncStorage.getItem('userId');
+      const userdata = await AsyncStorage.getItem('userdata');
+      const parsedUserdata = JSON.parse(userdata); // Parse userdata JSON
+      const customerId = parsedUserdata.data.customerId; // Access customerId
+      const customerResponse = await fetch(`${API_BASE_URL}/customer/${customerId}`);
+      const datacustomer = await customerResponse.json();
+      const fullName = datacustomer.data.fullName; // Extract fullName from the response
       const response = await fetch(`${API_BASE_URL}/appointments`);
       const data = await response.json();
       // Filter by userId
@@ -43,6 +49,7 @@ const Appointment = () => {
         }));
         return {
           ...appointment,
+          fullName,
           services: serviceNames,
         };
       }));

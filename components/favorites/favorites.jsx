@@ -1,48 +1,53 @@
-import React from 'react';
-import { View, Text, Image, FlatList, StyleSheet, StatusBar, TouchableOpacity } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, Image, FlatList, StyleSheet, StatusBar, TouchableOpacity, Alert } from 'react-native';
 import { Ionicons } from '@expo/vector-icons'; // Import Ionicons cho nút back
 import { useRouter } from 'expo-router'; // Import useRouter để điều hướng
 
-const favoritesData = [
+const initialFavoritesData = [
   {
     id: '1',
-    name: 'The Big Tease Salons',
-    address: '2972 Westheimer Rd. Santa Ana, Illinois 85486',
+    name: 'Exfoliation service',
+    address: 'damage facial skin care',
     rating: 5,
-    image: { uri: 'https://via.placeholder.com/80' }, // Link hình ảnh từ URL
+    image: { uri: 'https://storage.googleapis.com/ops-shopee-files-live/live/shopee-blog/2022/03/e595944e-cac-dich-vu-spa-3.jpg' },
   },
   {
     id: '2',
-    name: 'Straight Razors',
-    address: '1901 Thornridge Cir. Shiloh, Hawaii 81063',
+    name: 'Melasma and freckles treatment service',
+    address: 'damage facial skin caredamage facial skin caredamage facial skin caredamage facial skin caredamage facial skin caredamage facial skin care',
     rating: 4,
-    image: { uri: 'https://via.placeholder.com/80' }, // Link hình ảnh từ URL
+    image: { uri: 'https://storage.googleapis.com/ops-shopee-files-live/live/shopee-blog/2022/03/75fe2ae7-cac-dich-vu-spa-1.jpg' },
   },
   {
     id: '3',
-    name: 'Backyard Barbers',
-    address: '2715 Ash Dr. San Jose, South Dakota 83475',
+    name: 'Facial care services',
+    address: 'damage facial skin care',
     rating: 3,
-    image: { uri: 'https://via.placeholder.com/80' }, // Link hình ảnh từ URL
+    image: { uri: 'https://noithatart.com/wp-content/uploads/2019/09/dich-vu-cham-soc-da-mat-cho-nam-gioi.jpg' },
   },
-  {
-    id: '4',
-    name: 'Salon Zeppelin',
-    address: '3517 W. Gray St. Utica, Pennsylvania 57867',
-    rating: 4,
-    image: { uri: 'https://via.placeholder.com/80' }, // Link hình ảnh từ URL
-  },
-  {
-    id: '5',
-    name: 'Brooklyn Barbers',
-    address: '2972 Westheimer Rd. Santa Ana, Illinois 85486',
-    rating: 5,
-    image: { uri: 'https://via.placeholder.com/80' }, // Link hình ảnh từ URL
-  },
+  
 ];
 
 const Favorites = () => {
-  const router = useRouter(); // Sử dụng useRouter để điều hướng
+  const [favorites, setFavorites] = useState(initialFavoritesData);
+  const router = useRouter();
+
+  const handleDelete = (id) => {
+    Alert.alert(
+      "Xóa mục yêu thích",
+      "Bạn có chắc chắn muốn xóa mục này?",
+      [
+        { text: "Hủy", style: "cancel" },
+        {
+          text: "Xóa",
+          style: "destructive",
+          onPress: () => {
+            setFavorites((prevFavorites) => prevFavorites.filter(item => item.id !== id));
+          },
+        },
+      ]
+    );
+  };
 
   const renderItem = ({ item }) => (
     <View style={styles.card}>
@@ -55,6 +60,14 @@ const Favorites = () => {
             <Text key={i} style={{ color: i < item.rating ? '#f00' : '#ccc' }}>★</Text>
           ))}
         </View>
+        <View style={styles.buttons}>
+          <TouchableOpacity style={styles.button} onPress={() => handleDelete(item.id)}>
+            <Text style={styles.buttonText}>Xóa</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.button} onPress={() => router.push(`/details/${item.id}`)}>
+            <Text style={styles.buttonText}>Chi tiết</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     </View>
   );
@@ -62,7 +75,6 @@ const Favorites = () => {
   return (
     <View style={styles.container}>
       <StatusBar barStyle="light-content" />
-      {/* Header with back button and title */}
       <View style={styles.header}>
         <TouchableOpacity style={styles.backButton} onPress={() => router.back()}>
           <Ionicons name="arrow-back" size={24} color="#fff" />
@@ -70,7 +82,7 @@ const Favorites = () => {
         <Text style={styles.headerTitle}>Favorites</Text>
       </View>
       <FlatList
-        data={favoritesData}
+        data={favorites}
         renderItem={renderItem}
         keyExtractor={item => item.id}
       />
@@ -84,19 +96,19 @@ const styles = StyleSheet.create({
     backgroundColor: '#f8f8f8',
   },
   header: {
-    backgroundColor: '#009999',  // Màu nền cho tiêu đề
+    backgroundColor: '#009999',
     paddingVertical: 25,
     paddingHorizontal: 16,
-    flexDirection: 'row', // Xếp ngang tiêu đề và nút back
-    alignItems: 'center', // Canh giữa theo trục dọc
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   backButton: {
-    marginRight: 15, // Tạo khoảng cách giữa nút back và tiêu đề
+    marginRight: 15,
   },
   headerTitle: {
     fontSize: 20,
     fontWeight: 'bold',
-    color: '#fff',  // Màu chữ cho tiêu đề
+    color: '#fff',
   },
   card: {
     flexDirection: 'row',
@@ -132,6 +144,23 @@ const styles = StyleSheet.create({
   },
   rating: {
     flexDirection: 'row',
+  },
+  buttons: {
+    flexDirection: 'row',
+    marginTop: 10,
+    alignSelf: 'flex-end',
+  },
+  button: {
+    backgroundColor: '#DDDDDD',
+    paddingVertical: 6,
+    paddingHorizontal: 12,
+    borderRadius: 4,
+    marginRight: 5,
+  },
+  buttonText: {
+    color: '#fff',
+    fontWeight: 'bold',
+    fontSize: 14,
   },
 });
 

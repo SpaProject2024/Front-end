@@ -76,8 +76,8 @@ const ChangePassword = () => {
                 ]);
             }
         } catch (error) {
-            console.error('Password Update Error:', error);
-            Alert.alert("Error", "Failed to update password");
+            // console.error('Password Update Error:', error);
+            Alert.alert("Error", "Old password is incorrect");
         }
     };
 
@@ -86,7 +86,7 @@ const ChangePassword = () => {
         <View style={styles.container}>
             <View style={styles.header}>
                 <TouchableOpacity onPress={() => router.back()} style={styles.back}>
-                    <Icon name="arrow-back" size={24} color="black" />
+                    <Icon name="arrow-back" size={24} color="#fff" />
                 </TouchableOpacity>
                 <Text style={styles.title}>Change Password</Text>
             </View>

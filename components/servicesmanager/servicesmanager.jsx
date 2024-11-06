@@ -95,15 +95,10 @@ const ServicesManager = () => {
     if (error) {
         return <Text>Error: {error}</Text>;
     }
-
-    const goBack = () => {
-        router.push('/Dashboard/dashboard');
-    };
-
     return (
         <View style={styles.container}>
             <View style={styles.header}>
-                <TouchableOpacity onPress={goBack} style={styles.backButton}>
+                <TouchableOpacity onPress={() => router.back()} style={styles.backButton}>
                     <Icon name='arrow-back' size={24} color="#ffffff" />
                 </TouchableOpacity>
                 <Text style={styles.title}>Service List</Text>

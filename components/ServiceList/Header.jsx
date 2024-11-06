@@ -15,6 +15,7 @@ export default function Header({ setFilterVisible }) {
             name="arrow-back-outline"
             size={28}
             color="white"
+            style={{marginTop: 6,}}
             onPress={() => router.back()}
           />
           <Text style={styles.text}>Search</Text>
@@ -23,7 +24,6 @@ export default function Header({ setFilterVisible }) {
           <Ionicons name="filter-circle" size={40} color="white" />
         </Pressable>
       </View>
-      {/* <SearchService /> */}
     </View>
   );
 }

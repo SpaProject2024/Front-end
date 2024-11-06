@@ -92,6 +92,8 @@ export default function Login() {
               if (role === "doctor") {
                 router.push("/appointmenttab/appointmenttab");
               } else if (role === "staff") {
+                // router.push("/Dashboard/dashboard");
+              } else if (role === "manager") {
                 router.push("/Dashboard/dashboard");
               }
               else {
@@ -196,10 +198,10 @@ export default function Login() {
           <Text style={styles.registerText}>Register</Text>
         </TouchableOpacity>
       </View>
-      <View style={styles.withGGContainer}>
+      {/* <View style={styles.withGGContainer}>
         <AntDesign name="google" size={24} color="#EA4335" />
         <Text style={styles.withGGText}>Login With Google</Text>
-      </View>
+      </View> */}
       <View>
         <Ionicons
           name="arrow-back-circle-outline"

@@ -106,17 +106,12 @@ const ServicesDetail = () => {
     if (loading) {
         return <ActivityIndicator size="large" color="#0000ff" />;
     }
-
-    const goBack = () => {
-        router.push('/servicesmanager/servicesmanager');
-    };
-
     return (
         <ScrollView style={styles.container}>
             {service ? (
                 <>
                     <View style={styles.header}>
-                        <TouchableOpacity onPress={goBack} style={styles.backButton}>
+                        <TouchableOpacity onPress={() => router.back()} style={styles.backButton}>
                             <Icon name='arrow-back' size={24} color="#fff" />
                         </TouchableOpacity>
                         <Text style={styles.title}>Service Detail</Text>

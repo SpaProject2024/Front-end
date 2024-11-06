@@ -82,7 +82,7 @@ const MyAccount = () => {
         </TouchableOpacity>
 
         {/* Navigate to My Favorites */}
-        {/* <TouchableOpacity
+        <TouchableOpacity
           style={styles.optionRow}
           onPress={() => router.push('/Favorites/favorites.jsx')}
         >
@@ -91,7 +91,7 @@ const MyAccount = () => {
           <Icon name="chevron-right" type="material" color="#2e8b57" size={24} />
         </TouchableOpacity>
 
-        <TouchableOpacity
+        {/* <TouchableOpacity
           style={styles.optionRow}
           onPress={() => router.push('/History/history.jsx')}>
           <Icon name="undo" type="font-awesome" color="#8a2be2" size={24} />

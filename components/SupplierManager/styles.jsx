@@ -7,6 +7,14 @@ export const styles = StyleSheet.create({
     card: {
         padding: 20,
     },
+    header: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        paddingTop: 40,
+        paddingBottom: 10,
+        paddingHorizontal: 20,
+        backgroundColor: '#2B5F2F',
+    },
     title: {
         fontSize: 24,
         fontWeight: 'bold',
@@ -22,13 +30,13 @@ export const styles = StyleSheet.create({
         backgroundColor: 'white',
         borderRadius: 10,
         marginBottom: 10,
-        elevation: 2,
+        elevation: 5,
         borderWidth: 2,
         borderColor: '#ccc',
     },
     infoContainer: {
         flex: 1,
-        width: 270,
+        width: 260,
         padding: 20,
         marginRight: 10,
     },
@@ -40,7 +48,7 @@ export const styles = StyleSheet.create({
     label: {
         fontSize: 14,
         fontWeight: 'bold',
-        width: 80, // Set a fixed width for label alignment
+        width: 90, // Set a fixed width for label alignment
     },
     value: {
         fontSize: 14,
@@ -53,10 +61,11 @@ export const styles = StyleSheet.create({
         backgroundColor: '#4CAF50',
         padding: 10,
         borderRadius: 10,
+        borderWidth: 1,
         alignItems: 'center',
     },
     buttonText: {
-        color: 'white',
+        color: '#fff',
         fontWeight: 'bold',
     },
     // Thêm style cho nền mờ
@@ -91,14 +100,6 @@ export const styles = StyleSheet.create({
         padding: 10,
         borderRadius: 5,
         marginTop: 20,
-    },
-    header: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        paddingTop: 40,
-        paddingBottom: 10,
-        paddingHorizontal: 20,
-        backgroundColor: '#5C9161',
     },
     backButton: {
         marginRight: 20,
