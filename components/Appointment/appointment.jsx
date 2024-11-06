@@ -35,29 +35,44 @@ export default function Appointment() {
     // Function to fetch data from API
     const fetchAppointments = async () => {
         try {
-            const doctorId = await AsyncStorage.getItem('doctorId'); // Lấy doctorId từ AsyncStorage
+            const doctorId = await AsyncStorage.getItem('userId'); // Get doctorId from AsyncStorage
             const response = await fetch(`${API_BASE_URL}/appointments`);
             const data = await response.json();
-            //thanh lọc
+            // Filter appointments based on doctor ID
             const filteredAppointments = data.data.filter((appointment) => appointment.doctor === doctorId);
-            //dịch vụ 
-            const appointmentsWithServices = await Promise.all(filteredAppointments.map(async (appointment) => {
+            // Add user details to appointments and log them
+            const appointmentsWithUserDetails = await Promise.all(filteredAppointments.map(async (appointment) => {
+                const userDetails = await fetchUserById(appointment.user); 
+                const response = await fetch(`${API_BASE_URL}/customer/${userDetails.data.customerId}`);
+                const fullName = await response.json();
+                return {
+                    ...appointment,
+                    user: {
+                        ...userDetails.data,
+                        fullName: fullName.data.fullName // Add fullName to user object
+                    },
+                };
+            }));
+
+            // Fetch services for appointments
+            const appointmentsWithServices = await Promise.all(appointmentsWithUserDetails.map(async (appointment) => {
                 const serviceNames = await Promise.all(appointment.services.map(async (serviceId) => {
                     const serviceData = await fetchServiceById(serviceId);
-                    return serviceData ? serviceData.data.name : 'Unknown service'; // Lấy tên từ serviceData.data
+                    return serviceData ? serviceData.data.name : 'Unknown service'; // Get service name
                 }));
                 return {
                     ...appointment,
                     services: serviceNames,
                 };
             }));
-            console.log('doctor', doctorId);
-            setAppointments(appointmentsWithServices); // Assuming your data is inside `data.data`
+
+            setAppointments(appointmentsWithServices);
             filterByDate(new Date(), statusFilter);
         } catch (error) {
             console.error('Error fetching appointments:', error);
         }
     };
+
     const fetchServiceById = async (serviceId) => {
         try {
             const response = await fetch(`${API_BASE_URL}/services/${serviceId}`);
@@ -66,6 +81,17 @@ export default function Appointment() {
         } catch (error) {
             console.error(`Error fetching service with ID ${serviceId}:`, error);
             return null; // Trả về null nếu có lỗi
+        }
+    };
+    // Function to fetch user by ID
+    const fetchUserById = async (userId) => {
+        try {
+            const response = await fetch(`${API_BASE_URL}/user/${userId}`); // Adjust the endpoint as needed
+            const data = await response.json();
+            return data; // Assuming you receive user information with a structure that contains user data
+        } catch (error) {
+            console.error(`Error fetching user with ID ${userId}:`, error);
+            return null; // Return null if there's an error
         }
     };
 
@@ -86,6 +112,7 @@ export default function Appointment() {
     // Filter appointments by selected date and status
     const filterByDate = (date, status) => {
         let filtered = appointments;
+
         if (date) {
             filtered = filtered.filter((item) => {
                 const itemDate = new Date(item.appointmentDate);
@@ -97,7 +124,7 @@ export default function Appointment() {
             });
         }
         if (status !== null) {
-            filtered = filtered.filter((item) => item.status === (status ? 'Canceled' : 'Booked')); // Cập nhật logic lọc
+            filtered = filtered.filter((item) => item.status === (status ? 'Canceled' : 'Booked'));
         }
         setFilteredData(filtered);
     };
@@ -118,7 +145,7 @@ export default function Appointment() {
             <View style={styles.scheduleItem}>
                 <View style={styles.infoRow}>
                     <Text style={styles.labelText}>Patient:</Text>
-                    <Text style={styles.valueText}>{item.patientName}</Text>
+                    <Text style={styles.valueText}>{item.user.fullName}</Text>
                 </View>
                 <View style={styles.infoRow}>
                     <Text style={styles.labelText}>Service:</Text>

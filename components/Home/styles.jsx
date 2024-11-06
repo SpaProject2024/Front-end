@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native";
-import { Colors } from './../../constants/Colors.ts'
+import { Colors } from "./../../constants/Colors.ts";
 
 export const styles = StyleSheet.create({
   container: {
@@ -33,6 +33,12 @@ export const styles = StyleSheet.create({
     marginRight: 10,
     marginLeft: 10,
   },
+  textName: {
+    fontSize: 24,
+    fontWeight: "bold",
+    color: "#fff",
+  },
+
   searchBox: {
     flexDirection: "row",
     alignItems: "center",
@@ -64,7 +70,7 @@ export const styles = StyleSheet.create({
   dropdownContainer: {
     zIndex: 1,
     top: 15,
-    width:120,
+    width: 120,
     marginLeft: -40,
   },
   dropdown: {
@@ -92,10 +98,9 @@ export const styles = StyleSheet.create({
     color: "#2B5F2F",
   },
   placeholderStyle: {
-    color: Colors.PRIMARY
+    color: Colors.PRIMARY,
   },
   selectedTextStyle: {
-    color: Colors.PRIMARY
-  }
+    color: Colors.PRIMARY,
+  },
 });
-

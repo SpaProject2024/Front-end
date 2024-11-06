@@ -17,7 +17,7 @@ const VerifyPin = () => {
         if (router.params && router.params.email) {
             setEmail(router.params.email);
         } else {
-            console.error('Email not found in router params.');
+            // console.error('Email not found in router params.');
         }
     }, [router.params]);
 

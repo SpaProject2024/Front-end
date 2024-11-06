@@ -129,7 +129,7 @@ const Warehouse = () => {
         <View style={styles.container}>
             <View style={styles.header}>
                 <TouchableOpacity onPress={goBack} style={styles.backButton}>
-                    <Icon name="arrow-back" size={24} color="#000" />
+                    <Icon name="arrow-back" size={24} color="#fff" />
                 </TouchableOpacity>
                 <Text style={styles.headerTitle}>Warehouse</Text>
                 <TouchableOpacity style={styles.addButton} onPress={openCreateModal}>
@@ -247,8 +247,10 @@ const styles = StyleSheet.create({
     header: {
         flexDirection: 'row',
         alignItems: 'center',
-        paddingBottom: 16,
-        padding: 10,
+        paddingTop: 40,
+        paddingBottom: 10,
+        paddingHorizontal: 20,
+        backgroundColor: '#2B5F2F',
     },
     addButton: {
         marginLeft: 110,
@@ -265,6 +267,7 @@ const styles = StyleSheet.create({
     },
     headerTitle: {
         fontSize: 24,
+        color:'#fff',
         fontWeight: 'bold',
     },
     containerList: {

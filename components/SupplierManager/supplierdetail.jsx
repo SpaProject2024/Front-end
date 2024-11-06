@@ -86,7 +86,6 @@ const SupplierDetail = () => {
         if (!updatedSupplier.name) {
             errors.name = "Name is required.";
         }
-
         // Kiểm tra số điện thoại
         const phoneRegex = /^\d{10}$/; // Biểu thức chính quy cho 10 chữ số
         if (!updatedSupplier.numberphone) {
@@ -94,7 +93,6 @@ const SupplierDetail = () => {
         } else if (!phoneRegex.test(updatedSupplier.numberphone)) {
             errors.numberphone = "Phone number must be 10 digits and contain only numbers";
         }
-
         if (!updatedSupplier.address) {
             errors.address = "Address is required.";
         }
@@ -102,21 +100,17 @@ const SupplierDetail = () => {
         setValidationErrors(errors);
         return Object.keys(errors).length === 0;
     };
-
-
     if (loading) {
         return <ActivityIndicator size="large" color="#0000ff" />;
     }
-    const goBack = () => {
-        router.push('/suppliermanager/suppliermanager');
-    };
+
     return (
         <View style={styles.container}>
 
             {supplier ? (
                 <>
                     <View style={styles.header}>
-                        <TouchableOpacity onPress={goBack} style={styles.backButton}>
+                        <TouchableOpacity onPress={() => router.back()} style={styles.backButton}>
                             <Icon name='arrow-back' size={24} color="#ffffff" />
                         </TouchableOpacity>
                         <Text style={styles.title}>Supplier Detail</Text>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, Image, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
 import { Card } from 'react-native-paper';
 import { useRouter } from 'expo-router';
 
@@ -8,20 +8,20 @@ const Dashboard = ({ navigation }) => {
     const router = useRouter();
     return (
         <View style={styles.container}>
-            <Text style={styles.cardTitle}>Visitors Stats</Text>
+            <Text style={styles.cardTitle}>Statistical</Text>
             <View style={styles.card}>
             </View>
             <Text style={styles.cardTitle}>Details of the managers</Text>
-            <View style={styles.card}>
+            <ScrollView style={styles.card}>
                 <Card.Content>
-                    <TouchableOpacity
+                    {/* <TouchableOpacity
                         style={styles.button}
                         onPress={() => router.push('/WareHouse/warehouse.jsx')}
                     >
                         <Text style={styles.buttonText}>Product</Text>
                     </TouchableOpacity>
 
-                    <View style={styles.separator} />
+                    <View style={styles.separator} /> */}
                     <TouchableOpacity
                         style={styles.button}
                         onPress={() => router.push('/suppliermanager/suppliermanager')}
@@ -78,20 +78,16 @@ const Dashboard = ({ navigation }) => {
 
                     <View style={styles.separator} />
                     <TouchableOpacity
+                        onPress={() => router.push('/ManageSchedule/manageschedule')}
                         style={styles.button}
                     >
-                        <Text style={styles.buttonText}>Services</Text>
+                        <Text style={styles.buttonText}>Manage Schedule</Text>
                     </TouchableOpacity>
 
                     <View style={styles.separator} />
-                    <TouchableOpacity
-                        style={styles.button}
-                    >
-
-                        <Text style={styles.buttonText}>................</Text>
-                    </TouchableOpacity>
+                    
                 </Card.Content>
-            </View>
+            </ScrollView>
         </View>
     );
 };

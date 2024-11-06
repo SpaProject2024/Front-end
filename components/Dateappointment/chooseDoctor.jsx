@@ -57,7 +57,7 @@ export default function ChooseDoctor() {
             const appointmentData = {
                 appointmentDate: appointmentDate,
                 slot: selectedSlot,
-                status: "Pending",
+                status: "Booked",
                 services: [selectedServiceId],
                 doctor: selectedDoctor,
                 user: userId,
@@ -86,7 +86,7 @@ export default function ChooseDoctor() {
                             notification_type: "Appointment",
                             receiverID: staffId,
                             senderID: userId,
-                            title: "New Appointment Scheduled",
+                            title: "Appointment successful",
                         };
                         await axios.post(`${API_BASE_URL}/notification`, notificationData);
                     } catch (notificationError) {

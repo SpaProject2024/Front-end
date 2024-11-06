@@ -1,12 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {
-  View,
-  Image,
-  TextInput,
-  TouchableOpacity,
-  Text,
-  Alert,
-} from "react-native";
+import { View, Image, TextInput, TouchableOpacity, Text, Alert, } from "react-native";
 import { API_BASE_URL } from '../../LocalIP/localIP';
 import { useRouter } from "expo-router";
 import { Dropdown } from "react-native-element-dropdown";
@@ -22,27 +15,26 @@ const options = [
   { label: "Login", value: "login" },
   { label: "Register", value: "register" },
   { label: "Logout", value: "logout" },
-  { label: "appointment", value: "appointment" },
-  { label: "managerbooking", value: "managerbooking" },
-  { label: "dashboard", value: "dashboard" },
 ];
 
 const Header = () => {
   const router = useRouter();
   const [selectedOption, setSelectedOption] = useState(null);
   const [userInfo, setUserInfo] = useState(null);
-
+  const [token, setToken] = useState(null);
   useEffect(() => {
     const fetchUserInfo = async () => {
       try {
         const token = await AsyncStorage.getItem("token");
+        setToken(token); // Set token state
+
         const userId = await AsyncStorage.getItem("userId"); // Retrieve userId from AsyncStorage
         const doctorId = await AsyncStorage.getItem("doctorId"); // Retrieve userId from AsyncStorage
         const userdata = await AsyncStorage.getItem("data"); // Retrieve userId from AsyncStorage
 
-        console.log("Token:", token); // Logging token
-        console.log("User ID:", userId); // Logging user ID
-        console.log("doctor ID:", doctorId); // Logging user ID
+        // console.log("Token:", token); // Logging token
+        // console.log("User ID:", userId); // Logging user ID
+        // console.log("doctor ID:", doctorId); // Logging user ID
         // Ensure both token and userId are present
         if (token && userId) {
           const response = await axios.get(
@@ -60,13 +52,13 @@ const Header = () => {
           const userrole = response.data.data.role;
           await AsyncStorage.setItem("userdata", JSON.stringify(userdata));
           await AsyncStorage.setItem("userrole", JSON.stringify(userrole));
-          console.log("userdata:", userdata);
-          console.log("userrole:", userrole);
-          console.log("Your email:", response.data.data.email);
+          // console.log("userdata:", userdata);
+          // console.log("userrole:", userrole);
+          // console.log("Your email:", response.data.data.email);
           setUserInfo(response.data.data); // Save user info in state
           //lưu id của doctorID
           const doctorId = response.data.data.doctorId;
-          console.log("Doctor ID:", doctorId);
+          // console.log("Doctor ID:", doctorId);
           await AsyncStorage.setItem("doctorId", doctorId);
         } else {
           // console.log("No token or user ID found");
@@ -89,20 +81,17 @@ const Header = () => {
       case "logout":
         await confirmLogout();
         break;
-      case "appointment":
-        router.push("/appointmenttab/appointmenttab");
-        break;
-      case "managerbooking":
-        router.push("/ManagerBooking/managerbooking");
-        break;
-      case "dashboard":
-        router.push("/Dashboard/dashboard");
-        break;
       default:
         break;
     }
   };
-
+  // Conditionally set options based on token presence
+  const options = token
+    ? [{ label: "Logout", value: "logout" }]
+    : [
+      { label: "Login", value: "login" },
+      { label: "Register", value: "register" },
+    ];
   const confirmLogout = () => {
     Alert.alert(
       "Logout Confirmation",
@@ -132,12 +121,13 @@ const Header = () => {
         <View style={styles.rowHeader}>
           <View style={styles.row}>
             <Image source={Logo} style={styles.logo} />
-            <View style={styles.searchBox}>
+            {/* <View style={styles.searchBox}>
               <View style={styles.searchRow}>
                 <EvilIcons name="search" size={20} color="#2B5F2F" />
                 <TextInput style={styles.input} placeholder="Search" />
               </View>
-            </View>
+            </View> */}
+            <Text style={styles.textName}>VitaBella</Text>
           </View>
           <View style={styles.rowRight}>
             <TouchableOpacity
@@ -177,7 +167,6 @@ const Header = () => {
               )}
               itemTextStyle={styles.itemTextStyle}
             />
-
           </View>
         </View>
         {/* Display user information if available */}

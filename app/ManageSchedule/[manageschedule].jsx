@@ -1,10 +1,11 @@
 import { View, Text, Image, StyleSheet } from "react-native";
 import React from "react";
-import AppointmentPage from "../../components/Appointment/Appointment";
-export default function AppointmentScreen() {
+import ManageWorkScheduleScreen from "../../components/ManageSchedule/manageschedule";
+
+export default function ManagecheduleScreen() {
   return (
     <View style={styles.container}>
-      <AppointmentPage />
+      <ManageWorkScheduleScreen />
     </View>
   );
 }

@@ -6,31 +6,29 @@ import HomeScreen from '../../app/Home/[home]';
 import HistoryScreen from '../../app/History/[history]';
 import ServicesScreen from '../../app/ServiceList/[servicelist]';
 import ProfileScreen from '../../app/MyAccount/[myAccount]';
-import AcceptAppointmentScreen from '../../app/acceptappointment/[acceptappointment]'; // Import the Accept Appointment screen
-
+import DashboardScreen from '../../app/Dashboard/[dashboard]';
+import AppointmentScreen from '../../app/appointment/[appointment]';
 const Tab = createBottomTabNavigator();
 
 export default function HomeTabs() {
     const [role, setRole] = useState(null);
-
     useEffect(() => {
         const getUserRole = async () => {
             try {
                 const userdata = await AsyncStorage.getItem('userrole');
                 console.log("User data:", userdata); // Log the retrieved data
-                const parsedData = userdata ? JSON.parse(userdata) : null;
-                if (parsedData && parsedData.role) {
-                    setRole(parsedData.role);
+                const role = userdata ? JSON.parse(userdata) : null;
+                if (role) {
+                    setRole(role);
                 } else {
                     console.log("No role found in userdata");
                 }
             } catch (error) {
-                console.error("Failed to retrieve user data:", error);
+                // console.error("Failed to retrieve user data:", error);
             }
         };
         getUserRole();
     }, []);
-
 
     return (
         <Tab.Navigator
@@ -46,8 +44,10 @@ export default function HomeTabs() {
                         iconName = focused ? 'list' : 'list-outline';
                     } else if (route.name === 'Profile') {
                         iconName = focused ? 'person' : 'person-outline';
-                    } else if (route.name === 'Accept Appointment') {
-                        iconName = focused ? 'checkmark-circle' : 'checkmark-circle-outline';
+                    } else if (route.name === 'Appointment') {
+                        iconName = focused ? 'calendar' : 'calendar-outline';
+                    } else if (route.name === 'Dashboard') {
+                        iconName = focused ? 'stats-chart' : 'stats-chart-outline';
                     }
                     return <Ionicons name={iconName} size={size} color={color} />;
                 },
@@ -56,12 +56,22 @@ export default function HomeTabs() {
             })}
         >
             <Tab.Screen name="Home" component={HomeScreen} options={{ headerShown: false }} />
-            <Tab.Screen name="Services" component={ServicesScreen} options={{ headerShown: false }} />
-            <Tab.Screen name="History" component={HistoryScreen} options={{ headerShown: false }} />
-            <Tab.Screen name="Profile" component={ProfileScreen} options={{ headerShown: false }} />
-            {role === 'staff' && (
-                <Tab.Screen name="Accept Appointment" component={AcceptAppointmentScreen} options={{ headerShown: false }} />
+            {role === 'doctor' && (
+
+                <Tab.Screen name="Appointment" component={AppointmentScreen} options={{ headerShown: false }} />
             )}
+            {role === 'manager' && (
+                <Tab.Screen name="Dashboard" component={DashboardScreen} options={{ headerShown: false }} />
+            )}
+            {role === 'customer' && (
+                <>
+                    <Tab.Screen name="Services" component={ServicesScreen} options={{ headerShown: false }} />
+                    <Tab.Screen name="History" component={HistoryScreen} options={{ headerShown: false }} />
+                </>
+            )}
+            <Tab.Screen name="Profile" component={ProfileScreen} options={{ headerShown: false }} />
+
+
         </Tab.Navigator>
     );
 }

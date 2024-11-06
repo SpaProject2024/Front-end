@@ -17,8 +17,7 @@ const MenuItems = () => {
       setLoading(true);
       const userId = await AsyncStorage.getItem('userId');
       const response = await axios.get(`${API_BASE_URL}/notification`);
-      const newNotifications = response.data.data; // Điều chỉnh theo cấu trúc phản hồi của bạn
-
+      const newNotifications = response.data.data;
       // Lọc các thông báo có senderID trùng với userId
       const filteredNotifications = newNotifications.filter(notification => notification.senderID === userId);
       setVisibleItems(filteredNotifications);
@@ -50,7 +49,7 @@ const MenuItems = () => {
       <View>
         <Text style={menuStyles.statusText}>{item.notification_type}</Text>
         <Text style={menuStyles.titleText}>{item.title}</Text>
-        <Text style={menuStyles.contentText}>{item.content}</Text>
+        {/* <Text style={menuStyles.contentText}>{item.content}</Text> */}
       </View>
     </View>
   );
@@ -85,11 +84,17 @@ const menuStyles = StyleSheet.create({
     marginLeft: 50,
   },
   innerContainer: {
-    paddingHorizontal: 15,
-    paddingVertical: 15,
-    marginLeft:20,
-    flexDirection: "row",
-    alignItems: "center",
+    backgroundColor: '#f9f9f9',  // Light background for each notification card
+    borderWidth: 1,
+    borderColor: '#ddd', // Light grey border color
+    borderRadius: 8,  // Rounded corners
+    padding: 15,
+    margin: 10,
+    shadowColor: "#000",  // Shadow for a card-like effect
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
+    elevation: 3,  // Elevation for Android
   },
   statusText: {
     color: "#2B5F2F",
@@ -113,5 +118,6 @@ const menuStyles = StyleSheet.create({
     marginRight: 20,
   },
 });
+
 
 export default MenuItems;

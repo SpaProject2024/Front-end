@@ -42,7 +42,7 @@ export const styles = StyleSheet.create({
         backgroundColor: '#ffffff', // Input field background color
     },
     saveButton: {
-        backgroundColor: '#A1D9A8',
+        backgroundColor: '#2B5F2F',
         padding: 15,
         alignItems: 'center',
         borderRadius: 5,
