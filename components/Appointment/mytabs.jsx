@@ -34,5 +34,6 @@ export default function mytabs() {
             <Tab.Screen name="Appointment" component={AppointmentScreen} options={{ headerShown: false }} />
             <Tab.Screen name="Profile" component={ProfileScreen} options={{ headerShown: false }} />
         </Tab.Navigator>
+
     );
 }

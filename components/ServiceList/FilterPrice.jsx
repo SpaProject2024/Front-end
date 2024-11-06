@@ -9,7 +9,7 @@ export default function FilterPrice() {
   return (
     <View style={styles.container}>
       <View style={styles.titleContainer}>
-        <Text style={styles.title}>Price</Text>
+        <Text>Price</Text>
         <Text style={styles.price}>$0 - ${value}</Text>
       </View>
       <Slider
@@ -34,9 +34,6 @@ const styles = StyleSheet.create({
   titleContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
-  },
-  title: {
-    fontWeight: "bold"
   },
   price: {
     fontSize: 13, 

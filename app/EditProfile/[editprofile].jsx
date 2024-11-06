@@ -6,6 +6,7 @@ export default function EditProfile() {
   return (
     <View style={styles.container}>
      <EditProfliePage></EditProfliePage>
+     
     </View>
   );
 }

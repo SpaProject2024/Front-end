@@ -34,6 +34,7 @@ const Register = () => {
     { label: "Customer", value: "customer" },
     { label: "Staff", value: "staff" },
     { label: "Doctor", value: "doctor" },
+    { label: "Manager", value: "manager" },
   ];
 
   const validateEmail = (email) => {
